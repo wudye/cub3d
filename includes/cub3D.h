@@ -9,11 +9,27 @@
 # include "../minilibx_linux/mlx.h"
 # include "../srcs/get_next_line.h"
 
+typedef struct s_img
+{
+    void    *img_ptr;
+    char    *img_addr;
+    int     bits_per_pixel;
+    int     size_line;
+    int     endian;
+}   t_img;
+
 typedef struct s_var
 {
     void    *mlx_init_ptr;
+    void    *win_init_ptr;
     char    **texture;
     char    **map;
+    t_img   *north;
+    t_img   *sourth;
+    t_img   *west;
+    t_img   *east;
+
+    
 
 }   t_var;
 

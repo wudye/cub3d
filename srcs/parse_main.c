@@ -27,6 +27,7 @@ static int  get_file_length(int fd)
 static void set_data_value_helper(int fd, char **str, int len, t_var *var)
 {
     char    *temp;
+    char    *t2;
     int     i;
     
     i = 0;
@@ -40,8 +41,10 @@ static void set_data_value_helper(int fd, char **str, int len, t_var *var)
         }
         if (temp == NULL)
             break ;
-        str[i] = ft_strdup(temp);
+        t2 = ft_strtrim(temp, " ");
         free(temp);
+        str[i] = ft_strtrim(t2, "\n");
+        free(t2);
         if (!str[i])
         {
             error_malloc(var);
@@ -81,10 +84,10 @@ static int  open_map_file(char *filename, t_var *var)
 
     fd = open(filename, O_RDONLY);
     if (fd == -1)
-        return(err_return_info("can not open the map", var));
+        return(err_return_info("Error can not open the map", var));
     len = get_file_length(fd);
     if (len == 0)
-        return(err_return_info("empty map", var));
+        return(err_return_info("Error empty map", var));
     close (fd);
     fd = open(filename, O_RDONLY);
     set_data_value(fd, var, len);
@@ -96,11 +99,15 @@ int    parse_main(t_var *var, char **argv)
 {
 
     if (parse_argv(argv[1]) == 1)
-        return (err_return_info("need a cub type map", var));
+        return (err_return_info("Error need a cub type map", var));
+
+
     if (open_map_file(argv[1], var) == 1)
         return (1);
+
+
     if (check_texture(var, var->texture) == 1)
-        return (err_return_info("texture format wrong", var));
+        return (err_return_info("Error texture format wrong", var));
     // if (check_color(var->texture) == 1)
     //     return (1);
     // if (check_map(var->texture) == 1)
