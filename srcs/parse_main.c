@@ -100,18 +100,12 @@ int    parse_main(t_var *var, char **argv)
 
     if (parse_argv(argv[1]) == 1)
         return (err_return_info("Error need a cub type map", var));
-
-
     if (open_map_file(argv[1], var) == 1)
         return (1);
-
-
     if (check_texture(var, var->texture) == 1)
         return (err_return_info("Error texture format wrong", var));
-    // if (check_color(var->texture) == 1)
-    //     return (1);
-    // if (check_map(var->texture) == 1)
-    //     return (1);
+    if (check_map_numbers(var, var->map) == 1)
+        return (1);
     
 // {
 //     printf("---test----\n");

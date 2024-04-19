@@ -62,9 +62,11 @@ int main(int argc, char **argv)
         
         var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, 1900, 1600, "cub3D");
         if (!var->mlx_init_ptr)
-        return (err_return_info("Error win_ptr fail", var));
-        printf("end in main \n");
-
+            return (err_return_info("Error win_ptr fail", var));
+        printf("end in main %d\n", var->ceil[0]);
+        printf("end in main %d\n", var->ceil[1]);
+        printf("end in main %d\n", var->ceil[2]);
+   
         return (0);
     }
     return (err_return_info( "Error argument nums wrong", var));

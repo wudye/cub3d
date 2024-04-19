@@ -5,6 +5,8 @@ int  parse_argv(char *str)
     int n;
 
     n = ft_strlen(str);
+    if (n == 4)
+    return (ft_putstr_fd("Error need full file name\n", 2), 1);
     str += (n - 4);
     if (ft_strncmp(str, ".cub", 5) == 0)
         return (0);

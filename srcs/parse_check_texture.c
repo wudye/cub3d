@@ -1,5 +1,6 @@
 #include "cub3D.h"
-static int  check_texture_color(char *st, char *compare, t_var *var)
+
+static int  check_texture_color(char *st, char *compare, t_var *var, int *color)
 {
     char    **str;
 
@@ -11,8 +12,16 @@ static int  check_texture_color(char *st, char *compare, t_var *var)
         free_double_ptr(str);
         return (1);
     }
+    if (ft_strncmp(str[0], compare, ft_strlen(str[0]) + 1) != 0)
+        return (ft_putstr_fd("Error wrong color name\n", 2), free_double_ptr(str), 1);
+    if (check_color_value(str[1], color) == -1)
+        return (free_double_ptr(str), error_malloc(var), 1);
+    if (check_color_value(str[1], color) == 1)
+        return (ft_putstr_fd("Error wrong color value 0-255\n", 2), free_double_ptr(str), 1);
+    free_double_ptr(str);
     return (0);
 }
+
 static int  check_load_texture(char *str, t_var *var, t_img *img)
 {
     int     size;
@@ -62,9 +71,9 @@ static int  check_texture_content(char *str, int i, t_var *var)
     if (i == 3)
         return (check_texture_directions(str, "EA", var, var->east));
     if (i == 4)
-        return (check_texture_color(str, "F", var, var->));
+        return (check_texture_color(str, "F", var, var->floor));
     if (i == 5)
-        return (check_texture_color(str, "C", var));
+        return (check_texture_color(str, "C", var, var->ceil));
     return (0);
 }
 

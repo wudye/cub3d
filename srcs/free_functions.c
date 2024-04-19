@@ -43,6 +43,8 @@ void    free_var(t_var *var)
     destroy_mlxlib(var);
     free_double_ptr(var->map);
     free_double_ptr(var->texture);
+    free(var->ceil);
+    free(var->floor);
     free(var);
 }
 

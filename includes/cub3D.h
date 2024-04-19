@@ -4,6 +4,7 @@
 # include <stddef.h>
 # include <stdint.h>
 # include <fcntl.h>
+# include <stdbool.h>
 
 # include "../libft/libft.h"
 # include "../minilibx_linux/mlx.h"
@@ -24,10 +25,13 @@ typedef struct s_var
     void    *win_init_ptr;
     char    **texture;
     char    **map;
+    int     floor[3];
+    int     ceil[3];
     t_img   *north;
     t_img   *sourth;
     t_img   *west;
     t_img   *east;
+    
 
     
 
@@ -41,6 +45,9 @@ int     parse_main(t_var *var, char **argv);
 int     parse_argv(char *str);
 int     double_ft_len(char **str);
 int     check_texture(t_var *var, char **texture);
+int     check_color_value(char *str, int *color);
+int     check_map_numbers(t_var *var, char **map);
+
 
 // free functions
 void    error_malloc(t_var *var);
