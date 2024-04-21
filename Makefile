@@ -14,6 +14,7 @@ S_DIR =	srcs
 SRCS =	srcs/main.c srcs/free_functions.c srcs/parse_main.c \
 		srcs/parse_utils.c srcs/parse_check_texture.c \
 		srcs/parse_check_texture_help.c srcs/check_map_numbers.c\
+		srcs/check_map_numbers_space.c srcs/check_map_numbers_wall.c \
 		srcs/get_next_line.c srcs/get_next_line_utils.c 
 		
 OBJS = $(addprefix $(O_DIR)/,$(SRCS:.c=.o))

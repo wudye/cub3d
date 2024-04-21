@@ -10,6 +10,8 @@
 # include "../minilibx_linux/mlx.h"
 # include "../srcs/get_next_line.h"
 
+# define player "NSEW"
+
 typedef struct s_img
 {
     void    *img_ptr;
@@ -27,6 +29,8 @@ typedef struct s_var
     char    **map;
     int     floor[3];
     int     ceil[3];
+    int     player_x;
+    int     player_y;
     t_img   *north;
     t_img   *sourth;
     t_img   *west;
@@ -47,6 +51,9 @@ int     double_ft_len(char **str);
 int     check_texture(t_var *var, char **texture);
 int     check_color_value(char *str, int *color);
 int     check_map_numbers(t_var *var, char **map);
+int     handle_spaces(char **map);
+int     handle_walls(t_var *var, char **map);
+
 
 
 // free functions

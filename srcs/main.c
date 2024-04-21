@@ -1,7 +1,5 @@
 #include "cub3D.h"
 
-
-
 static void zero_img_init(t_img *img)
 {
     img->img_addr =  NULL;
@@ -44,6 +42,8 @@ static t_var *init_var()
     res->win_init_ptr = NULL;
     res->map = NULL;
     res->texture = NULL;
+    res->player_x = 0;
+    res->player_y = 0;
     init_img(res);
     return (res);
 }
@@ -52,21 +52,21 @@ int main(int argc, char **argv)
 {
     t_var   *var;
 
-    var = init_var();
-    if (!var)
-        error_malloc(var);
+    var = NULL;
     if (argc == 2)
     {
+        if (parse_argv(argv[1]) == 1)
+            return (err_return_info("Error need a cub type map", var));
+        var = init_var();
+        if (!var)
+            error_malloc(var);
         if (parse_main(var, argv) == 1)
             return (1);
-        
         var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, 1900, 1600, "cub3D");
         if (!var->mlx_init_ptr)
             return (err_return_info("Error win_ptr fail", var));
+    
         printf("end in main %d\n", var->ceil[0]);
-        printf("end in main %d\n", var->ceil[1]);
-        printf("end in main %d\n", var->ceil[2]);
-   
         return (0);
     }
     return (err_return_info( "Error argument nums wrong", var));
