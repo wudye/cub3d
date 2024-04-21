@@ -48,6 +48,11 @@ static t_var *init_var()
     return (res);
 }
 
+
+// texture part should have an order provide two ways
+// second way do not care about order
+// should check player routines
+// eg. at the beginning player is surronded by walls valid or not 
 int main(int argc, char **argv)
 {
     t_var   *var;
@@ -62,11 +67,8 @@ int main(int argc, char **argv)
             error_malloc(var);
         if (parse_main(var, argv) == 1)
             return (1);
-        var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, 1900, 1600, "cub3D");
-        if (!var->mlx_init_ptr)
-            return (err_return_info("Error win_ptr fail", var));
-    
-        printf("end in main %d\n", var->ceil[0]);
+        if (render_mlx(var) == 1)
+            return (1);
         return (0);
     }
     return (err_return_info( "Error argument nums wrong", var));
