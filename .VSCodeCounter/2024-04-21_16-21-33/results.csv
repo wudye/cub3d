@@ -1,0 +1,15 @@
+"filename", "language", "C", "C++", "comment", "blank", "total"
+"/home/mwu/Desktop/cub3d/cub3d/srcs/check_map_numbers.c", "C", 69, 0, 9, 6, 84
+"/home/mwu/Desktop/cub3d/cub3d/srcs/check_map_numbers_space.c", "C", 41, 0, 1, 5, 47
+"/home/mwu/Desktop/cub3d/cub3d/srcs/check_map_numbers_wall.c", "C", 74, 0, 0, 5, 79
+"/home/mwu/Desktop/cub3d/cub3d/srcs/free_functions.c", "C", 58, 0, 0, 9, 67
+"/home/mwu/Desktop/cub3d/cub3d/srcs/get_next_line.c", "C", 94, 0, 25, 16, 135
+"/home/mwu/Desktop/cub3d/cub3d/srcs/get_next_line.h", "C++", 0, 20, 11, 6, 37
+"/home/mwu/Desktop/cub3d/cub3d/srcs/get_next_line_utils.c", "C", 66, 0, 11, 11, 88
+"/home/mwu/Desktop/cub3d/cub3d/srcs/main.c", "C", 64, 0, 4, 7, 75
+"/home/mwu/Desktop/cub3d/cub3d/srcs/parse_check_texture.c", "C", 84, 0, 36, 13, 133
+"/home/mwu/Desktop/cub3d/cub3d/srcs/parse_check_texture_help.c", "C", 37, 0, 0, 5, 42
+"/home/mwu/Desktop/cub3d/cub3d/srcs/parse_main.c", "C", 98, 0, 0, 10, 108
+"/home/mwu/Desktop/cub3d/cub3d/srcs/parse_utils.c", "C", 20, 0, 0, 4, 24
+"/home/mwu/Desktop/cub3d/cub3d/srcs/render_mlx_main.c", "C", 8, 0, 0, 2, 10
+"Total", "-", 713, 20, 97, 99, 929
