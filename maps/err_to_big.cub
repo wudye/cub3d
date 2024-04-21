@@ -1,10 +1,10 @@
-NO ./img/no_wall.xpm
-SO ./img/no_wall.xpm
-WE ./img/no_wall.xpm
-EA ./img/no_wall.xpm
+NO ./assets/n_flame_64x64.xpm
+SO ./assets/s_flame_64x64.xpm
+WE ./assets/w_flame_64x64.xpm
+EA ./assets/e_flame_64x64.xpm
 
-F 70,70,70
-C 38,38,38
+F    220,100,0
+C       225,30,0
 
         1111111111111111111111111
         1000000000110000000000001

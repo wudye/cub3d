@@ -11,6 +11,14 @@ static void zero_img_init(t_img *img)
 
 static void init_img(t_var *var)
 {
+    // var->north.img_ptr = NULL;
+    // var->north.img_addr = NULL;
+    // var->sourth.img_ptr = NULL;
+    // var->sourth.img_addr = NULL;
+    // var->west.img_ptr = NULL;
+    // var->west.img_addr = NULL;
+    // var->east.img_ptr = NULL;
+    // var->east.img_addr = NULL;
     var->east = malloc(sizeof(t_img));
     if (!var->east)
         error_malloc(var);
@@ -66,9 +74,10 @@ int main(int argc, char **argv)
         if (!var)
             error_malloc(var);
         if (parse_main(var, argv) == 1)
-            return (1);
+            return ( 1);
         if (render_mlx(var) == 1)
             return (1);
+        free_var(var);
         return (0);
     }
     return (err_return_info( "Error argument nums wrong", var));

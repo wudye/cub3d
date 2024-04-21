@@ -59,6 +59,8 @@ static int set_player_value(char **map, t_var *var)
                 var->player_y = j;
                 num += 1;
             }
+            else if (map[i][j] != '1' && map[i][j] != ' ' && map[i][j] != '0' && !ft_strchr(player, map[i][j]))
+                return (1);
             j++;
         }
         i++;
@@ -70,10 +72,10 @@ static int set_player_value(char **map, t_var *var)
 int handle_walls(t_var *var, char **map)
 {
     if (handle_first_end_line(map) == 1)
-        return (ft_putstr_fd("Error map walls wrong\n", 2), 1);
+        return (err_return_info("Error map walls wrong", var), 1);
     if (handle_mid_lines(map) == 1)
-        return (ft_putstr_fd("Error map walls wrong\n", 2), 1);
+        return (err_return_info("Error map walls wrong", var), 1);
     if (set_player_value(map, var) == 1)
-        return (ft_putstr_fd("Erorr player fail\n", 2), 1);
+        return (err_return_info("Erorr player fail", var), 1);
     return (0);   
 }

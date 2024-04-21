@@ -35,12 +35,29 @@ typedef struct s_var
     t_img   *sourth;
     t_img   *west;
     t_img   *east;
-    
-
-    
 
 }   t_var;
 
+
+// typedef struct s_var
+// {
+//     void    *mlx_init_ptr;
+//     void    *win_init_ptr;
+//     char    **texture;
+//     char    **map;
+//     int     floor[3];
+//     int     ceil[3];
+//     int     player_x;
+//     int     player_y;
+//     t_img   north;
+//     t_img   sourth;
+//     t_img   west;
+//     t_img   east;
+    
+
+    
+
+// }   t_var;
 
 int     main(int argc, char **arv);
 

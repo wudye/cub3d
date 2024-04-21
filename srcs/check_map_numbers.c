@@ -76,7 +76,7 @@ int check_map_numbers(t_var *var, char **map)
     }
     new_map(map, map_copy, maxi, var);
     if (handle_spaces(map_copy) == 1)
-        return (ft_putstr_fd("Error map spaces wrong\n", 2), free_double_ptr(map_copy), 1);
+        return (err_return_info("Error map spaces wrong", var), free_double_ptr(map_copy), 1);
     if (handle_walls(var, map) == 1)
         return (free_double_ptr(map_copy), 1);
     free_double_ptr(map_copy);

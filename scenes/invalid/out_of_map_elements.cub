@@ -1,10 +1,11 @@
-NO ./images/foo.xpm
-SO ./images/foo.xpm
-WE ./images/foo.xpm
-EA ./images/foo.xpm
+NO ./assets/n_flame_64x64.xpm
+SO ./assets/s_flame_64x64.xpm
+WE ./assets/w_flame_64x64.xpm
+EA ./assets/e_flame_64x64.xpm
 
-F 110,153,15 
-C 255,255,255
+F    220,100,0
+C       225,30,0
+
 
         1111111111111111111111111
    E    1000000000000000000000001

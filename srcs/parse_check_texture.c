@@ -13,11 +13,11 @@ static int  check_texture_color(char *st, char *compare, t_var *var, int *color)
         return (1);
     }
     if (ft_strncmp(str[0], compare, ft_strlen(str[0]) + 1) != 0)
-        return (ft_putstr_fd("Error wrong color name\n", 2), free_double_ptr(str), 1);
+        return (err_return_info("Error wrong color name", var), free_double_ptr(str), 1);
     if (check_color_value(str[1], color) == -1)
         return (free_double_ptr(str), error_malloc(var), 1);
     if (check_color_value(str[1], color) == 1)
-        return (ft_putstr_fd("Error wrong color value 0-255\n", 2), free_double_ptr(str), 1);
+        return (err_return_info("Error wrong color value 0-255",var), free_double_ptr(str), 1);
     free_double_ptr(str);
     return (0);
 }
@@ -53,7 +53,7 @@ static int  check_texture_directions(char *st, char *compare, t_var *var, t_img 
         return (ft_putstr_fd("Error wrong direction\n", 2), free_double_ptr(str), 1);
 
     if (check_load_texture(str[1], var, vimg) == 1)
-            return (ft_putstr_fd("Error load wrong direction\n", 2), free_double_ptr(str), 1);
+            return ( free_var(var), free_double_ptr(str), 1);
     // *vimg = img;
     free_double_ptr(str);
     return (0);
@@ -114,7 +114,7 @@ static int  check_texture_content(char *str, t_var *var)
         return (free_double_ptr(temp), check_texture_color(str, "F", var, var->floor));
     else if (ft_strncmp(temp[0], "C", 2) == 0)
         return (free_double_ptr(temp), check_texture_color(str, "C", var, var->ceil));
-    return (free_double_ptr(temp), 1);
+    return (free_double_ptr(temp), err_return_info("Error in texture", var));
 }
 int check_texture(t_var *var, char **texture)
 {
@@ -124,7 +124,7 @@ int check_texture(t_var *var, char **texture)
     while (texture[i])
     {
         if (check_texture_content(texture[i], var) == 1)
-            return (err_return_info("Error texture format wrong", var));
+            return (1);
         i++;
     }
     return (0);

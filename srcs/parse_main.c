@@ -56,7 +56,7 @@ static void set_data_value_helper(int fd, char **str, int len, t_var *var)
     str[i] = 0;
 }
 
-static void set_data_value(int fd, t_var *var, int len)
+static int set_data_value(int fd, t_var *var, int len)
 {
     char    *temp;
 
@@ -64,6 +64,8 @@ static void set_data_value(int fd, t_var *var, int len)
     if (!var->texture)
         error_malloc(var);
     set_data_value_helper(fd, var->texture, 6, var);
+    if (len - 6 == 0)
+        return(err_return_info("Error no map", var));
     var->map = malloc(sizeof(char *) * (len - 6 + 1));
     if (!var->map)
         error_malloc(var);
@@ -75,6 +77,7 @@ static void set_data_value(int fd, t_var *var, int len)
             break;
         free(temp);
     }
+    return (0);
 }
 
 static int  open_map_file(char *filename, t_var *var)
@@ -90,7 +93,8 @@ static int  open_map_file(char *filename, t_var *var)
         return(err_return_info("Error empty map", var));
     close (fd);
     fd = open(filename, O_RDONLY);
-    set_data_value(fd, var, len);
+    if (set_data_value(fd, var, len) == 1)
+    return (close(fd), 1);
     close(fd);
     return (0);
 }
@@ -100,7 +104,7 @@ int    parse_main(t_var *var, char **argv)
     if (open_map_file(argv[1], var) == 1)
         return (1);
     if (check_texture(var, var->texture) == 1)
-        return (err_return_info("Error texture format wrong", var));
+        return (1);
     if (check_map_numbers(var, var->map) == 1)
         return (1);
     return (0);
