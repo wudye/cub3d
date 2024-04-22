@@ -21,9 +21,8 @@ int	err(char *s)
 
 int	main(int argc, char **argv)
 {
+(void)argv;
 	if (argc != 2)
 		return (err("Error: invalid nr of args\n"));
-	if (init_map(argv))
-		return (err("Error: init map failed\n"));
 	return (0);
 }

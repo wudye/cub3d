@@ -1,42 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cthaler <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 13:45:02 by cthaler           #+#    #+#             */
-/*   Updated: 2024/04/17 13:45:03 by cthaler          ###   ########.fr       */
+/*   Created: 2024/04/22 13:16:02 by cthaler           #+#    #+#             */
+/*   Updated: 2024/04/22 13:16:04 by cthaler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../inc/cub3d.h"
 
-# include "libft/libft.h"
-# include <stdio.h>
-# include <fcntl.h>
-# include <math.h>
-
-typedef struct	s_ray
+/*
+	Converts degree to radian and returns it
+*/
+float	rad(float degree)
 {
-	float x;
-	float y;
-	float dist;
-	int angle;
-	
-}		t_ray;
-
-typedef struct	s_player
-{
-	float x;
-	float y;
-	int angle;
-	
-}		t_player;
-
-int	arr_len(char **arr);
-int	check_bounds(int x, int y, char **map);
-float	rad(float degree);
-
-#endif
+	return (degree * (M_PI / 180));
+}

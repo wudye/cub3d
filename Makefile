@@ -1,9 +1,15 @@
+#MLX
+INC=%%%%
+INCLIB=$(INC)/../lib
+LFLAGS = -L.. -lmlx -L$(INCLIB) -lXext -lX11 -lm
+
 CC     = cc
 CFLAGS = -Wall -Wextra -Werror -g
 NAME   = cub3d
 FILES  = main.c \
-		init_map.c \
-		read_mapfile.c \
+		init_rays.c \
+		math.c \
+		utils.c
 
 CFILES = $(addprefix src/, $(FILES))
 OFILES = $(addprefix obj/, $(FILES:.c=.o))
@@ -14,7 +20,7 @@ obj/%.o	: src/%.c $(DEPS)
 all: $(NAME)
 $(NAME): $(OFILES)
 	@make all -C ./inc/libft
-	@$(CC) -o $(NAME) $(OFILES) ./inc/libft/libft.a
+	@$(CC) -o $(NAME) $(OFILES) ./inc/libft/libft.a $(LFLAGS)
 
 clean:
 	@make clean -C ./inc/libft
