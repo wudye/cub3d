@@ -23,7 +23,7 @@ typedef struct	s_ray
 	float x;
 	float y;
 	float dist;
-	int angle;
+	float angle;
 	
 }		t_ray;
 
@@ -35,8 +35,12 @@ typedef struct	s_player
 	
 }		t_player;
 
+//utils.c
 int	arr_len(char **arr);
 int	check_bounds(int x, int y, char **map);
+//math.c
 float	rad(float degree);
+//init_rays.c
+void	calc_ray(t_player *p, t_ray *r, float angle, char **map);
 
 #endif

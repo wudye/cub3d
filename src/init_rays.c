@@ -53,19 +53,41 @@ float	calc_coordinate(t_ray *r, t_player *p, int horizontal)
 	return (i);
 }
 
+int	check_hor_map(t_ray *r, char **map)
+{
+	if ((r->angle > 270 || r->angle < 90)
+		&& !check_bounds(r->x + 1, r->y, map)
+		&& ((r->x == (int)r->x && map[(int)r->y][(int)r->x] == '1')
+		|| (r->x != (int)r->x && map[(int)r->y][(int)r->x + 1] == '1')))
+		return (1);
+	else if ((r->angle < 270 && r->angle > 90)
+		&& !check_bounds(r->x - 1, r->y, map)
+		&& ((r->x == (int)r->x && map[(int)r->y][(int)r->x] == '1')
+		|| (r->x != (int)r->x && map[(int)r->y][(int)r->x - 1] == '1')))
+		return (1);
+	return (0);
+}
+
+int	check_vert_map(t_ray *r, int x, int y, char **map)
+{
+	if (r->angle < 180 && !check_bounds(x, y + 1, map)
+		&& ((x == (int)x && map[(int)y][(int)x] == '1')
+		|| (x != (int)x && map[(int)y + 1][(int)x] == '1')))
+		return (1);
+	else if (r->angle > 180 && !check_bounds(x, y - 1, map)
+		&& ((x == (int)x && map[(int)y][(int)x] == '1')
+		|| (x != (int)x && map[(int)y - 1][(int)x] == '1')))
+		return (1);
+	return (0);
+}
+
 void	check_horizontal(t_player *p, t_ray *r, char **map)
 {
 	while (!check_bounds(r->x, r->y, map))
 	{
 		r->x = calc_coordinate(r, p, 1);
-		if ((r->angle > 270 || r->angle < 90)
-			&& !check_bounds(r->x + 1, r->y, map)
-			&& map[(int)r->y][(int)r->x + 1] == '1')
-			break ;
-		else if ((r->angle < 270 && r->angle > 90)
-			&& !check_bounds(r->x + 1, r->y, map)
-			&& map[(int)r->y][(int)r->x - 1] == '1')
-			break ;
+		if (check_hor_map(r, map))
+			break ;			
 		if (r->angle < 180)
 			r->y -= 1;
 		else
@@ -73,6 +95,7 @@ void	check_horizontal(t_player *p, t_ray *r, char **map)
 	}
 	if (!check_bounds(r->x, r->y, map))
 		r->dist = fabs(r->y - p->y) / cos(convert_angle(r, 1));
+	
 }
 
 int	check_vertical(t_player *p, t_ray *r, char **map)
@@ -86,11 +109,7 @@ int	check_vertical(t_player *p, t_ray *r, char **map)
 	while (!check_bounds(x, y, map))
 	{
 		y = calc_coordinate(r, p, 0);
-		if (r->angle < 180 && !check_bounds(x, y + 1, map)
-			&& map[(int)y + 1][(int)x] == '1')
-			break ;
-		else if (r->angle > 180 && !check_bounds(x, y - 1, map)
-			&& map[(int)y - 1][(int)x] == '1')
+		if (check_vert_map(r, x, y, map))
 			break ;
 		if (r->angle < 90 || r->angle > 270)
 			x -= 1;
@@ -113,4 +132,5 @@ void	calc_ray(t_player *p, t_ray *r, float angle, char **map)
 	r->dist = 0;
 	check_horizontal(p, r, map);
 	check_vertical(p, r, map);
+//printf("x_wall: %f y_wall: %f\n", r->x, r->y);
 }
