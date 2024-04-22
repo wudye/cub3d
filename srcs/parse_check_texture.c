@@ -60,6 +60,9 @@ static int  check_texture_directions(char *st, char *compare, t_var *var, t_img 
 }
 
 /*
+// this part should discuss 
+// if the order of texture is mandatory 
+// should keep this one
 static int  check_texture_content(char *str, int i, t_var *var)
 {
 

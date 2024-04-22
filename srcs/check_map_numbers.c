@@ -21,7 +21,7 @@ static void new_map_value(char **map, char **map_copy, int i, int maxi)
     }
     while (j < maxi)
     {
-        map_copy[i][j] = '1';
+        map_copy[i][j] = '2';
         j++;
     }
     map_copy[i][j] = '\0';
@@ -79,6 +79,11 @@ int check_map_numbers(t_var *var, char **map)
         return (err_return_info("Error map spaces wrong", var), free_double_ptr(map_copy), 1);
     if (handle_walls(var, map) == 1)
         return (free_double_ptr(map_copy), 1);
+
+    // if in the subject the map valid, this condition should remove
+    // 0 should be surrronded by 1 or not
+    if (handle_inner_zero(map_copy) == 1)
+        return (err_return_info("Error 0 not closed wall", var), free_double_ptr(map_copy), 1);
     free_double_ptr(map_copy);
     return (0);
 }

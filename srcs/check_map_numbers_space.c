@@ -44,3 +44,40 @@ int  handle_spaces(char **map)
     }
     return (0);
 }
+
+// this part has to discuss to remove or not
+
+static bool    dfs_zero(int i, int j, char **str)
+{
+    int row;
+    int col;
+
+    row = double_ft_len(str);
+    col = ft_strlen(str[0]);
+    if (str[i][j] == '2' && (i + 1 <= row  || i - 1 >= -1  || j + 1 <= col || j - 1 >= -1))
+        return (false);
+    return (true);
+}
+
+int handle_inner_zero(char **map_copy)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (map_copy[i])
+    {
+        j = 0;
+        while (map_copy[i][j])
+        {
+            if (map_copy[i][j] == '0')
+            {
+                if (!(dfs_zero(i + 1, j, map_copy) && dfs_zero(i - 1, j, map_copy) && dfs_zero(i, j + 1, map_copy) && dfs_zero(i, j - 1, map_copy)))
+                    return (1);
+            }
+            j++;
+        }
+        i++;
+    }
+    return (0);
+}

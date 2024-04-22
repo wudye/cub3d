@@ -69,6 +69,7 @@ static int set_player_value(char **map, t_var *var)
         return (1);
     return (0);
 }
+
 int handle_walls(t_var *var, char **map)
 {
     if (handle_first_end_line(map) == 1)

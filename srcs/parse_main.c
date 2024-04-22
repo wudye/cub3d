@@ -1,26 +1,64 @@
 #include "cub3D.h"
 
+static int  get_file_length1(int fd, int len)
+{
+    int     i;
+    char    *temp;
+    char    *temp1;
+    int     j;
+
+    j = 0;
+    i = 0;
+    while (1)
+    {
+        temp = get_next_line(fd);
+        if (temp == NULL)
+            break ;
+        temp1 = ft_strtrim(temp, " ");
+        free(temp);
+        temp = ft_strtrim(temp1, "\t");
+        free(temp1);
+        if (temp && ft_strncmp(temp, "\n", 2) == 0)
+        {
+            free(temp);
+            if (i > 6 && i < len)
+                j++;
+            continue;
+        }
+        i++;
+        free(temp);
+    }
+    if (i - 6 == 0)
+        return (-1);
+    if (j > 0)
+        return (-1);
+    return (i);
+}
+
 static int  get_file_length(int fd)
 {
     int     i;
     char    *temp;
+    char    *temp1;
 
     i = 0;
     while (1)
     {
         temp = get_next_line(fd);
+        if (temp == NULL)
+            break ;
+        temp1 = ft_strtrim(temp, " ");
+        free(temp);
+        temp = ft_strtrim(temp1, "\t");
+        free(temp1);
         if (temp && ft_strncmp(temp, "\n", 2) == 0)
-        {     
+        {
             free(temp);
             continue;
         }
-        if (temp == NULL)
-            break ;
         i++;
         free(temp);
     }
-    if (temp)
-        free(temp);
     return (i);
 }
 
@@ -43,8 +81,10 @@ static void set_data_value_helper(int fd, char **str, int len, t_var *var)
             break ;
         t2 = ft_strtrim(temp, " ");
         free(temp);
-        str[i] = ft_strtrim(t2, "\n");
+        temp = ft_strtrim(t2, "\t");
         free(t2);
+        str[i] = ft_strtrim(temp, "\n");
+        free(temp);
         if (!str[i])
         {
             error_malloc(var);
@@ -82,8 +122,9 @@ static int set_data_value(int fd, t_var *var, int len)
 
 static int  open_map_file(char *filename, t_var *var)
 {
-    int     fd;
-    int     len;
+    int fd;
+    int len;
+    int k;
 
     fd = open(filename, O_RDONLY);
     if (fd == -1)
@@ -93,10 +134,16 @@ static int  open_map_file(char *filename, t_var *var)
         return(err_return_info("Error empty map", var));
     close (fd);
     fd = open(filename, O_RDONLY);
+    if (fd == -1)
+        return(err_return_info("Error can not open the map", var));
+    k = get_file_length1(fd, len);
+    if (k == -1)
+        return(err_return_info("Error map has empty line", var));
+    close (fd);
+    fd = open(filename, O_RDONLY);
     if (set_data_value(fd, var, len) == 1)
-    return (close(fd), 1);
-    close(fd);
-    return (0);
+        return (close(fd), 1);
+    return (close(fd), 0);
 }
 
 int    parse_main(t_var *var, char **argv)

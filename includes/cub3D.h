@@ -70,6 +70,7 @@ int     check_color_value(char *str, int *color);
 int     check_map_numbers(t_var *var, char **map);
 int     handle_spaces(char **map);
 int     handle_walls(t_var *var, char **map);
+int     handle_inner_zero(char **map);
 
 // render
 int     render_mlx(t_var *var);
