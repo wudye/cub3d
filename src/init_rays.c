@@ -28,7 +28,7 @@ float	convert_angle(t_ray *r, int horizontal)
 		else if (r->angle > 270)
 			return (rad(fabs(r->angle - 360.0)));
 	}
-	return (r->angle);
+	return (rad(r->angle));
 }
 
 float	calc_coordinate(t_ray *r, t_player *p, int horizontal, int x)
@@ -46,9 +46,9 @@ float	calc_coordinate(t_ray *r, t_player *p, int horizontal, int x)
 	else
 	{
 		if (r->angle < 180)
-			i = p->x - tan(convert_angle(r, 1)) * fabs(x - p->x);
+			i = p->y - tan(convert_angle(r, 0)) * fabs(x - p->x);
 		else
-			i = p->x + tan(convert_angle(r, 1)) * fabs(x - p->x);
+			i = p->y + tan(convert_angle(r, 0)) * fabs(x - p->x);
 	}
 	return (i);
 }
@@ -68,12 +68,13 @@ int	check_hor_map(t_ray *r, char **map)
 	return (0);
 }
 
-int	check_vert_map(t_ray *r, int x, int y, char **map)
+int	check_vert_map(t_ray *r, float x, float y, char **map)
 {
 	if (r->angle < 180 && !check_bounds(x, y + 1, map)
 		&& ((y == (int)y && map[(int)y][(int)x] == '1')
 		|| (y != (int)y && map[(int)y + 1][(int)x] == '1')))
 		return (1);
+
 	else if (r->angle > 180 && !check_bounds(x, y - 1, map)
 		&& ((y == (int)y && map[(int)y][(int)x] == '1')
 		|| (y != (int)y && map[(int)y - 1][(int)x] == '1')))
@@ -95,7 +96,6 @@ void	check_horizontal(t_player *p, t_ray *r, char **map)
 	}
 	if (!check_bounds(r->x, r->y, map))
 		r->dist = fabs(r->y - p->y) / cos(convert_angle(r, 1));
-	
 }
 
 int	check_vertical(t_player *p, t_ray *r, char **map)
@@ -116,7 +116,6 @@ int	check_vertical(t_player *p, t_ray *r, char **map)
 		else
 			x += 1;
 	}
-printf("x_wall: %f y_wall: %f\n", x, y);
 	dist = fabs(x - p->x) / cos(convert_angle(r, 0));
 	if (!check_bounds(x, y, map) && dist && (dist < r->dist || !r->dist))
 		return (r->x = x, r->y = y, r->dist = dist, 0);
@@ -133,5 +132,4 @@ void	calc_ray(t_player *p, t_ray *r, float angle, char **map)
 	r->dist = 0;
 	check_horizontal(p, r, map);
 	check_vertical(p, r, map);
-//printf("x_wall: %f y_wall: %f\n", r->x, r->y);
 }
