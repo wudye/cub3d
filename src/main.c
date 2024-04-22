@@ -53,8 +53,9 @@ int	main(int argc, char **argv)
 	p.y = 8;
 	p.angle = 90;
 	
-	float offset = -45;
+	float offset = -50;
 	calc_ray(&p, &r, p.angle + offset, map);
+	//calc_ray(&p, &r, 31, map);
 	
 	printf("Angle: %f x_wall: %f y_wall: %f dist: %f\n",
 		p.angle + offset, r.x, r.y, r.dist);
