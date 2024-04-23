@@ -45,10 +45,12 @@ $(NAME): $(OFILES)
 
 clean:
 	make clean -C $(LIB_DIR)
+	make clean -C $(I_MLX)
 	$(RM) $(OFILES)
 
 fclean:	clean
 	make fclean -C $(LIB_DIR)
+
 	$(RM) $(NAME)
 
 re: fclean all

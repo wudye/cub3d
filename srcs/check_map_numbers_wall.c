@@ -62,14 +62,14 @@ static int	set_player_value(char **map, t_var *var, int i, int num)
 		j = 0;
 		while (map[i][j])
 		{
-			if (ft_strchr(player, map[i][j]))
+			if (ft_strchr(PLAYER, map[i][j]))
 			{
 				var->player_x = i;
 				var->player_y = j;
 				num += 1;
 			}
 			else if (map[i][j] != '1' && map[i][j] != ' ' && map[i][j] != '0' \
-							&& !ft_strchr(player, map[i][j]))
+							&& !ft_strchr(PLAYER, map[i][j]))
 				return (1);
 			j++;
 		}
