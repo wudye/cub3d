@@ -6,55 +6,85 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:11:02 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/22 16:28:05 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/25 16:11:29 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-static void	new_map_value(char **map, char **map_copy, int i, int maxi)
+static void equal_value_set(int j, char *mapi, int maxi)
 {
-	int	j;
+    int valid_len;
 
-	j = 0;
-	while (map[i][j])
-	{
-		map_copy[i][j] = map[i][j];
-		j++;
-	}
-	while (j < maxi)
-	{
-		map_copy[i][j] = '2';
-		j++;
-	}
-	map_copy[i][j] = '\0';
+    valid_len = 0;
+    j = 0;
+    while (mapi[j])
+    {
+        if (mapi[j] == '1' || mapi[j] == '0' || ft_strchr(PLAYER, mapi[j]))
+            valid_len++;
+        j++;  
+    }
+    if (valid_len == j)
+        return ;
+    else
+    {
+        j = 0;
+        while (mapi[j] && (mapi[j] == '\t' || mapi[j] == ' '))
+        {
+            mapi[j] = '1';
+            j++;
+        }
+        while (valid_len < maxi)
+        {
+            mapi[valid_len] = '1';
+            valid_len++;
+        }
+    }
 }
 
-static void	new_map(char **map, char **map_copy, int maxi, t_var *var)
+static void no_equal_set(int maxi, char *mapi, char *temp)
+{
+    int l;
+
+    l = 0;
+    while (mapi[l])
+    {
+        temp[l] = mapi[l];
+        l++;
+    }
+    while (l < maxi)
+    {
+        temp[l] = ' ';
+        l++;
+    }
+    temp[l] = '\0';
+    equal_value_set(l, temp, maxi);
+}
+
+
+static void	new_map(char **map, int maxi, t_var *var)
 {
 	int	i;
 	int	len;
+    char    *temp;
 
 	i = 0;
 	while (map[i])
 	{
 		len = ft_strlen(map[i]);
-		if (i == maxi)
-		{
-			map_copy[i] = ft_strdup(map[i]);
-			if (!map_copy[i])
-				return (free_double_ptr(map_copy), error_malloc(var));
-		}
-		else
-		{
-			map_copy[i] = malloc(sizeof(char) * (maxi + 1));
-			if (!map_copy[i])
-				return (free_double_ptr(map_copy), error_malloc(var));
-			new_map_value(map, map_copy, i, maxi);
-		}
-		i++;
+		if (len == maxi)
+            equal_value_set(len, map[i], maxi);
+        else
+        {
+            temp = malloc(sizeof(char) * (maxi + 1));
+            if (!temp)
+                error_malloc(var);
+            no_equal_set(maxi, map[i], temp);
+            free(map[i]);
+            map[i] = temp;
+        }
+        i++;
 	}
-	map_copy[i] = 0;
 }
 
 static int	check_helper(char **map, int len)
@@ -74,26 +104,29 @@ static int	check_helper(char **map, int len)
 	return (maxi);
 }
 
+
+
+// map parse about spaces
+// if the beginning and end are spaces(only space and tab)
+// replace it by 1
+// others stay
+
 int	check_map_numbers(t_var *var, char **map)
 {
-	char	**map_copy;
-	int		maxi;
-	int		len;
 
-	len = double_ft_len(map);
-	map_copy = malloc(sizeof(char *) * (len + 1));
-	if (!map_copy)
-		error_malloc(var);
+	int		len;
+    int     maxi;
+    
+    if (check_map_value(var, map) == false)
+        return (1);
+    len = double_ft_len(map);
 	maxi = check_helper(map, len);
-	new_map(map, map_copy, maxi, var);
-	if (handle_spaces(map_copy, var) == 1)
-		return (free_double_ptr(map_copy), 1);
-	if (handle_walls(var, map) == 1)
-		return (free_double_ptr(map_copy), 1);
-// if in the subject the map valid, this condition should remove
-// 0 should be surrronded by 1 or not
-	if (handle_inner_zero(map_copy, var) == 1)
-		return (free_double_ptr(map_copy), 1);
-	free_double_ptr(map_copy);
+	new_map(map,  maxi, var);
+	if (handle_spaces(map, var) == 1)
+		return (1);
+	// if (handle_walls(var, map) == 1)
+	// 	return ( 1);
+	// if (handle_inner_zero(map, var) == 1)
+	// 	return (1);
 	return (0);
 }

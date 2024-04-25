@@ -26,20 +26,48 @@ static int	get_file_length(int fd)
 			break ;
 		temp1 = ft_strtrim(temp, " ");
 		free(temp);
-		temp = ft_strtrim(temp1, "\t");
-		free(temp1);
-		if (temp && ft_strncmp(temp, "\n", 2) == 0)
+		if (temp1 && ft_strncmp(temp1, "\n", 2) == 0)
 		{
-			free(temp);
+			free(temp1);
 			continue ;
 		}
 		i++;
-		free(temp);
+		free(temp1);
 	}
 	return (i);
 }
+static void	set_value_texture(int fd, char **str, int len, t_var *var)
+{
+	char	*temp;
+	int		i;
+    char    *temp1;
 
-static void	set_data_value_helper(int fd, char **str, int len, t_var *var)
+	i = 0;
+	while (1)
+	{
+		temp = get_next_line(fd);
+		if (temp == NULL)
+			break ;
+        temp1 = ft_strtrim(temp, " ");
+		free(temp);
+		if (temp1 && ft_strncmp(temp1, "\n", 2) == 0)
+		{
+			free(temp1);
+			continue ;
+		}
+        str[i] = ft_strtrim(temp1, "\n");
+        free(temp1);
+		if (!str[i])
+			error_malloc(var);
+		i++;
+        if (i == len)
+            break ;
+
+	}
+	str[i] = 0;
+}
+
+static void	set_value_map(int fd, char **str, int len, t_var *var)
 {
 	char	*temp;
 	int		i;
@@ -48,19 +76,20 @@ static void	set_data_value_helper(int fd, char **str, int len, t_var *var)
 	while (1)
 	{
 		temp = get_next_line(fd);
+		if (temp == NULL)
+			break ;
 		if (temp && ft_strncmp(temp, "\n", 2) == 0)
 		{
 			free(temp);
 			continue ;
 		}
-		if (temp == NULL)
-			break ;
-		exchange_helper(temp, str, i);
+        str[i] = ft_strtrim(temp, "\n");
+        free(temp);
 		if (!str[i])
 			error_malloc(var);
 		i++;
-		if (i == len)
-			break ;
+        if (i == len)
+		    break ;
 	}
 	str[i] = 0;
 }
@@ -72,13 +101,13 @@ static int	set_data_value(int fd, t_var *var, int len)
 	var->texture = malloc(sizeof(char *) * 7);
 	if (!var->texture)
 		error_malloc(var);
-	set_data_value_helper(fd, var->texture, 6, var);
+	set_value_texture(fd, var->texture, 6, var);
 	if (len - 6 == 0)
 		return (err_return_info("Error no map", var));
 	var->map = malloc(sizeof(char *) * (len - 6 + 1));
 	if (!var->map)
 		error_malloc(var);
-	set_data_value_helper(fd, var->map, len - 6, var);
+	set_value_map(fd, var->map, len - 6, var);
 	while (1)
 	{
 		temp = get_next_line(fd);

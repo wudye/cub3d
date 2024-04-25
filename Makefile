@@ -11,7 +11,7 @@ FILES  = main.c free_functions.c parse_main.c \
 		parse_utils.c parse_check_texture.c \
 		parse_check_texture_help.c check_map_numbers.c\
 		check_map_numbers_space.c check_map_numbers_wall.c \
-		render_mlx_main.c \
+		render_mlx_main.c check_map_value.c\
 		get_next_line.c get_next_line_utils.c \
 		init_rays.c \
 		init_rays2.c \

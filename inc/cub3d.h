@@ -125,6 +125,7 @@ int		handle_walls(t_var *var, char **map);
 int		handle_inner_zero(char **map, t_var *var);
 int		get_file_length1(int fd, int len);
 void	exchange_helper(char *temp, char **str, int i);
+bool    check_map_value(t_var *var, char **map);
 // render
 int		render_mlx(t_var *var);
 // free functions
