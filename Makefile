@@ -9,6 +9,9 @@ NAME   = cub3d
 FILES  = main.c \
 		init_rays.c \
 		math.c \
+		render.c \
+		render_utils.c \
+		movement.c \
 		utils.c
 
 CFILES = $(addprefix src/, $(FILES))

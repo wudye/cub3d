@@ -19,6 +19,42 @@ int	err(char *s)
 	return (1);
 }
 
+int	close_window(t_cube *c)
+{
+(void)c;
+	//include free function
+	exit(0);
+	return (0);
+}
+
+void	player_move(t_cube *c)
+{
+	c->key_press = 1;
+	//c->p.angle++;
+	//if (c->p.angle == 360)
+	//	c->p.angle = 0;
+}
+
+int	key_handler(int key, void *p)
+{
+(void)p;
+	if (key == 0xFF1B)
+		//include free function
+		exit(0);
+		//free_all(p, EXIT_SUCCESS);
+	/*
+	if (key == 'w')
+		player_move(p, 0, -1);
+	if (key == 's')
+		player_move(p, 0, 1);
+	*/
+	if (key == 'd')
+		player_move(p);
+	//if (key == 'd')
+
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 (void)argv;
@@ -26,6 +62,12 @@ int	main(int argc, char **argv)
 		return (err("Error: invalid nr of args\n"));
 	//Test calc_ray function, delete later
 	//****************************************
+	t_img1 img;
+	t_cube	cube;
+	
+	void *mlx_ptr = mlx_init();
+	void *win_ptr = mlx_new_window(mlx_ptr, IMG_W, IMG_H, "cub3d");
+	
 	char **map = malloc(sizeof(map) * 11);
 	int i = 0;
 	int j = 0;
@@ -46,21 +88,35 @@ int	main(int argc, char **argv)
 	}
 	map[i] = 0;
 	
-	t_ray	r;
-	t_player	p;
+	//init img struct*****************************************
+	//img.floor_rgb = create_trgb(0, 0, 0, 0);
+	//img.ceiling_rgb = create_trgb(0, 255, 255, 255);
+	//img.ptr = mlx_new_image(mlx_ptr, IMG_W, IMG_H);
+	//img.addr = (int *)mlx_get_data_addr(img.ptr, &img.bitsinpixel,
+	//			&img.line_bytes, &img.endian);
+	//********************************************************
 	
-	p.x = 8;
-	p.y = 8;
-	p.angle = 90;
+	//change map test***************
+	map[5][5] = '1';
+	map[5][6] = '1';
+	map[4][5] = '1';
+	map[4][6] = '1';
+	//******************************
 	
-	float offset = -50;
-	calc_ray(&p, &r, p.angle + offset, map);
-	//calc_ray(&p, &r, 31, map);
+	cube.img = &img;
+	cube.win_ptr = win_ptr;
+	cube.mlx_ptr = mlx_ptr;
+	cube.floor_rgb = create_trgb(0, 0, 0, 0);
+	cube.ceiling_rgb = create_trgb(0, 255, 255, 255);
+	cube.map = map;
+	cube.key_press = 0;
 	
-	printf("Angle: %f x_wall: %f y_wall: %f dist: %f\n",
-		p.angle + offset, r.x, r.y, r.dist);
+	cube.p.x = 7;
+	cube.p.y = 7;
+	cube.p.angle = 45;
+	
 	//for testing: print map
-	/*
+	
 	i = 0;
 	j = 0;
 	while (i < 10)
@@ -74,7 +130,16 @@ int	main(int argc, char **argv)
 		printf("\n");
 		i++;
 	}
-	*/
+	mlx_hook(cube.win_ptr, 17, 0, close_window, &cube);
+	//mlx_key_hook(cube.win_ptr, key_handler, &cube);
+	
+	mlx_hook(win_ptr, 2, 1L << 0, key_press, &cube);
+	//mlx_hook(win_ptr, 2, 1L << 1, key_release, &cube);
+	
+	//render_frame(&cube);
+	mlx_loop_hook(cube.mlx_ptr, render_frame, &cube);
+	mlx_loop(mlx_ptr);
+	
 	//****************************************
 	return (0);
 }
