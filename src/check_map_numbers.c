@@ -124,9 +124,9 @@ int	check_map_numbers(t_var *var, char **map)
 	new_map(map,  maxi, var);
 	if (handle_spaces(map, var) == 1)
 		return (1);
-	// if (handle_walls(var, map) == 1)
-	// 	return ( 1);
-	// if (handle_inner_zero(map, var) == 1)
-	// 	return (1);
+	if (handle_walls(var, map) == 1)
+		return ( 1);
+	if (handle_inner_zero(map, var) == 1)
+		return (1);
 	return (0);
 }
