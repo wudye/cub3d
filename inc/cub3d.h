@@ -29,22 +29,7 @@
 # define IMG_W	1200
 # define IMG_H	600
 /*
-typedef struct	s_ray
-{
-	float x;
-	float y;
-	float dist;
-	float angle;
-	
-}		t_ray;
 
-typedef struct	s_player
-{
-	float x;
-	float y;
-	int angle;
-	
-}		t_player;
 
 //change name later
 typedef struct	s_img1
@@ -76,10 +61,28 @@ typedef struct	s_cube
 }		t_cube;
 */
 
+typedef struct	s_ray
+{
+	float x;
+	float y;
+	float dist;
+	float angle;
+	
+}		t_ray;
+
+typedef struct	s_player
+{
+	float x;
+	float y;
+	int angle;
+	
+}		t_player;
+
+
 typedef struct s_img
 {
 	void	*img_ptr;
-	char	*img_addr;
+	int	*img_addr;
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
@@ -93,8 +96,15 @@ typedef struct s_var
 	char	**map;
 	int		floor[3];
 	int		ceil[3];
+	int		floor_rgb;
+	int		ceiling_rgb;
 	int		player_x;
 	int		player_y;
+	int		key_press;
+	float	angle;
+	t_ray	r;
+	t_player p;
+	t_img	*img;
 	t_img	*north;
 	t_img	*sourth;
 	t_img	*west;
@@ -124,18 +134,22 @@ int		err_return_info(char *str, t_var *var);
 void	free_double_ptr(char **str);
 
 
-// //utils.c
-// int	arr_len(char **arr);
-// int	check_bounds(int x, int y, char **map);
-// //math.c
-// float	rad(float degree);
-// //init_rays.c
-// void	calc_ray(t_player *p, t_ray *r, float angle, char **map);
-// //render_utils.c
-// int	create_trgb(int t, int r, int g, int b);
-// //render.c
-// int	render_frame(t_cube *c);
-// //movement.c
-// int	key_press(int key, void *p);
-// int	key_release(int key, void *p);
+//utils.c
+int	arr_len(char **arr);
+int	check_bounds(int x, int y, char **map);
+//math.c
+float	rad(float degree);
+//init_rays.c
+void	calc_ray(t_player *p, t_ray *r, float angle, char **map);
+//init_rays2.c
+int	check_hor_map(t_ray *r, char **map);
+int	check_vert_map(t_ray *r, float x, float y, char **map);
+//render_utils.c
+int	create_trgb(int t, int r, int g, int b);
+//render.c
+int	render_frame(t_var *c);
+//movement.c
+int	key_press(int key, void *p);
+ int	key_release(int key, void *p);
+ int	close_window(t_var *var);
 #endif

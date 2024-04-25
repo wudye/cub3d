@@ -53,6 +53,19 @@ static int	handle_first_end_line(char **map)
 	return (0);
 }
 
+static float	angle(char c)
+{
+	if (c == 'N')
+		return (90);
+	else if (c == 'S')
+		return (270);
+	else if (c == 'E')
+		return (180);
+	else if (c == 'W')
+		return (0);
+	return (0);
+}
+
 static int	set_player_value(char **map, t_var *var, int i, int num)
 {
 	int	j;
@@ -66,6 +79,8 @@ static int	set_player_value(char **map, t_var *var, int i, int num)
 			{
 				var->player_x = i;
 				var->player_y = j;
+				var->angle = angle(map[i][j]);
+				
 				num += 1;
 			}
 			else if (map[i][j] != '1' && map[i][j] != ' ' && map[i][j] != '0' \

@@ -41,6 +41,10 @@ static void	zero_img_init(t_img *img)
  */
 static void	init_img(t_var *var)
 {
+	var->img = malloc(sizeof(t_img));
+	if (!var->img)
+		error_malloc(var);
+	zero_img_init(var->img);
 	var->east = malloc(sizeof(t_img));
 	if (!var->east)
 		error_malloc(var);
