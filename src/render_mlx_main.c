@@ -14,6 +14,14 @@
 
 int	render_mlx(t_var *var)
 {
+    
+    int i = 0;
+
+    while (var->map[i])
+    {
+        printf("%s\n", var->map[i]);
+        i++;
+    }
 
 	var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, 1280, 800, "cub3D");
 	if (!var->mlx_init_ptr)
