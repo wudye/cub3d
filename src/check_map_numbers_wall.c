@@ -6,7 +6,7 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:41:55 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/22 18:18:57 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/25 14:32:48 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	set_player_value(char **map, t_var *var, int i, int num)
 			{
 				var->player_x = i;
 				var->player_y = j;
+				set_angle_value(var->angle, map[i][j]);
 				num += 1;
 			}
 			else if (map[i][j] != '1' && map[i][j] != ' ' && map[i][j] != '0' \

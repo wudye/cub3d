@@ -90,8 +90,6 @@ int	check_map_numbers(t_var *var, char **map)
 		return (free_double_ptr(map_copy), 1);
 	if (handle_walls(var, map) == 1)
 		return (free_double_ptr(map_copy), 1);
-// if in the subject the map valid, this condition should remove
-// 0 should be surrronded by 1 or not
 	if (handle_inner_zero(map_copy, var) == 1)
 		return (free_double_ptr(map_copy), 1);
 	free_double_ptr(map_copy);

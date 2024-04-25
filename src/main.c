@@ -6,7 +6,7 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:02:46 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/22 14:29:20 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/25 14:34:29 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static t_var	*init_var(void)
 	res->texture = NULL;
 	res->player_x = 0;
 	res->player_y = 0;
+	res->angle = 0;
 	init_img(res);
 	return (res);
 }
