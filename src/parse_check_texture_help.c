@@ -6,7 +6,7 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 18:38:40 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/22 18:41:07 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/26 12:40:20 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	check_color_value(char *str, int *color)
 	free_double_ptr(split_str);
 	return (0);
 }
+/* do i use it ?
  bool   is_space(char c)
  {
     if (c == '\r' || c == '\t' || c == '\v'
@@ -99,3 +100,4 @@ void	exchange_helper(char *temp, char **str, int i)
     }
 	free(t2);
 }
+*/

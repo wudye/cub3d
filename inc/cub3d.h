@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:34:10 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/23 11:38:49 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/26 12:23:19 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ int		handle_inner_zero(char **map, t_var *var);
 int		get_file_length1(int fd, int len);
 void	exchange_helper(char *temp, char **str, int i);
 bool    check_map_value(t_var *var, char **map);
+void    map_copy_help(char *str, char *str_copy, int maxi);
+void	set_value_texture(int fd, char **str, int len, t_var *var);
 // render
 int		render_mlx(t_var *var);
 // free functions

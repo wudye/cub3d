@@ -6,7 +6,7 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:30:19 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/22 16:10:27 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/26 12:44:27 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,6 @@ static int	get_file_length(int fd)
 	}
 	return (i);
 }
-static void	set_value_texture(int fd, char **str, int len, t_var *var)
-{
-	char	*temp;
-	int		i;
-    char    *temp1;
-
-	i = 0;
-	while (1)
-	{
-		temp = get_next_line(fd);
-		if (temp == NULL)
-			break ;
-        temp1 = ft_strtrim(temp, " ");
-		free(temp);
-		if (temp1 && ft_strncmp(temp1, "\n", 2) == 0)
-		{
-			free(temp1);
-			continue ;
-		}
-        str[i] = ft_strtrim(temp1, "\n");
-        free(temp1);
-		if (!str[i])
-			error_malloc(var);
-		i++;
-        if (i == len)
-            break ;
-
-	}
-	str[i] = 0;
-}
 
 static void	set_value_map(int fd, char **str, int len, t_var *var)
 {
@@ -83,13 +53,13 @@ static void	set_value_map(int fd, char **str, int len, t_var *var)
 			free(temp);
 			continue ;
 		}
-        str[i] = ft_strtrim(temp, "\n");
-        free(temp);
+		str[i] = ft_strtrim(temp, "\n");
+		free(temp);
 		if (!str[i])
 			error_malloc(var);
 		i++;
-        if (i == len)
-		    break ;
+		if (i == len)
+			break ;
 	}
 	str[i] = 0;
 }

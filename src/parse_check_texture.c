@@ -6,13 +6,13 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 18:26:49 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/25 16:18:06 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/26 12:39:14 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-static int	check_texture_color(char *st, char *compare, t_var *var, int *color)
+static int	ctc(char *st, char *compare, t_var *var, int *color)
 {
 	char	**str;
 
@@ -50,7 +50,7 @@ static int	check_load_texture(char *str, t_var *var, t_img *img)
 	return (0);
 }
 
-static int	check_texture_directions(char *st, char *compare, \
+static int	ctd(char *st, char *compare, \
 t_var *var, t_img *vimg)
 {
 	char	**str;
@@ -71,7 +71,7 @@ t_var *var, t_img *vimg)
 	free_double_ptr(str);
 	return (0);
 }
-
+/*
 static int  check_texture_content(char *str, int i, t_var *var)
 {
 	if (i == 0)
@@ -89,8 +89,8 @@ static int  check_texture_content(char *str, int i, t_var *var)
 	return (err_return_info("Error in texture", var));
 }
 
-/*
-// if there is no order
+*/
+
 static int	check_texture_content(char *str, t_var *var)
 {
 	char	**temp;
@@ -115,7 +115,7 @@ static int	check_texture_content(char *str, t_var *var)
 		return (free_double_ptr(temp), ctc(str, "C", var, var->ceil));
 	return (free_double_ptr(temp), err_return_info("Error in texture", var));
 }
-*/
+
 int	check_texture(t_var *var, char **texture)
 {
 	int	i;
@@ -123,7 +123,7 @@ int	check_texture(t_var *var, char **texture)
 	i = 0;
 	while (texture[i])
 	{
-		if (check_texture_content(texture[i], i, var) == 1)
+		if (check_texture_content(texture[i], var) == 1)
 			return (1);
 		i++;
 	}

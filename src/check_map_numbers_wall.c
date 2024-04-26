@@ -6,7 +6,7 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:41:55 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/25 16:12:07 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/26 12:28:26 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ static int	handle_mid_lines(char **map)
 	while (i < e)
 	{
 		len = ft_strlen(map[i]) - 1;
+		while (len > 0 && map[i][len] \
+						&& (map[i][len] == ' ' || map[i][len] == '\t'))
+			len--;
 		if (map[i][0] != '1' || map[i][len] != '1')
 			return (1);
 		i++;
@@ -105,7 +108,6 @@ int	handle_walls(t_var *var, char **map)
 		return (err_return_info("Error map walls wrong", var), 1);
 	if (handle_mid_lines(map) == 1)
 		return (err_return_info("Error map walls wrong", var), 1);
-
 	if (set_player_value(map, var, i, num) == 1)
 		return (err_return_info("Erorr player fail", var), 1);
 	return (0);

@@ -16,12 +16,12 @@ int	render_mlx(t_var *var)
 {
 	t_img	img;
 
-	// int i = 0;
-	// while (var->map[i])
-	// {
-	// 	printf("--%s--\n", var->map[i]);
-    //     i++;
-	// }
+	int i = 0;
+	while (var->map[i])
+	{
+		printf("--%s--\n", var->map[i]);
+        i++;
+	}
 	var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, IMG_W, IMG_H, "cub3D");
 	if (!var->mlx_init_ptr)
 		return (err_return_info("Error win_ptr fail", var));
