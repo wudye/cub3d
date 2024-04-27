@@ -6,7 +6,7 @@ LFLAGS = -L.. -lmlx -L$(INCLIB) -lXext -lX11 -lm
 
 CC     = cc
 CFLAGS = -Wall -Wextra -Werror -g
-NAME   = cub3d
+NAME   = cub3D
 FILES  = main.c free_functions.c parse_main.c \
 		parse_utils.c parse_check_texture.c \
 		parse_check_texture_help.c check_map_numbers.c\
