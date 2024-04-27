@@ -12,7 +12,7 @@
 
 #include "../inc/cub3d.h"
 
-void	create_floor(t_img1 *img, int width, int height)
+void	create_floor(t_var *c, t_img *img, int width, int height)
 {
 	int	w;
 	int	h;
@@ -24,9 +24,9 @@ void	create_floor(t_img1 *img, int width, int height)
 		while (w < width)
 		{
 			if ((h + 1) * 2 < height)
-				img->addr[h * width + w] = img->ceiling_rgb;
+				img->img_addr[h * width + w] = c->ceiling_rgb;
 			else
-				img->addr[h * width + w] = img->floor_rgb;
+				img->img_addr[h * width + w] = c->floor_rgb;
 			w++;
 		}
 		h++;
@@ -47,7 +47,7 @@ void	draw_pixels(t_img1 *img, int x, int h, int w)
 		x2 = 0;
 		while (x2 + x < IMG_W && x2 < w)
 		{
-			img->addr[y * IMG_W + x2 + x] = test_rgb;
+			img->img_addr[y * IMG_W + x2 + x] = test_rgb;
 			x2++;
 		}
 		test++;
@@ -55,38 +55,65 @@ void	draw_pixels(t_img1 *img, int x, int h, int w)
 	}
 }
 
-void	init_img(t_cube *c)
+void	init_img(t_var *c)
 {
-	c->img->floor_rgb = create_trgb(0, 0, 0, 0);
-	c->img->ceiling_rgb = create_trgb(0, 255, 255, 255);
-	c->img->ptr = mlx_new_image(c->mlx_ptr, IMG_W, IMG_H);
-	c->img->addr = (int *)mlx_get_data_addr(c->img->ptr, &c->img->bitsinpixel,
-				&c->img->line_bytes, &c->img->endian);
+	c->floor_rgb = create_trgb(0, c->floor[0], c->floor[1], c->floor[2]);
+	c->ceiling_rgb = create_trgb(0, c->ceil[0], c->ceil[1], c->ceil[2]);
+	c->img->img_ptr = mlx_new_image(c->mlx_init_ptr, IMG_W, IMG_H);
+	c->img->img_addr = (int *)mlx_get_data_addr(c->img->img_ptr,
+		&c->img->bits_per_pixel, &c->img->size_line, &c->img->endian);
 }
 
-float	new_angle(float angle)
+int	check_map(float x, float y, char **map)
 {
-	if (angle < 0)
-		return (fabs(angle - 360));
-	else if (angle < 135 && angle > 45)
-		return (fabs(90 - angle));
-	else if (angle > 135 && angle < 225)
-		return (fabs(angle - 180));
-	else if (angle > 225 && angle < 315)
-		return (fabs(angle - 270));
-	//else if (angle > 315)
-	//	return (fabs(360 - angle));
-	return (angle);
+	if (map[(int)y][(int)x] == '1')
+		return (1);
+	else if (x > (int)x && (check_bounds((int)x + 1, (int)y, map)
+		|| map[(int)y][(int)x + 1] == '1'))
+		return (1);
+	else if (y > (int)y && (check_bounds(x, y + 1, map)
+		|| map[(int)y + 1][(int)x] == '1'))
+		return (1);
+	else if (x > (int)x && y > (int)y && (check_bounds((int)x + 1, (int)y, map)
+		|| check_bounds((int)x, (int)y + 1, map)
+		|| map[(int)y + 1][(int)x + 1] == '1'))
+		return (1);
+	return (0);
+}
+void	move_player(t_var *c)
+{
+	float	x;
+	float	y;
+	//if (c->key_pos)
+	//{
+		x = c->p.x - (cos(rad(c->p.angle)) * c->key_pos * 0.05);
+		y = c->p.y - (sin(rad(c->p.angle)) * c->key_pos * 0.05);
+		if (!check_bounds(x, y, c->map) && !check_map(x, y, c->map))
+		{
+			if (x - 0.04 < (int)x)
+				c->p.x = (int)x;
+			else
+				c->p.x = x;
+			if (y - 0.04 < (int)y)
+				c->p.y = (int)y;
+			else
+				c->p.y = y;
+		printf("x: %f y: %f angle: %f pos: %d\n", x, y, c->p.angle, c->key_pos);
+		}
+	//}
+	c->p.angle += c->key_angle;
+	if (c->p.angle == 360)
+		c->p.angle = 0;
+	else if (c->p.angle < 0)
+		c->p.angle += 360;
 }
 
-int	render_frame(t_cube *c)
+int	render_frame(t_var *c)
 {
+	move_player(c);
 	init_img(c);
-	create_floor(c->img, IMG_W, IMG_H);
-	
-	//mlx_hook(c->win_ptr, 2, 1L << 0, key_press, c);
-	//mlx_hook(c->win_ptr, 2, 1L << 1, key_release, c);
-	
+	create_floor(c, c->img, IMG_W, IMG_H);
+
 	float offset = -30;
 	int draw_Dist = IMG_W / 60;
 	int x_start = 0;
@@ -99,19 +126,17 @@ int	render_frame(t_cube *c)
 		else if (angle >= 360)
 			angle -= 360;
 		//if (!offset)
-		//	printf("angle: %f\n", angle);
+	//printf("angle: %f\n", angle);
 		calc_ray(&c->p, &c->r, angle, c->map);
 	//printf("offset: %f\n", offset);
 		if (c->r.dist > 0)
 		{
-		//printf("dist: %f\n", c->r.dist);
+//if (c->test < 60 && ++c->test)
+	//printf("dist: %f x: %f y: %f angle: %f\n", c->r.dist, c->r.x, c->r.y, angle);
 		//printf("offset: %f\n", angle);
 		//printf("new angle: %f\n", new_angle(c->p.angle + offset));
-		//	if (angle && angle != 90 && angle != 180 && angle != 270 )
-		//		c->r.dist = c->r.dist
-		//			* fabs(cos(rad(new_angle(c->p.angle + offset))));
 		//printf("new dist: %f\n", c->r.dist);
-			//c->r.dist = c->r.dist * cos(rad(c->p.angle + offset));
+			c->r.dist = c->r.dist * cos(rad(fabs(offset)));
 			wallH = IMG_H / c->r.dist;
 			if (wallH > IMG_H)
 				wallH = IMG_H;
@@ -121,12 +146,11 @@ int	render_frame(t_cube *c)
 		x_start += draw_Dist;
 		offset++;
 	}
-	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img->ptr, 0, 0);
-	mlx_destroy_image(c->mlx_ptr, c->img->ptr);
-	if (c->key_press)
-		c->p.angle ++;
-	if (c->p.angle == 360)
-		c->p.angle = 0;
+		//if (c->test == 60 && ++c->test)
+		//	printf("p_x: %f p_y: %f\n", c->p.x, c->p.y);
+	mlx_put_image_to_window(c->mlx_init_ptr,
+		c->win_init_ptr, c->img->img_ptr, 0, 0);
+	mlx_destroy_image(c->mlx_init_ptr, c->img->img_ptr);
 	usleep(9000);
 	return (0);
 }

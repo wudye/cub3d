@@ -19,42 +19,6 @@ int	err(char *s)
 	return (1);
 }
 
-int	close_window(t_cube *c)
-{
-(void)c;
-	//include free function
-	exit(0);
-	return (0);
-}
-
-void	player_move(t_cube *c)
-{
-	c->key_press = 1;
-	//c->p.angle++;
-	//if (c->p.angle == 360)
-	//	c->p.angle = 0;
-}
-
-int	key_handler(int key, void *p)
-{
-(void)p;
-	if (key == 0xFF1B)
-		//include free function
-		exit(0);
-		//free_all(p, EXIT_SUCCESS);
-	/*
-	if (key == 'w')
-		player_move(p, 0, -1);
-	if (key == 's')
-		player_move(p, 0, 1);
-	*/
-	if (key == 'd')
-		player_move(p);
-	//if (key == 'd')
-
-	return (0);
-}
-
 int	main(int argc, char **argv)
 {
 (void)argv;
@@ -62,8 +26,8 @@ int	main(int argc, char **argv)
 		return (err("Error: invalid nr of args\n"));
 	//Test calc_ray function, delete later
 	//****************************************
-	t_img1 img;
-	t_cube	cube;
+	t_img img;
+	t_var	cube;
 	
 	void *mlx_ptr = mlx_init();
 	void *win_ptr = mlx_new_window(mlx_ptr, IMG_W, IMG_H, "cub3d");

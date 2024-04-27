@@ -8,11 +8,12 @@ CFLAGS = -Wall -Wextra -Werror -g
 NAME   = cub3d
 FILES  = main.c \
 		init_rays.c \
+		init_rays2.c \
 		math.c \
 		render.c \
 		render_utils.c \
 		movement.c \
-		utils.c
+		utils.c \
 
 CFILES = $(addprefix src/, $(FILES))
 OFILES = $(addprefix obj/, $(FILES:.c=.o))

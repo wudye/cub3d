@@ -12,32 +12,43 @@
 
 #include "../inc/cub3d.h"
 
-static void	change_player(t_cube *c, int press)
+int	close_window(t_var *var)
 {
-	if (press)
-	{
-		c->key_press = 1;
-		//c->p.angle++;
-		//if (c->p.angle == 360)
-		//	c->p.angle = 0;
-	}
-	else
-		c->key_press = 0;
+	free_var(var);
+	exit(0);
+	return (0);
+}
+
+static void	change_angle(t_var *c, int press)
+{
+	c->key_angle = press;
+}
+
+static void	change_pos(t_var *c, int press)
+{
+	c->key_pos = press;
+}
+
+int	key_release(int key, void *p)
+{
+	if (key == 'a' || key == 'd')
+		change_angle(p, 0);
+	if (key == 'w' || key == 's')
+		change_pos(p, 0);
+	return (0);
 }
 
 int	key_press(int key, void *p)
 {
 	if (key == 0xFF1B)
-		exit(0);
+		return (free_var(var), exit(0));
 	if (key == 'd')
-		change_player(p, 1);
+		change_angle(p, 1);
+	if (key == 'a')
+		change_angle(p, -1);
+	if (key == 'w')
+		change_pos(p, 1);
+	if (key == 's')
+		change_pos(p, -1);
 	return (0);
 }
-
-int	key_release(int key, void *p)
-{
-	if (key == 'd')
-		change_player(p, 0);
-	return (0);
-}
-

@@ -13,7 +13,7 @@
 #include "../inc/cub3d.h"
 
 /*
-	Converts degree to radian and returns it
+ * Converts degree to radian and returns it
 */
 float	rad(float degree)
 {

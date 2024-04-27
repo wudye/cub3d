@@ -23,9 +23,10 @@ int	arr_len(char **arr)
 	return (i);
 }
 
-int	check_bounds(int x, int y, char **map)
+int	check_bounds(float x, float y, char **map)
 {
-	if (x < 0 || y < 0 || x > (int)ft_strlen(map[0]) || y > arr_len(map))
+	if (x < 0 || y < 0 || y >= arr_len(map)
+		|| x >= (int)ft_strlen(map[(int)y]))
 		return (1);
 	return (0);
 }
