@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 /*
     seconde way
 static void equal_value_set(int j, char *mapi, int maxi)
@@ -185,7 +185,7 @@ static void	change_map_begin(char **map)
 		i++;
 	}
 }
-
+/*
 static void	set_map_last(t_var *var, char **map, char **map_copy)
 {
 	int	i;
@@ -206,7 +206,104 @@ static void	set_map_last(t_var *var, char **map, char **map_copy)
 	free_double_ptr(map);
 	var->map = map_copy;
 }
+*/
+static char **reset_map_value(char **map, t_var *var, int len)
+{
+    int i;
+    char **map_help;
 
+    i = 0;
+    map_help = malloc(sizeof(char *) * (len + 1));
+    if (!map_help)
+        error_malloc(var);
+    while (map[i])
+    {
+        map_help[i] = ft_strtrim(map[i], "\n");
+        if (!map_help[i])
+        {
+            free_double_ptr(map_help);
+            error_malloc(var);
+        }
+        i++;
+    }
+    map_help[i] = 0;
+    return (map_help);
+}
+
+static float	angle(char c)
+{
+	if (c == 'N')
+		return (90);
+	else if (c == 'S')
+		return (270);
+	else if (c == 'E')
+		return (180);
+	else if (c == 'W')
+		return (0);
+	return (0);
+}
+
+static int	set_player_value(char **map, t_var *var)
+{
+    int i;
+	int	j;
+    int num;
+
+    num = 0;
+    i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (ft_strchr(PLAYER, map[i][j]))
+			{
+				var->player_x = i;
+				var->player_y = j;
+                var->direction = map[i][j];
+				var->angle = angle(map[i][j]);
+				num += 1;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (num != 1)
+		return (1);
+	return (0);
+}
+
+int	check_map_numbers(t_var *var, char **map)
+{
+	int		len;
+	int		maxi;
+	char	**map_copy;
+    char    **map_help;
+
+	len = double_ft_len(map);
+    map_help = reset_map_value(map, var, len);
+	if (check_map_value(var, map_help) == false)
+		return (1);
+	map_copy = malloc(sizeof(char *) * (len + 1));
+	if (!map_copy)
+		error_malloc(var);
+	change_map_begin(map_help);
+	maxi = check_helper(map_help, len);
+	set_map_copy(map_help, map_copy, maxi, var);
+	if (handle_spaces(map_copy, var) == 1)
+		return (free_double_ptr(map_copy), free_double_ptr(map_help), 1);
+	if (handle_inner_zero(map_copy, var) == 1)
+		return (free_double_ptr(map_copy), free_double_ptr(map_help), 1);
+	if (handle_walls(var, map_help) == 1)
+		return (free_double_ptr(map_copy), free_double_ptr(map_help), 1);
+    if (set_player_value(map, var) == 1)
+		return (free_double_ptr(map_copy), free_double_ptr(map_help), err_return_info("Erorr player fail", var), 1);
+    free_double_ptr(map_copy);
+    free_double_ptr(map_help);
+	return (0);
+}
+
+/* this is original
 int	check_map_numbers(t_var *var, char **map)
 {
 	int		len;
@@ -231,3 +328,4 @@ int	check_map_numbers(t_var *var, char **map)
 	set_map_last(var, map, map_copy);
 	return (0);
 }
+*/

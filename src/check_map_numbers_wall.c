@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 static int	handle_mid_lines(char **map)
 {
@@ -55,7 +55,7 @@ static int	handle_first_end_line(char **map)
 	}
 	return (0);
 }
-
+/*
 static float	angle(char c)
 {
 	if (c == 'N')
@@ -110,5 +110,16 @@ int	handle_walls(t_var *var, char **map)
 		return (err_return_info("Error map walls wrong", var), 1);
 	if (set_player_value(map, var, i, num) == 1)
 		return (err_return_info("Erorr player fail", var), 1);
+	return (0);
+}
+*/
+
+int	handle_walls(t_var *var, char **map)
+{
+
+	if (handle_first_end_line(map) == 1)
+		return (err_return_info("Error map walls wrong", var), 1);
+	if (handle_mid_lines(map) == 1)
+		return (err_return_info("Error map walls wrong", var), 1);
 	return (0);
 }

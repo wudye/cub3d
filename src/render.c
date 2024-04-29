@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 void	create_floor(t_var *c, t_img *img, int width, int height)
 {

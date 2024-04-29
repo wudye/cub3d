@@ -24,6 +24,8 @@
 
 # include "libft/libft.h"
 # include "get_next_line.h"
+#include "my_try.h"
+
 
 # define PLAYER "NSEW"
 # define IMG_W	1200
@@ -101,6 +103,7 @@ typedef struct s_var
 	int		player_x;
 	int		player_y;
 	int		key_press;
+    char    direction;
 	float	angle;
 	t_ray	r;
 	t_player p;
@@ -155,4 +158,10 @@ int	render_frame(t_var *c);
 int	key_press(int key, void *p);
  int	key_release(int key, void *p);
  int	close_window(t_var *var);
+
+ // my try 
+int mouse_hook(int x, int y, t_var *var, t_camera *camera);
+ void init_camera(t_var *var, t_camera *camera);
+int	window_loop(t_var *this, t_camera *camera);
+
 #endif

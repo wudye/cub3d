@@ -6,7 +6,7 @@ LFLAGS = -L.. -lmlx -L$(INCLIB) -lXext -lX11 -lm
 
 CC     = cc
 CFLAGS = -Wall -Wextra -Werror -g
-NAME   = cub3d
+NAME   = cub3D
 FILES  = main.c free_functions.c parse_main.c \
 		parse_utils.c parse_check_texture.c \
 		parse_check_texture_help.c check_map_numbers.c\
@@ -20,11 +20,13 @@ FILES  = main.c free_functions.c parse_main.c \
 		render_utils.c \
 		movement.c \
 		utils.c \
+		my_try_mouse_hook.c \
+		my_try_put_map.c
 
 
 CFILES = $(addprefix src/, $(FILES))
 OFILES = $(addprefix obj/, $(FILES:.c=.o))
-DEPS   = inc/cub3d.h inc/libft/libft.h
+DEPS   = inc/cub3D.h inc/libft/libft.h
 obj/%.o	: src/%.c $(DEPS)
 	@mkdir -p obj
 	@$(CC) $(CFLAGS) -c $< -o $@

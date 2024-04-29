@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 static int	ctc(char *st, char *compare, t_var *var, int *color)
 {

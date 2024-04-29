@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 float	convert_angle(t_ray *r, int horizontal)
 {

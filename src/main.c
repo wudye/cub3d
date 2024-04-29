@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 int	err_return_info(char *str, t_var *var)
 {
@@ -104,7 +104,10 @@ int	main(int argc, char **argv)
 			return (1);
 		if (render_mlx(var) == 1)
 			return (1);
-		free_var(var);
+
+		// free_var(var);
+        //         printf("finished\n");
+
 		return (0);
 	}
 	return (err_return_info("Error argument nums wrong", var));

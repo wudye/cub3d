@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 static int	get_file_length(int fd)
 {
@@ -37,6 +37,34 @@ static int	get_file_length(int fd)
 	return (i);
 }
 
+// map each line with \n
+static void	set_value_map(int fd, char **str, int len, t_var *var)
+{
+	char	*temp;
+	int		i;
+
+	i = 0;
+	while (1)
+	{
+		temp = get_next_line(fd);
+		if (temp == NULL)
+			break ;
+		if (temp && ft_strncmp(temp, "\n", 2) == 0)
+		{
+			free(temp);
+			continue ;
+		}
+		str[i] = ft_strdup(temp);
+		free(temp);
+		if (!str[i])
+			error_malloc(var);
+		i++;
+		if (i == len)
+			break ;
+	}
+	str[i] = 0;
+}
+/* map each line without \n
 static void	set_value_map(int fd, char **str, int len, t_var *var)
 {
 	char	*temp;
@@ -63,6 +91,7 @@ static void	set_value_map(int fd, char **str, int len, t_var *var)
 	}
 	str[i] = 0;
 }
+*/
 
 static int	set_data_value(int fd, t_var *var, int len)
 {
