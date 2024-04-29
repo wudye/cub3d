@@ -12,32 +12,43 @@
 
 #include "../inc/cub3d.h"
 
-int	check_hor_map(t_ray *r, char **map)
+static int	check_map_pos(float x, float y, char **map)
 {
-	if ((r->angle > 270 || r->angle < 90)
-		&& !check_bounds(r->x + 1, r->y, map) && !check_bounds(r->x, r->y, map)
-		&& ((r->x == (int)r->x && map[(int)r->y][(int)r->x] == '1')
-		|| (r->x != (int)r->x && map[(int)r->y][(int)r->x + 1] == '1')))
-		return (1);
-	else if ((r->angle < 270 && r->angle > 90)
-		&& !check_bounds(r->x - 1, r->y, map) && !check_bounds(r->x, r->y, map)
-		&& ((r->x == (int)r->x && map[(int)r->y][(int)r->x] == '1')
-		|| (r->x != (int)r->x && map[(int)r->y][(int)r->x - 1] == '1')))
+	if (!check_bounds(x, y, map) && map[(int)y][(int)x] == '1')
 		return (1);
 	return (0);
 }
 
+int	check_hor_map(t_ray *r, char **map)
+{
+	if (r->angle < 90 && (!check_map_pos(r->x, r->y, map)
+		|| (r->y && check_map_pos(r->x, r->y - 1, map))))
+		return (0);
+	else if ((r->angle > 90 && r->angle < 180) && (!check_map_pos(r->x, r->y, map)
+		|| (r->y && check_map_pos(r->x, r->y - 1, map))))
+		return (0);
+	else if ((r->angle > 180 && r->angle < 270) && (!check_map_pos(r->x, r->y, map)
+		|| check_map_pos(r->x, r->y + 1, map)))
+		return (0);
+	else if (r->angle > 270 && (!check_map_pos(r->x, r->y, map)
+		|| check_map_pos(r->x, r->y + 1, map)))
+		return (0);
+	return (1);
+}
+
 int	check_vert_map(t_ray *r, float x, float y, char **map)
 {
-	if (r->angle < 180 && !check_bounds(x, y + 1, map)
-		&& !check_bounds(x, y, map)
-		&& ((y == (int)y && map[(int)y][(int)x] == '1')
-		|| (y != (int)y && map[(int)y + 1][(int)x] == '1')))
-		return (1);
-	else if (r->angle > 180 && !check_bounds(x, y - 1, map)
-		&& !check_bounds(x, y, map)
-		&& ((y == (int)y && map[(int)y][(int)x] == '1')
-		|| (y != (int)y && map[(int)y - 1][(int)x] == '1')))
-		return (1);
-	return (0);
+	if (r->angle < 90 && (!check_map_pos(x, y, map)
+		|| (x && check_map_pos(x - 1, y, map))))
+		return (0);
+	else if ((r->angle > 90 && r->angle < 180) && (!check_map_pos(x, y, map)
+		|| check_map_pos(x + 1, y, map)))
+		return (0);
+	else if ((r->angle > 180 && r->angle < 270) && (!check_map_pos(x, y, map)
+		|| check_map_pos(x + 1, y, map)))
+		return (0);
+	else if (r->angle > 270 && (!check_map_pos(x, y, map)
+		|| (x && check_map_pos(x - 1, y, map))))
+		return (0);
+	return (1);
 }

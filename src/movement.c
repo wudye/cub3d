@@ -41,7 +41,7 @@ int	key_release(int key, void *p)
 int	key_press(int key, void *p)
 {
 	if (key == 0xFF1B)
-		return (free_var(var), exit(0));
+		return (free_var(p), exit(0), 0);
 	if (key == 'd')
 		change_angle(p, 1);
 	if (key == 'a')

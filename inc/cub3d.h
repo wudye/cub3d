@@ -70,11 +70,11 @@ typedef struct s_var
 	float	angle;
 	t_ray	r;
 	t_player p;
-	t_img1	*img;
-	t_img1	*north;
-	t_img1	*sourth;
-	t_img1	*west;
-	t_img1	*east;
+	t_img	*img;
+	t_img	*north;
+	t_img	*sourth;
+	t_img	*west;
+	t_img	*east;
 }	t_var;
 
 //utils.c
@@ -91,9 +91,15 @@ int	check_vert_map(t_ray *r, float x, float y, char **map);
 int	create_trgb(int t, int r, int g, int b);
 //render.c
 int	render_frame(t_var *c);
+//render2.c
+void	create_floor(t_var *c, t_img *img, int width, int height);
+void	init_main_img(t_var *c);
+float	angle_overflow(float angle);
 //movement.c
 int	key_press(int key, void *p);
  int	key_release(int key, void *p);
  int	close_window(t_var *var);
+//movement2.c
+void	move_player(t_var *c);
 
 #endif
