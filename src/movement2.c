@@ -37,13 +37,14 @@ void	move_player(t_var *c)
 	y = c->p.y - (sin(rad(c->p.angle)) * c->key_pos * 0.05);
 	if (!check_bounds(x, y, c->map) && !check_map(x, y, c->map))
 	{
-		if (x - 0.04 < (int)x)
-			c->p.x = (int)x;
-		else
+		//change later so player can move through small paths
+		//if (x - 0.04 < (int)x)
+		//	c->p.x = (int)x;
+		//else
 			c->p.x = x;
-		if (y - 0.04 < (int)y)
-			c->p.y = (int)y;
-		else
+		//if (y - 0.04 < (int)y)
+		//	c->p.y = (int)y;
+		//else
 			c->p.y = y;
 printf("x: %f y: %f angle: %f pos: %d\n", x, y, c->p.angle, c->key_pos);
 	}
