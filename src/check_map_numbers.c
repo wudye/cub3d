@@ -259,8 +259,8 @@ static int	set_player_value(char **map, t_var *var)
 		{
 			if (ft_strchr(PLAYER, map[i][j]))
 			{
-				var->player_x = i;
-				var->player_y = j;
+				var->player_x = j;
+				var->player_y = i;
 				var->angle = angle(map[i][j]);
 				num += 1;
 			}

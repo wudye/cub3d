@@ -46,7 +46,7 @@ void	move_player(t_var *c)
 		//	c->p.y = (int)y;
 		//else
 			c->p.y = y;
-printf("x: %f y: %f angle: %f pos: %d\n", x, y, c->p.angle, c->key_pos);
+//printf("x: %f y: %f angle: %f pos: %d\n", x, y, c->p.angle, c->key_pos);
 	}
 	c->p.angle += c->key_angle;
 	if (c->p.angle == 360)
