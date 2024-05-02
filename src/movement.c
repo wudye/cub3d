@@ -31,9 +31,9 @@ static void	change_pos(t_var *c, int press)
 
 int	key_release(int key, void *p)
 {
-	if (key == 'a' || key == 'd')
+	if (key == 'a' || key == 'd' || key == 65361 || key == 65363)
 		change_angle(p, 0);
-	if (key == 'w' || key == 's')
+	if (key == 'w' || key == 's' || key == 65362 || key == 65364)
 		change_pos(p, 0);
 	return (0);
 }
@@ -42,13 +42,13 @@ int	key_press(int key, void *p)
 {
 	if (key == 0xFF1B)
 		return (free_var(p), exit(0), 0);
-	if (key == 'd')
+	if (key == 'd' || key == 65363)
 		change_angle(p, 1);
-	if (key == 'a')
+	if (key == 'a' || key == 65361)
 		change_angle(p, -1);
-	if (key == 'w')
+	if (key == 'w' || key == 65362)
 		change_pos(p, 1);
-	if (key == 's')
+	if (key == 's' || key == 65364)
 		change_pos(p, -1);
 	return (0);
 }
