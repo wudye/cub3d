@@ -102,6 +102,7 @@ void	calc_ray(t_player *p, t_ray *r, float angle, char **map)
 	r->x = (int)p->x;
 	r->y = (int)p->y;
 	r->dist = 0;
+	r->p = p;
 	check_horizontal(p, r, map);
 	check_vertical(p, r, map);
 }
