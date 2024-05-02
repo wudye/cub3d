@@ -17,7 +17,7 @@ FILES  = main.c \
 
 CFILES = $(addprefix src/, $(FILES))
 OFILES = $(addprefix obj/, $(FILES:.c=.o))
-DEPS   = inc/cub3d.h inc/libft/libft.h
+DEPS   = inc/cub3D.h inc/libft/libft.h
 obj/%.o	: src/%.c $(DEPS)
 	@mkdir -p obj
 	@$(CC) $(CFLAGS) -c $< -o $@
