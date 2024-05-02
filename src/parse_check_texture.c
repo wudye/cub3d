@@ -6,11 +6,11 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 18:26:49 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/22 18:37:57 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/26 12:39:14 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 static int	ctc(char *st, char *compare, t_var *var, int *color)
 {
@@ -50,7 +50,8 @@ static int	check_load_texture(char *str, t_var *var, t_img *img)
 	return (0);
 }
 
-static int	ctd(char *st, char *compare, t_var *var, t_img *vimg)
+static int	ctd(char *st, char *compare, \
+t_var *var, t_img *vimg)
 {
 	char	**str;
 
@@ -70,44 +71,26 @@ static int	ctd(char *st, char *compare, t_var *var, t_img *vimg)
 	free_double_ptr(str);
 	return (0);
 }
-
 /*
-// this part should discuss 
-// if the order of texture is mandatory 
-// should keep this one
 static int  check_texture_content(char *str, int i, t_var *var)
 {
-
-    if (i == 0)
-        return (check_texture_directions(str, "NO",var, var->north));
-    if (i == 1)
-        return (check_texture_directions(str, "SO", var, var->sourth));
-    if (i == 2)
-        return (check_texture_directions(str, "WE", var, var->west));
-    if (i == 3)
-        return (check_texture_directions(str, "EA", var, var->east));
-    if (i == 4)
-        return (check_texture_color(str, "F", var, var->floor));
-    if (i == 5)
-        return (check_texture_color(str, "C", var, var->ceil));
-    return (0);
+	if (i == 0)
+		return (check_texture_directions(str, "NO",var, var->north));
+	if (i == 1)
+		return (check_texture_directions(str, "SO", var, var->sourth));
+	if (i == 2)
+		return (check_texture_directions(str, "WE", var, var->west));
+	if (i == 3)
+		return (check_texture_directions(str, "EA", var, var->east));
+	if (i == 4)
+		return (check_texture_color(str, "F", var, var->floor));
+	if (i == 5)
+		return (check_texture_color(str, "C", var, var->ceil));
+	return (err_return_info("Error in texture", var));
 }
 
-int check_texture(t_var *var, char **texture)
-{
-    int i;
-
-    i = 0;
-    while (texture[i])
-    {
-        if (check_texture_content(texture[i], i, var) == 1)
-            return (err_return_info("Error texture format wrong", var));
-        i++;
-    }
-    return (0);
-}
 */
-// if there is no order
+
 static int	check_texture_content(char *str, t_var *var)
 {
 	char	**temp;

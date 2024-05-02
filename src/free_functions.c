@@ -6,11 +6,11 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 18:19:58 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/22 18:26:08 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/26 12:38:24 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 void	free_double_ptr(char **str)
 {
@@ -54,11 +54,14 @@ void	destroy_mlxlib(t_var *var)
 		free_img(var, var->west);
 	if (var->east)
 		free_img(var, var->east);
+    // should destry image
+	if (var->img)
+		free_img(var, var->img);
 	if (var->win_init_ptr)
 	{
-        mlx_destroy_window(var->mlx_init_ptr, var->win_init_ptr);
-        var->win_init_ptr = NULL;
-    }
+		mlx_destroy_window(var->mlx_init_ptr, var->win_init_ptr);
+		var->win_init_ptr = NULL;
+	}
 	if (var->mlx_init_ptr)
 	{
 		mlx_destroy_display(var->mlx_init_ptr);

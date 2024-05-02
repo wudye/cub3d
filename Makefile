@@ -11,20 +11,22 @@ FILES  = main.c free_functions.c parse_main.c \
 		parse_utils.c parse_check_texture.c \
 		parse_check_texture_help.c check_map_numbers.c\
 		check_map_numbers_space.c check_map_numbers_wall.c \
-		render_mlx_main.c \
+		render_mlx_main.c check_map_value.c\
 		get_next_line.c get_next_line_utils.c \
 		init_rays.c \
 		init_rays2.c \
 		math.c \
 		render.c \
+		render2.c \
 		render_utils.c \
 		movement.c \
+		movement2.c \
 		utils.c \
 
 
 CFILES = $(addprefix src/, $(FILES))
 OFILES = $(addprefix obj/, $(FILES:.c=.o))
-DEPS   = inc/cub3d.h inc/libft/libft.h
+DEPS   = inc/cub3D.h inc/libft/libft.h
 obj/%.o	: src/%.c $(DEPS)
 	@mkdir -p obj
 	@$(CC) $(CFLAGS) -c $< -o $@

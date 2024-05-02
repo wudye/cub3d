@@ -10,36 +10,45 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 int	close_window(t_var *var)
 {
 	free_var(var);
-	//include free function
 	exit(0);
 	return (0);
 }
 
-static void	change_player(t_var *c, int press)
+static void	change_angle(t_var *c, int press)
 {
-	if (press)
-		c->key_press = 1;
-	else
-		c->key_press = 0;
+	c->key_angle = press;
+}
+
+static void	change_pos(t_var *c, int press)
+{
+	c->key_pos = press;
+}
+
+int	key_release(int key, void *p)
+{
+	if (key == 'a' || key == 'd' || key == 65361 || key == 65363)
+		change_angle(p, 0);
+	if (key == 'w' || key == 's' || key == 65362 || key == 65364)
+		change_pos(p, 0);
+	return (0);
 }
 
 int	key_press(int key, void *p)
 {
 	if (key == 0xFF1B)
-		exit(0);
-	if (key == 'd')
-		change_player(p, 1);
-	return (0);
-}
-
-int	key_release(int key, void *p)
-{
-	if (key == 'd')
-		change_player(p, 0);
+		return (free_var(p), exit(0), 0);
+	if (key == 'd' || key == 65363)
+		change_angle(p, 1);
+	if (key == 'a' || key == 65361)
+		change_angle(p, -1);
+	if (key == 'w' || key == 65362)
+		change_pos(p, 1);
+	if (key == 's' || key == 65364)
+		change_pos(p, -1);
 	return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:41:55 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/22 18:18:57 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/26 12:28:26 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 static int	handle_mid_lines(char **map)
 {
@@ -23,6 +23,9 @@ static int	handle_mid_lines(char **map)
 	while (i < e)
 	{
 		len = ft_strlen(map[i]) - 1;
+		while (len > 0 && map[i][len] \
+						&& (map[i][len] == ' ' || map[i][len] == '\t'))
+			len--;
 		if (map[i][0] != '1' || map[i][len] != '1')
 			return (1);
 		i++;
@@ -52,7 +55,7 @@ static int	handle_first_end_line(char **map)
 	}
 	return (0);
 }
-
+/*
 static float	angle(char c)
 {
 	if (c == 'N')
@@ -80,7 +83,6 @@ static int	set_player_value(char **map, t_var *var, int i, int num)
 				var->player_x = j;
 				var->player_y = i;
 				var->angle = angle(map[i][j]);
-				
 				num += 1;
 			}
 			else if (map[i][j] != '1' && map[i][j] != ' ' && map[i][j] != '0' \
@@ -108,5 +110,16 @@ int	handle_walls(t_var *var, char **map)
 		return (err_return_info("Error map walls wrong", var), 1);
 	if (set_player_value(map, var, i, num) == 1)
 		return (err_return_info("Erorr player fail", var), 1);
+	return (0);
+}
+*/
+
+int	handle_walls(t_var *var, char **map)
+{
+
+	if (handle_first_end_line(map) == 1)
+		return (err_return_info("Error map walls wrong", var), 1);
+	if (handle_mid_lines(map) == 1)
+		return (err_return_info("Error map walls wrong", var), 1);
 	return (0);
 }
