@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: cthaler <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 11:34:10 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/26 12:23:19 by mwu              ###   ########.fr       */
+/*   Created: 2024/04/17 13:45:02 by cthaler           #+#    #+#             */
+/*   Updated: 2024/04/17 13:45:03 by cthaler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,44 +24,18 @@
 
 # include "libft/libft.h"
 # include "get_next_line.h"
-#include "my_try.h"
-
 
 # define PLAYER "NSEW"
 # define IMG_W	1200
 # define IMG_H	600
-/*
 
-
-//change name later
-typedef struct	s_img1
+typedef struct	s_player
 {
-	void	*ptr;
-	int	*addr;
-	int	bitsinpixel;
-	int	line_bytes;
-	int	endian;
-	int	floor_rgb;
-	int	ceiling_rgb;
-	//int	player_rgb;
-	//int	map[64];
-	//t_player	p;
-	//t_ray		ray;
-}		t_img1;
-
-typedef struct	s_cube
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_img1	*img;
-	t_player	p;
-	t_ray	r;
-	char	**map;
-	int	floor_rgb;
-	int	ceiling_rgb;
-	int	key_press;
-}		t_cube;
-*/
+	float x;
+	float y;
+	float angle;
+	
+}		t_player;
 
 typedef struct	s_ray
 {
@@ -69,17 +43,10 @@ typedef struct	s_ray
 	float y;
 	float dist;
 	float angle;
+	int	vert;
+	t_player *p;
 	
 }		t_ray;
-
-typedef struct	s_player
-{
-	float x;
-	float y;
-	int angle;
-	
-}		t_player;
-
 
 typedef struct s_img
 {
@@ -102,8 +69,8 @@ typedef struct s_var
 	int		ceiling_rgb;
 	int		player_x;
 	int		player_y;
-	int		key_press;
-    char    direction;
+	int		key_angle;
+	int		key_pos;
 	float	angle;
 	t_ray	r;
 	t_player p;
@@ -113,6 +80,7 @@ typedef struct s_var
 	t_img	*west;
 	t_img	*east;
 }	t_var;
+
 
 int		main(int argc, char **arv);
 
@@ -139,10 +107,9 @@ void	free_var(t_var *var);
 int		err_return_info(char *str, t_var *var);
 void	free_double_ptr(char **str);
 
-
 //utils.c
 int	arr_len(char **arr);
-int	check_bounds(int x, int y, char **map);
+int	check_bounds(float x, float y, char **map);
 //math.c
 float	rad(float degree);
 //init_rays.c
@@ -154,14 +121,16 @@ int	check_vert_map(t_ray *r, float x, float y, char **map);
 int	create_trgb(int t, int r, int g, int b);
 //render.c
 int	render_frame(t_var *c);
+//render2.c
+void	create_floor(t_var *c, t_img *img, int width, int height);
+void	init_main_img(t_var *c);
+float	angle_overflow(float angle);
 //movement.c
 int	key_press(int key, void *p);
  int	key_release(int key, void *p);
  int	close_window(t_var *var);
+//movement2.c
+void	move_player(t_var *c);
 
- // my try 
-int mouse_hook(int x, int y, t_var *var, t_camera *camera);
- void init_camera(t_var *var, t_camera *camera);
-int	window_loop(t_var *this, t_camera *camera);
 
 #endif

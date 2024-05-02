@@ -185,7 +185,7 @@ static void	change_map_begin(char **map)
 		i++;
 	}
 }
-/*
+
 static void	set_map_last(t_var *var, char **map, char **map_copy)
 {
 	int	i;
@@ -206,7 +206,7 @@ static void	set_map_last(t_var *var, char **map, char **map_copy)
 	free_double_ptr(map);
 	var->map = map_copy;
 }
-*/
+
 static char **reset_map_value(char **map, t_var *var, int len)
 {
     int i;
@@ -218,7 +218,8 @@ static char **reset_map_value(char **map, t_var *var, int len)
         error_malloc(var);
     while (map[i])
     {
-        map_help[i] = ft_strtrim(map[i], "\n");
+        map_help[i] = ft_strdup(map[i]);
+        // map_help[i] = ft_strtrim(map[i], "\n");
         if (!map_help[i])
         {
             free_double_ptr(map_help);
@@ -260,7 +261,6 @@ static int	set_player_value(char **map, t_var *var)
 			{
 				var->player_x = i;
 				var->player_y = j;
-                var->direction = map[i][j];
 				var->angle = angle(map[i][j]);
 				num += 1;
 			}
@@ -298,8 +298,11 @@ int	check_map_numbers(t_var *var, char **map)
 		return (free_double_ptr(map_copy), free_double_ptr(map_help), 1);
     if (set_player_value(map, var) == 1)
 		return (free_double_ptr(map_copy), free_double_ptr(map_help), err_return_info("Erorr player fail", var), 1);
+    
+    set_map_last(var, map, map_help);
+
     free_double_ptr(map_copy);
-    free_double_ptr(map_help);
+    // free_double_ptr(map_help);
 	return (0);
 }
 

@@ -17,11 +17,11 @@ FILES  = main.c free_functions.c parse_main.c \
 		init_rays2.c \
 		math.c \
 		render.c \
+		render2.c \
 		render_utils.c \
 		movement.c \
+		movement2.c \
 		utils.c \
-		my_try_mouse_hook.c \
-		my_try_put_map.c
 
 
 CFILES = $(addprefix src/, $(FILES))

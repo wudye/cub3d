@@ -89,7 +89,7 @@ int	check_vertical(t_player *p, t_ray *r, char **map)
 	}
 	dist = fabs(x - p->x) / cos(convert_angle(r, 0));
 	if (!check_bounds(x, y, map) && dist && (dist < r->dist || !r->dist))
-		return (r->x = x, r->y = y, r->dist = dist, 0);
+		return (r->x = x, r->y = y, r->dist = dist, r->vert = 1, 0);
 	return (0);
 }
 
@@ -98,9 +98,11 @@ void	calc_ray(t_player *p, t_ray *r, float angle, char **map)
 	if (angle == 90 || angle == 270 || angle == 0 || angle == 180)
 		angle += 0.1;
 	r->angle = angle;
+	r->vert = 0;
 	r->x = (int)p->x;
 	r->y = (int)p->y;
 	r->dist = 0;
+	r->p = p;
 	check_horizontal(p, r, map);
 	check_vertical(p, r, map);
 }

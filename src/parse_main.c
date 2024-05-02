@@ -37,7 +37,7 @@ static int	get_file_length(int fd)
 	return (i);
 }
 
-// map each line with \n
+/*// map each line with \n
 static void	set_value_map(int fd, char **str, int len, t_var *var)
 {
 	char	*temp;
@@ -64,7 +64,8 @@ static void	set_value_map(int fd, char **str, int len, t_var *var)
 	}
 	str[i] = 0;
 }
-/* map each line without \n
+*/
+/* map each line without \n */
 static void	set_value_map(int fd, char **str, int len, t_var *var)
 {
 	char	*temp;
@@ -91,7 +92,7 @@ static void	set_value_map(int fd, char **str, int len, t_var *var)
 	}
 	str[i] = 0;
 }
-*/
+
 
 static int	set_data_value(int fd, t_var *var, int len)
 {
