@@ -55,8 +55,8 @@ void	destroy_mlxlib(t_var *var)
 	if (var->east)
 		free_img(var, var->east);
     // should destry image
-	if (var->img)
-		free_img(var, var->img);
+	// if (var->img)
+	// 	free_img(var, var->img);
 	if (var->win_init_ptr)
 	{
 		mlx_destroy_window(var->mlx_init_ptr, var->win_init_ptr);

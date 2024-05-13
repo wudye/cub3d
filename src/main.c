@@ -41,10 +41,10 @@ static void	zero_img_init(t_img *img)
  */
 static void	init_img(t_var *var)
 {
-	var->img = malloc(sizeof(t_img));
-	if (!var->img)
-		error_malloc(var);
-	zero_img_init(var->img);
+	// var->img = malloc(sizeof(t_img));
+	// if (!var->img)
+	// 	error_malloc(var);
+	// zero_img_init(var->img);
 	var->east = malloc(sizeof(t_img));
 	if (!var->east)
 		error_malloc(var);
@@ -76,8 +76,6 @@ static t_var	*init_var(void)
 	res->win_init_ptr = NULL;
 	res->map = NULL;
 	res->texture = NULL;
-	res->player_x = 0;
-	res->player_y = 0;
 	init_img(res);
 	return (res);
 }
@@ -102,6 +100,7 @@ int	main(int argc, char **argv)
 			error_malloc(var);
 		if (parse_main(var, argv) == 1)
 			return (1);
+
 		if (render_mlx(var) == 1)
 			return (1);
 

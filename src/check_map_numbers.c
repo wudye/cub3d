@@ -186,26 +186,26 @@ static void	change_map_begin(char **map)
 	}
 }
 
-static void	set_map_last(t_var *var, char **map, char **map_copy)
-{
-	int	i;
-	int	j;
+// static void	set_map_last(t_var *var, char **map, char **map_copy)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	while (map_copy[i])
-	{
-		j = 0;
-		while (map_copy[i][j])
-		{
-			if (map_copy[i][j] == '2')
-				map_copy[i][j] = '1';
-			j++;
-		}
-		i++;
-	}
-	free_double_ptr(map);
-	var->map = map_copy;
-}
+// 	i = 0;
+// 	while (map_copy[i])
+// 	{
+// 		j = 0;
+// 		while (map_copy[i][j])
+// 		{
+// 			if (map_copy[i][j] == '2')
+// 				map_copy[i][j] = '1';
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	free_double_ptr(map);
+// 	var->map = map_copy;
+// }
 
 static char **reset_map_value(char **map, t_var *var, int len)
 {
@@ -231,18 +231,18 @@ static char **reset_map_value(char **map, t_var *var, int len)
     return (map_help);
 }
 
-static float	angle(char c)
-{
-	if (c == 'N')
-		return (90);
-	else if (c == 'S')
-		return (270);
-	else if (c == 'E')
-		return (180);
-	else if (c == 'W')
-		return (0);
-	return (0);
-}
+// static float	angle(char c)
+// {
+// 	if (c == 'N')
+// 		return (90);
+// 	else if (c == 'S')
+// 		return (270);
+// 	else if (c == 'E')
+// 		return (180);
+// 	else if (c == 'W')
+// 		return (0);
+// 	return (0);
+// }
 
 static int	set_player_value(char **map, t_var *var)
 {
@@ -259,9 +259,10 @@ static int	set_player_value(char **map, t_var *var)
 		{
 			if (ft_strchr(PLAYER, map[i][j]))
 			{
-				var->player_x = j;
-				var->player_y = i;
-				var->angle = angle(map[i][j]);
+				var->player.position_y = j + 0.5;
+				var->player.position_x = i + 0.5;
+                var->player.player_dir = map[i][j];
+				// var->angle = angle(map[i][j]);
 				num += 1;
 			}
 			j++;
@@ -298,11 +299,9 @@ int	check_map_numbers(t_var *var, char **map)
 		return (free_double_ptr(map_copy), free_double_ptr(map_help), 1);
     if (set_player_value(map, var) == 1)
 		return (free_double_ptr(map_copy), free_double_ptr(map_help), err_return_info("Erorr player fail", var), 1);
-    
-    set_map_last(var, map, map_help);
-
     free_double_ptr(map_copy);
-    // free_double_ptr(map_help);
+    free_double_ptr(map_help);
+    var->map_height = len;
 	return (0);
 }
 

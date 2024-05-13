@@ -3,8 +3,8 @@ SO ./assets/s_flame_64x64.xpm
 WE ./assets/w_flame_64x64.xpm
 EA ./assets/e_flame_64x64.xpm
 
-F    220,100,0
-C       225,30,0
+F    220,200,200
+C       225,130,110
             1
            101
           10001

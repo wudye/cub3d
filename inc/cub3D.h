@@ -20,33 +20,26 @@
 # include <mlx.h>
 # include <stdio.h>
 # include <math.h>
+# include <X11/keysym.h>
 
 
 # include "libft/libft.h"
 # include "get_next_line.h"
+# include "my_try.h"
 
 # define PLAYER "NSEW"
-# define IMG_W	1200
-# define IMG_H	600
+# define IMG_W	1280
+# define IMG_H	920
 
 typedef struct	s_player
 {
-	float x;
-	float y;
-	float angle;
+	double position_x;
+	double position_y;
+    int direction_x;
+    int direction_y;
+    char    player_dir;
 	
 }		t_player;
-
-typedef struct	s_ray
-{
-	float x;
-	float y;
-	float dist;
-	float angle;
-	int	vert;
-	t_player *p;
-	
-}		t_ray;
 
 typedef struct s_img
 {
@@ -67,14 +60,11 @@ typedef struct s_var
 	int		ceil[3];
 	int		floor_rgb;
 	int		ceiling_rgb;
-	int		player_x;
-	int		player_y;
-	int		key_angle;
-	int		key_pos;
-	float	angle;
-	t_ray	r;
-	t_player p;
-	t_img	*img;
+    int     map_height;
+    double    camerax;
+    double cameray;
+	t_player player;
+	t_img	img;
 	t_img	*north;
 	t_img	*sourth;
 	t_img	*west;
@@ -101,36 +91,27 @@ void    map_copy_help(char *str, char *str_copy, int maxi);
 void	set_value_texture(int fd, char **str, int len, t_var *var);
 // render
 int		render_mlx(t_var *var);
+
+// render utils
+int	change_int_to_rgb(int r, int g, int b);
+
+void player_left_rotate(t_var *var);
+void player_right_rotate(t_var *var);
+void player_left_move(t_var *var);
+void player_right_move(t_var *var);
+void player_up_move(t_var *var);
+void player_down_move(t_var *var);
+
+int render_loop(t_var *var);
+void render_set_value(t_var *var);
+
+
 // free functions
 void	error_malloc(t_var *var);
 void	free_var(t_var *var);
 int		err_return_info(char *str, t_var *var);
 void	free_double_ptr(char **str);
 
-//utils.c
-int	arr_len(char **arr);
-int	check_bounds(float x, float y, char **map);
-//math.c
-float	rad(float degree);
-//init_rays.c
-void	calc_ray(t_player *p, t_ray *r, float angle, char **map);
-//init_rays2.c
-int	check_hor_map(t_ray *r, char **map);
-int	check_vert_map(t_ray *r, float x, float y, char **map);
-//render_utils.c
-int	create_trgb(int t, int r, int g, int b);
-//render.c
-int	render_frame(t_var *c);
-//render2.c
-void	create_floor(t_var *c, t_img *img, int width, int height);
-void	init_main_img(t_var *c);
-float	angle_overflow(float angle);
-//movement.c
-int	key_press(int key, void *p);
- int	key_release(int key, void *p);
- int	close_window(t_var *var);
-//movement2.c
-void	move_player(t_var *c);
 
 
 #endif
