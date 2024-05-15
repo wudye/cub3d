@@ -30,6 +30,8 @@
 # define PLAYER "NSEW"
 # define IMG_W	1280
 # define IMG_H	920
+#define SPEED 0.03f
+#define DISTANCE	0.2f
 
 typedef struct	s_player
 {
@@ -95,15 +97,16 @@ int		render_mlx(t_var *var);
 // render utils
 int	change_int_to_rgb(int r, int g, int b);
 
-void player_left_rotate(t_var *var);
-void player_right_rotate(t_var *var);
+void player_rotate(t_var *var, int change);
 void player_left_move(t_var *var);
 void player_right_move(t_var *var);
 void player_up_move(t_var *var);
 void player_down_move(t_var *var);
 
 int render_loop(t_var *var);
-void render_set_value(t_var *var);
+void set_player_direction(t_var *var);
+void set_camera_value(t_var *var);
+
 
 
 // free functions

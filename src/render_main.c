@@ -13,16 +13,9 @@
 #include "../inc/cub3D.h"
 // static void	render_init_var(t_var *var)
 // {
-// 	var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, IMG_W, IMG_H, "cub3D");
-// 	if (!var->mlx_init_ptr)
-// 		return (error_malloc(var));
 // 	var->floor_rgb = change_int_to_rgb(var->floor[0], var->floor[1], var->floor[2]);
 // 	var->ceiling_rgb = change_int_to_rgb(var->ceil[0], var->ceil[1], var->ceil[2]);
-// 	var->img.img_ptr = mlx_new_image(var->mlx_init_ptr, IMG_W, IMG_H);
-// 	if (!var->img.img_ptr)
-// 		return (error_malloc(var));
-// 	var->img.img_addr = (int *)mlx_get_data_addr(var->img.img_ptr,
-// 		&var->img.bits_per_pixel, &var->img.size_line, &var->img.endian);
+
 // }
 
 static int close_window(t_var *var)
@@ -53,17 +46,18 @@ static int press_key(int keysmbol, t_var *var)
     if (keysmbol == XK_Escape)
         close_window(var);
     else if (keysmbol == XK_Left)
-        player_left_rotate(var);
+        player_rotate(var, -3);
     else if (keysmbol == XK_Right)
-        player_right_rotate(var);
+        player_rotate(var, 3);
     else if (keysmbol == XK_A || keysmbol == XK_a)
         player_left_move(var);
-    else if (keysmbol == XK_S || keysmbol == XK_s)
+    else if (keysmbol == XK_S || keysmbol == XK_Down)
         player_down_move(var);
-    else if (keysmbol == XK_W || keysmbol == XK_w)
+    else if (keysmbol == XK_W || keysmbol == XK_Up)
         player_up_move(var);
     else if (keysmbol == XK_D || keysmbol == XK_d)
         player_right_move(var);
+    render_loop(var);
     return (EXIT_SUCCESS);
 }
 
@@ -73,7 +67,8 @@ int	render_mlx(t_var *var)
     var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, IMG_W, IMG_H, "cub3D");
 	if (!var->mlx_init_ptr)
 		return (error_malloc(var), 1);
-    render_set_value(var);
+    set_player_direction(var);
+    set_camera_value(var);
 	mlx_mouse_hide(var->mlx_init_ptr, var->win_init_ptr); 
 	mlx_hook(var->win_init_ptr, 17, 0, close_window, var);
     mlx_hook(var->win_init_ptr, 2, (1L << 0), press_key, var);

@@ -9,13 +9,6 @@
 #define YELLOW 0xFFFF00
 #define MINIMAP_SQUARES_PADDING 4
 
-typedef struct s_camera
-{
-	double	plane_x;
-	double	plane_y;
-}				t_camera;
-
-
 typedef struct s_raycaster
 {
 	double	camera_x;

@@ -12,12 +12,18 @@
     planeX = planeX * cos(theta) — planeY * sin(theta);
     planeY = planeX * sin(theta) + planeY * cos(theta);
 */
-void player_left_rotate(t_var *var)
-{
-    (void)var;
-}
 
-void player_right_rotate(t_var *var)
+void player_rotate(t_var *var, int change)
 {
-    (void)var;
+    double change_angle;
+    
+    change_angle = (M_PI / 90) * change;
+    var->player.direction_x = var->player.direction_x * cos(change_angle) 
+    - var->player.direction_y * sin(change_angle);
+    var->player.direction_y = var->player.direction_x * sin(change_angle) 
+    + var->player.direction_y * cos(change_angle);
+    var->camerax = var->camerax * cos(change_angle) 
+    - var->cameray * sin(change_angle);
+    var->cameray = var->camerax * sin(change_angle) 
+    + var->cameray * cos(change_angle); 
 }
