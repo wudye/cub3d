@@ -18,8 +18,7 @@ static bool collion(char **map, int y, int x)
         return true;
     return false;
 }
-
-
+ 
 void player_left_move(t_var *var)
 {
     int new_posx;

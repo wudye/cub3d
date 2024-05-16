@@ -63,7 +63,7 @@ static int press_key(int keysmbol, t_var *var)
 
 int	render_mlx(t_var *var)
 {
-
+   
     var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, IMG_W, IMG_H, "cub3D");
 	if (!var->mlx_init_ptr)
 		return (error_malloc(var), 1);
@@ -71,6 +71,7 @@ int	render_mlx(t_var *var)
     set_camera_value(var);
 	mlx_mouse_hide(var->mlx_init_ptr, var->win_init_ptr); 
 	mlx_hook(var->win_init_ptr, 17, 0, close_window, var);
+
     mlx_hook(var->win_init_ptr, 2, (1L << 0), press_key, var);
 	mlx_loop_hook(var->mlx_init_ptr, render_loop, var);
 

@@ -46,7 +46,7 @@ typedef struct	s_player
 typedef struct s_img
 {
 	void	*img_ptr;
-	int	*img_addr;
+	char	*img_addr;
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
@@ -66,11 +66,12 @@ typedef struct s_var
     double    camerax;
     double cameray;
 	t_player player;
-	t_img	img;
+	t_img	*img;
 	t_img	*north;
 	t_img	*sourth;
 	t_img	*west;
 	t_img	*east;
+    t_render ren;
 }	t_var;
 
 
