@@ -77,6 +77,7 @@ static t_var	*init_var(void)
 	res->map = NULL;
 	res->texture = NULL;
 	init_img(res);
+    res->ren = NULL;
 	return (res);
 }
 

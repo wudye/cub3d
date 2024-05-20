@@ -301,7 +301,6 @@ int	check_map_numbers(t_var *var, char **map)
 		return (free_double_ptr(map_copy), free_double_ptr(map_help), err_return_info("Erorr player fail", var), 1);
     free_double_ptr(map_copy);
     free_double_ptr(map_help);
-    var->map_height = len;
 	return (0);
 }
 

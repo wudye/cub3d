@@ -152,6 +152,5 @@ int	parse_main(t_var *var, char **argv)
 		return (1);
 	if (check_map_numbers(var, var->map) == 1)
 		return (1);
-    printf("test\n");
 	return (0);
 }

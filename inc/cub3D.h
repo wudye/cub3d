@@ -28,17 +28,72 @@
 # include "my_try.h"
 
 # define PLAYER "NSEW"
-# define IMG_W	1280
-# define IMG_H	920
-#define SPEED 0.03f
-#define DISTANCE	0.2f
+# define IMG_W	800
+# define IMG_H	600
+typedef struct s_var t_var;
+
+typedef struct s_coordinate
+{
+    double d_x;
+    double d_y;
+} t_coordinate;
+
+typedef struct s_wall
+{
+    int hegiht;
+    int top;
+    int bottom;
+} t_wall;
+
+typedef struct s_texture
+{
+    int x;
+    int y;
+    double start;
+    double step;
+} t_texture;
+
+typedef struct s_step
+{
+    int x;
+    int y;
+} t_step;
+
+typedef struct s_hit
+{
+    char hit_side;
+    t_coordinate sideDist;
+    double perpWallDist;
+    t_coordinate deltaDist;
+    t_step  ray_map;
+    t_step step;
+    double  pre_dist;
+    t_coordinate hit_pos;
+} t_hit;
+
+typedef struct s_draw
+{
+    int start;
+    int end;
+    float high;
+} t_draw;
+
+typedef struct s_render
+{
+    t_coordinate *rays;
+    t_coordinate left_side_ray;
+    t_coordinate right_side_ray;
+    t_hit *hits;
+    t_draw draw;
+} t_render;
+
 
 typedef struct	s_player
 {
 	double position_x;
 	double position_y;
-    int direction_x;
-    int direction_y;
+    double direction_x;
+    double direction_y;
     char    player_dir;
 	
 }		t_player;
@@ -63,6 +118,7 @@ typedef struct s_var
 	int		floor_rgb;
 	int		ceiling_rgb;
     int     map_height;
+    int     map_width;
     double    camerax;
     double cameray;
 	t_player player;
@@ -71,7 +127,7 @@ typedef struct s_var
 	t_img	*sourth;
 	t_img	*west;
 	t_img	*east;
-    t_render ren;
+    t_render *ren;
 }	t_var;
 
 
@@ -92,6 +148,7 @@ void	exchange_helper(char *temp, char **str, int i);
 bool    check_map_value(t_var *var, char **map);
 void    map_copy_help(char *str, char *str_copy, int maxi);
 void	set_value_texture(int fd, char **str, int len, t_var *var);
+int longest_colum(char **map);
 // render
 int		render_mlx(t_var *var);
 
@@ -117,5 +174,11 @@ int		err_return_info(char *str, t_var *var);
 void	free_double_ptr(char **str);
 
 
+void value_in_render(t_var *var);
 
+void coordinate_x_y(double step,  t_coordinate *add, t_coordinate src);
+void vectot_rotate_by_angle(t_coordinate *ray, double angle, t_player player, double fov_rat);
+t_hit dda_main(t_var *var, t_coordinate ray);
+int loop_in_render(t_var *var);
+void draw_ceil_floor(t_img *img, t_step *sxy, int limit, int cf[3]);
 #endif

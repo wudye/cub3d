@@ -41,40 +41,56 @@ static int close_window(t_var *var)
     minilibx (to be exact, Xlib handles it) internally. 
     What we're getting in handle_input is the correct key symbol.
 */
-static int press_key(int keysmbol, t_var *var)
+// static int press_key(int keysmbol, t_var *var)
+// {
+//     if (keysmbol == XK_Escape)
+//         close_window(var);
+//     else if (keysmbol == XK_Left)
+//         player_rotate(var, -3);
+//     else if (keysmbol == XK_Right)
+//         player_rotate(var, 3);
+//     else if (keysmbol == XK_A || keysmbol == XK_a)
+//         player_left_move(var);
+//     else if (keysmbol == XK_S || keysmbol == XK_s)
+//         player_down_move(var);
+//     else if (keysmbol == XK_W || keysmbol == XK_w)
+//         player_up_move(var);
+//     else if (keysmbol == XK_D || keysmbol == XK_d)
+//         player_right_move(var);
+//     render_loop(var);
+//     return (EXIT_SUCCESS);
+// }
+
+static void init_render_part(t_var *var)
 {
-    if (keysmbol == XK_Escape)
-        close_window(var);
-    else if (keysmbol == XK_Left)
-        player_rotate(var, -3);
-    else if (keysmbol == XK_Right)
-        player_rotate(var, 3);
-    else if (keysmbol == XK_A || keysmbol == XK_a)
-        player_left_move(var);
-    else if (keysmbol == XK_S || keysmbol == XK_Down)
-        player_down_move(var);
-    else if (keysmbol == XK_W || keysmbol == XK_Up)
-        player_up_move(var);
-    else if (keysmbol == XK_D || keysmbol == XK_d)
-        player_right_move(var);
-    render_loop(var);
-    return (EXIT_SUCCESS);
+    var->map_height = double_ft_len(var->map);
+    var->map_width = longest_colum(var->map);
+    set_player_direction(var);
+    var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, IMG_W, IMG_H, "cub3D");
+	if (!var->mlx_init_ptr)
+		return (error_malloc(var));
+    var->img->img_ptr = mlx_new_image(var->mlx_init_ptr, IMG_W, IMG_H);
+	var->img->img_addr = mlx_get_data_addr(var->img->img_ptr, &(var->img->bits_per_pixel),
+			&(var->img->size_line), &(var->img->endian));
+    var->ren = malloc(sizeof(t_render));
+    if (!var->ren)
+        error_malloc(var);
+    value_in_render(var);
 }
 
 int	render_mlx(t_var *var)
 {
-   
-    var->win_init_ptr = mlx_new_window(var->mlx_init_ptr, IMG_W, IMG_H, "cub3D");
-	if (!var->mlx_init_ptr)
-		return (error_malloc(var), 1);
-    set_player_direction(var);
-    set_camera_value(var);
+
+    init_render_part(var);
+
+    // set_camera_value(var);
 	mlx_mouse_hide(var->mlx_init_ptr, var->win_init_ptr); 
 	mlx_hook(var->win_init_ptr, 17, 0, close_window, var);
 
-    mlx_hook(var->win_init_ptr, 2, (1L << 0), press_key, var);
-	mlx_loop_hook(var->mlx_init_ptr, render_loop, var);
+    // mlx_hook(var->win_init_ptr, 2, (1L << 0), press_key, var);
+	mlx_loop_hook(var->mlx_init_ptr, loop_in_render, var);
 
 	mlx_loop(var->mlx_init_ptr);
+
 	return (0);
 }
