@@ -104,10 +104,8 @@ int	main(int argc, char **argv)
 
 		if (render_mlx(var) == 1)
 			return (1);
-
-		// free_var(var);
-        //         printf("finished\n");
-
+        if (var)
+            free_var(var);
 		return (0);
 	}
 	return (err_return_info("Error argument nums wrong", var));

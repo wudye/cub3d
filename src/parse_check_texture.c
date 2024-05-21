@@ -43,7 +43,7 @@ static int	check_load_texture(char *str, t_var *var, t_img *img)
 	img->img_ptr = mlx_xpm_file_to_image(var->mlx_init_ptr, str, &size, &size);
 	if (!img->img_ptr)
 		return (ft_putstr_fd("Error xpm file open failed\n", 2), 1);
-	img->img_addr = mlx_get_data_addr(img->img_ptr, \
+	img->img_addr =  mlx_get_data_addr(img->img_ptr, \
 					&img->bits_per_pixel, &img->size_line, &img->endian);
 	if (!img->img_addr)
 		return (ft_putstr_fd("Error add xpm file open failed\n", 2), 1);

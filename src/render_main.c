@@ -18,48 +18,6 @@
 
 // }
 
-static int close_window(t_var *var)
-{
-    free_var(var);
-    exit(EXIT_SUCCESS);
-    return (EXIT_SUCCESS);
-}
-
-/*
-    this is for keyrelease
-    mlx_key_hook(var->win_init_ptr, &esc_key, var);
-    need this X11/keysym.h 
-    "key symbol" and not "key code". That's because 
-    a key code is not the same thing than a key symbol.
-    The key code for the "A" key on an AZERTY keyboard 
-    layout will be the same than the key code for the 
-    "Q" key on a QWERTY layout. However, what we want
-    to deal with is the symbol. If the key I expect     
-    to be pressed is "A", I want it to be "A" whatever 
-    the keyboard layout of the user is. I want to get
-    it by the symbol. This conversion is done by the
-    minilibx (to be exact, Xlib handles it) internally. 
-    What we're getting in handle_input is the correct key symbol.
-*/
-// static int press_key(int keysmbol, t_var *var)
-// {
-//     if (keysmbol == XK_Escape)
-//         close_window(var);
-//     else if (keysmbol == XK_Left)
-//         player_rotate(var, -3);
-//     else if (keysmbol == XK_Right)
-//         player_rotate(var, 3);
-//     else if (keysmbol == XK_A || keysmbol == XK_a)
-//         player_left_move(var);
-//     else if (keysmbol == XK_S || keysmbol == XK_s)
-//         player_down_move(var);
-//     else if (keysmbol == XK_W || keysmbol == XK_w)
-//         player_up_move(var);
-//     else if (keysmbol == XK_D || keysmbol == XK_d)
-//         player_right_move(var);
-//     render_loop(var);
-//     return (EXIT_SUCCESS);
-// }
 
 static void init_render_part(t_var *var)
 {
@@ -70,7 +28,7 @@ static void init_render_part(t_var *var)
 	if (!var->mlx_init_ptr)
 		return (error_malloc(var));
     var->img->img_ptr = mlx_new_image(var->mlx_init_ptr, IMG_W, IMG_H);
-	var->img->img_addr = mlx_get_data_addr(var->img->img_ptr, &(var->img->bits_per_pixel),
+	var->img->img_addr =  mlx_get_data_addr(var->img->img_ptr, &(var->img->bits_per_pixel),
 			&(var->img->size_line), &(var->img->endian));
     var->ren = malloc(sizeof(t_render));
     if (!var->ren)
@@ -86,11 +44,11 @@ int	render_mlx(t_var *var)
     // set_camera_value(var);
 	mlx_mouse_hide(var->mlx_init_ptr, var->win_init_ptr); 
 	mlx_hook(var->win_init_ptr, 17, 0, close_window, var);
-
-    // mlx_hook(var->win_init_ptr, 2, (1L << 0), press_key, var);
+    mlx_hook(var->win_init_ptr, 2, (1L << 0), esc_exit, var);
+    // mlx_key_hook(var->win_init_ptr, key_pressed, var);
+    // mlx_key_hook(var->win_init_ptr, key_released, var);
 	mlx_loop_hook(var->mlx_init_ptr, loop_in_render, var);
-
 	mlx_loop(var->mlx_init_ptr);
-
+    free_var(var);
 	return (0);
 }

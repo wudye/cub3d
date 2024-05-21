@@ -39,12 +39,37 @@ static void apply_dda(t_var *var)
         // printf("%d %f %f\n", st, ren->rays[st].d_x, ren->rays[st].d_y);
         ren->hits[st] = dda_main(var, ren->rays[st]);
         // printf("%f\n", ren->hits[st].hit_pos.d_x);
+        // printf("%d %f\n", st, ren->hits[st].perpWallDist);
         st++;
     }
     free(sum_ray);
 
+
 }
 
+void hit_value_set(t_var *var)
+{
+    t_render *ren;
+
+    int st;
+
+    ren = var->ren;
+
+    st = 0;
+
+    while (st < IMG_W)
+    {
+                //  printf("after %f %f %f %f\n",add.d_x, add.d_y, add_copy.d_x, add_copy.d_y);
+
+        // printf("%d %f %f\n", st, ren->rays[st].d_x, ren->rays[st].d_y);
+        ren->hits[st] = dda_main(var, ren->rays[st]);
+        // printf("%f\n", ren->hits[st].hit_pos.d_x);
+        printf("%d %f\n", st, ren->hits[st].perpWallDist);
+        // if (ren->hits[st].perpWallDist == 0.95)
+            // break;
+        st++;
+    }
+}
 void value_in_render(t_var *var)
 {
     t_render *ren;
@@ -55,4 +80,5 @@ void value_in_render(t_var *var)
     vectot_rotate_by_angle(&ren->left_side_ray, (-M_PI / 2), var->player, (FOV / 90.0));
     vectot_rotate_by_angle(&ren->right_side_ray, (M_PI / 2), var->player, (FOV / 90.0));
     apply_dda(var);
+    hit_value_set(var);
 }

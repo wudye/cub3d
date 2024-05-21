@@ -28,26 +28,3 @@ void set_player_direction(t_var *var)
     }
 }
 
-void set_camera_value(t_var *var)
-{
-    if (var->player.player_dir == 'N')
-    {
-        var->camerax = 0.66;
-        var->cameray = 0;
-    }
-    else if (var->player.player_dir == 'S')
-    {
-        var->camerax = -0.66;
-        var->cameray = 0;
-    }
-    else if (var->player.player_dir == 'E')
-    {
-        var->camerax = 0;
-        var->cameray = -0.66;
-    }
-    else if (var->player.player_dir == 'W')
-    {
-        var->camerax = 0;
-        var->cameray = 0.66;
-    }
-}

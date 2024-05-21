@@ -38,12 +38,6 @@ typedef struct s_coordinate
     double d_y;
 } t_coordinate;
 
-typedef struct s_wall
-{
-    int hegiht;
-    int top;
-    int bottom;
-} t_wall;
 
 typedef struct s_texture
 {
@@ -75,7 +69,7 @@ typedef struct s_draw
 {
     int start;
     int end;
-    float high;
+    double high;
 } t_draw;
 
 typedef struct s_render
@@ -101,11 +95,21 @@ typedef struct	s_player
 typedef struct s_img
 {
 	void	*img_ptr;
-	char	*img_addr;
+	void	*img_addr;
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
 }	t_img;
+
+typedef struct s_move
+{
+    int left_rotate;
+    int right_rotate;
+    int up_move;
+    int down_move;
+    int left_move;
+    int right_move;
+} t_move;
 
 typedef struct s_var
 {
@@ -128,6 +132,7 @@ typedef struct s_var
 	t_img	*west;
 	t_img	*east;
     t_render *ren;
+    t_move  move;
 }	t_var;
 
 
@@ -180,5 +185,13 @@ void coordinate_x_y(double step,  t_coordinate *add, t_coordinate src);
 void vectot_rotate_by_angle(t_coordinate *ray, double angle, t_player player, double fov_rat);
 t_hit dda_main(t_var *var, t_coordinate ray);
 int loop_in_render(t_var *var);
-void draw_ceil_floor(t_img *img, t_step *sxy, int limit, int cf[3]);
+unsigned int texture_pixel(t_img *tex, t_coordinate tex_range);
+void	*pixel_ptr(t_img *img, int x, int y);
+int close_window(t_var *var);
+int esc_exit(int keysmbol, t_var *var);
+int key_pressed(int keysmbol, t_var *var);
+int key_released(int keysmbol, t_var *var);
+void move_player(t_var *var);
+
+void hit_value_set(t_var *var);
 #endif

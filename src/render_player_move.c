@@ -11,62 +11,74 @@ posX += dirX * WEIGHT;
 posY += dirY * WEIGHT;
 */
 
-
-static bool collion(char **map, int y, int x)
-{
-    if (map[y][x] == '1')
-        return true;
-    return false;
-}
- 
-void player_left_move(t_var *var)
-{
-    int new_posx;
-    int new_posy;
-
-    new_posy = var->player.position_y - var->player.direction_x * DISTANCE;    
-    new_posx = var->player.position_x - var->player.direction_y * DISTANCE;
-    if (!collion(var->map, (int)var->player.position_y, (int)new_posx))
-        var->player.position_x -= var->player.direction_y * SPEED;
-    if (!collion(var->map, (int)new_posy, (int)var->player.position_x))
-        var->player.position_x -= var->player.direction_x * SPEED;
-}
-
-void player_right_move(t_var *var)
-{
-    int new_posx;
-    int new_posy;
-
-    new_posy = var->player.position_y + var->player.direction_x * DISTANCE;    
-    new_posx = var->player.position_x + var->player.direction_y * DISTANCE;
-    if (!collion(var->map, (int)var->player.position_y, (int)new_posx))
-        var->player.position_x += var->player.direction_y * SPEED;
-    if (!collion(var->map, (int)new_posy, (int)var->player.position_x))
-        var->player.position_x += var->player.direction_x * SPEED;
-}
+# define PLAYER_MOVE 0.1
 
 void player_up_move(t_var *var)
 {
     int new_posx;
     int new_posy;
 
-    new_posy = var->player.position_y - var->player.direction_y * DISTANCE;    
-    new_posx = var->player.position_x + var->player.direction_x * DISTANCE;
-    if (!collion(var->map, (int)var->player.position_y, (int)new_posx))
-        var->player.position_x += var->player.direction_x * SPEED;
-    if (!collion(var->map, (int)new_posy, (int)var->player.position_x))
-        var->player.position_y += var->player.direction_y * SPEED;
-}
+    new_posx = var->player.position_x + var->player.direction_x * PLAYER_MOVE;
+    new_posy = var->player.position_y - var->player.direction_y * PLAYER_MOVE;
+    if (var->map[(int)var->player.position_y][(int)new_posx] != '1')
+        var->player.position_x -= var->player.direction_x * PLAYER_MOVE;
+    if (var->map[(int)new_posy][(int)var->player.position_x] != '1')
+        var->player.position_y += var->player.direction_y * PLAYER_MOVE;
 
-void player_down_move(t_var *var)
-{
-    int new_posx;
-    int new_posy;
+            printf("%d %d\n",(int) var->player.position_x, (int) var->player.position_y);
 
-    new_posy = var->player.position_y + var->player.direction_y * DISTANCE;    
-    new_posx = var->player.position_x - var->player.direction_x * DISTANCE;
-    if (!collion(var->map, (int)var->player.position_y, (int)new_posx))
-        var->player.position_x -= var->player.direction_x * SPEED;
-    if (!collion(var->map, (int)new_posy, (int)var->player.position_x))
-        var->player.position_y -= var->player.direction_y * SPEED;
+    if (var->map[(int)var->player.position_y][(int)new_posx] || var->map[(int)new_posy][(int)var->player.position_x])
+        hit_value_set(var);
+
 }
+// void move_player(t_var *var)
+// {
+//     if (var->move.up_move == 1)
+//         player_up_move(var);
+// }
+// void player_left_move(t_var *var)
+// {
+//     int new_posx;
+//     int new_posy;
+
+//     new_posy = var->player.position_y - var->player.direction_x * DISTANCE;    
+//     new_posx = var->player.position_x - var->player.direction_y * DISTANCE;
+//     if (!collion(var->map, (int)var->player.position_y, (int)new_posx))
+//         var->player.position_x -= var->player.direction_y * SPEED;
+//     if (!collion(var->map, (int)new_posy, (int)var->player.position_x))
+//         var->player.position_x -= var->player.direction_x * SPEED;
+// }
+
+// void player_right_move(t_var *var)
+// {
+//     int new_posx;
+//     int new_posy;
+
+    
+// }
+
+// void player_up_move(t_var *var)
+// {
+//     int new_posx;
+//     int new_posy;
+
+//     new_posy = var->player.position_y - var->player.direction_y * DISTANCE;    
+//     new_posx = var->player.position_x + var->player.direction_x * DISTANCE;
+//     if (!collion(var->map, (int)var->player.position_y, (int)new_posx))
+//         var->player.position_x += var->player.direction_x * SPEED;
+//     if (!collion(var->map, (int)new_posy, (int)var->player.position_x))
+//         var->player.position_y += var->player.direction_y * SPEED;
+// }
+
+// void player_down_move(t_var *var)
+// {
+//     int new_posx;
+//     int new_posy;
+
+//     new_posy = var->player.position_y + var->player.direction_y * DISTANCE;    
+//     new_posx = var->player.position_x - var->player.direction_x * DISTANCE;
+//     if (!collion(var->map, (int)var->player.position_y, (int)new_posx))
+//         var->player.position_x -= var->player.direction_x * SPEED;
+//     if (!collion(var->map, (int)new_posy, (int)var->player.position_x))
+//         var->player.position_y -= var->player.direction_y * SPEED;
+// }

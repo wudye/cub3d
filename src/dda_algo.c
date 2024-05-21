@@ -44,12 +44,13 @@ t_hit dda_main_help(t_var *var, t_coordinate ray, t_hit fo)
     t_hit hit;
 
     hit.deltaDist = fo.deltaDist;
-    hit.perpWallDist = fo.perpWallDist;
+    // hit.perpWallDist = fo.perpWallDist;
     hit.sideDist = fo.sideDist;
-    hit.hit_pos.d_x =var->player.position_x + ray.d_x * hit.pre_dist;
-    hit.hit_pos.d_y = var->player.position_y + ray.d_y * hit.pre_dist;
-    hit.perpWallDist = hit.pre_dist * (ray.d_x * var->player.direction_x + \
+    hit.hit_pos.d_x =var->player.position_x + ray.d_x * fo.pre_dist;
+    hit.hit_pos.d_y = var->player.position_y + ray.d_y * fo.pre_dist;
+    hit.perpWallDist = fo.pre_dist * (ray.d_x * var->player.direction_x + \
     ray.d_y * var->player.direction_y);
+    // printf("gg %f\n", hit.perpWallDist);
     if (fo.hit_side == 'E')
     {
         if (ray.d_x > 0)
@@ -75,9 +76,9 @@ t_hit dda_main(t_var *var, t_coordinate ray)
 
     init_hit_value(var, ray,  &help);
         // printf("%f %f %f %f %f \n", res.pre_dist,res.deltaDist.d_x, res.deltaDist.d_y, res.sideDist.d_x, res.sideDist.d_y);
-    res.hit_side = '0';
+    res.hit_side = '5';
 
-    while (res.hit_side == '0')
+    while (res.hit_side == '5')
     {
         if (help.sideDist.d_x < help.sideDist.d_y)
         {
@@ -94,11 +95,11 @@ t_hit dda_main(t_var *var, t_coordinate ray)
             help.hit_side = 'N';
         }
         // printf("%f %f %f\n", res.pre_dist, res.sideDist.d_x, res.sideDist.d_y);
-        printf("tt%d %d\n", help.ray_map.x, help.ray_map.y);
+        // printf("tt%d %d\n", help.ray_map.x, help.ray_map.y);
         if (var->map[help.ray_map.y][help.ray_map.x] == '1')
             res = dda_main_help(var, ray, help);
     }
         // printf("%f %f %f %f\n", res.deltaDist.d_x, res.deltaDist.d_y, res.sideDist.d_x, res.sideDist.d_y);
-
+    // printf("%f\n", res.perpWallDist);
     return (res);
 }

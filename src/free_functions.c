@@ -76,6 +76,14 @@ void	free_var(t_var *var)
 	destroy_mlxlib(var);
 	free_double_ptr(var->map);
 	free_double_ptr(var->texture);
+    if (var->ren)
+    {
+        if (var->ren->rays)
+            free(var->ren->rays);
+        if (var->ren->hits)
+            free(var->ren->hits);
+        free(var->ren);
+    }
 	free(var);
 }
 
