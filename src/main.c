@@ -63,6 +63,7 @@ static void	init_img(t_var *var)
 	zero_img_init(var->north);
 }
 
+
 static t_var	*init_var(void)
 {
 	t_var	*res;
@@ -78,7 +79,13 @@ static t_var	*init_var(void)
 	res->texture = NULL;
 	init_img(res);
     res->ren = NULL;
-	return (res);
+    res->move.down_move = 0;
+    res->move.up_move = 0;
+    res->move.left_move = 0;
+    res->move.right_move = 0;
+    res->move.right_rotate = 0;
+    res->move.left_rotate = 0;
+    return (res);
 }
 
 /*

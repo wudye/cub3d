@@ -11,8 +11,8 @@ void vectot_rotate_by_angle(t_coordinate *ray, double angle, t_player player, do
 {
     float x;
     float y;
-    x = player.direction_x * fov_rat;
-    y = player.direction_y * fov_rat;
+    x = player.dir.d_x * fov_rat;
+    y = player.dir.d_y * fov_rat;
 
     ray->d_x = x * cosf(angle) - y * sinf(angle);
     ray->d_y = x * sinf(angle) + y* cosf(angle);

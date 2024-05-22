@@ -27,9 +27,22 @@
 # include "get_next_line.h"
 # include "my_try.h"
 
+#  define W 119
+#  define A 97
+#  define S 115
+#  define D 100
+#  define Q 113
+#  define UP 65362
+#  define DOWN 65364
+#  define LEFT 65361
+#  define RIGHT 65363
+#  define ESC 65307
+
 # define PLAYER "NSEW"
 # define IMG_W	800
 # define IMG_H	600
+# define PLAYER_MOVE 0.005
+# define PLAYER_ROTATE 2.0
 typedef struct s_var t_var;
 
 typedef struct s_coordinate
@@ -79,6 +92,7 @@ typedef struct s_render
     t_coordinate right_side_ray;
     t_hit *hits;
     t_draw draw;
+    t_step mouse_xy;
 } t_render;
 
 
@@ -86,8 +100,9 @@ typedef struct	s_player
 {
 	double position_x;
 	double position_y;
-    double direction_x;
-    double direction_y;
+    t_coordinate dir;
+    // double direction_x;
+    // double direction_y;
     char    player_dir;
 	
 }		t_player;
@@ -103,12 +118,12 @@ typedef struct s_img
 
 typedef struct s_move
 {
-    int left_rotate;
-    int right_rotate;
     int up_move;
     int down_move;
     int left_move;
     int right_move;
+    int left_rotate;
+    int right_rotate;
 } t_move;
 
 typedef struct s_var
@@ -160,7 +175,7 @@ int		render_mlx(t_var *var);
 // render utils
 int	change_int_to_rgb(int r, int g, int b);
 
-void player_rotate(t_var *var, int change);
+void player_rotate(t_var *var, double change);
 void player_left_move(t_var *var);
 void player_right_move(t_var *var);
 void player_up_move(t_var *var);
@@ -194,4 +209,5 @@ int key_released(int keysmbol, t_var *var);
 void move_player(t_var *var);
 
 void hit_value_set(t_var *var);
+int	bonus_mouse(int x, int y, t_var *var);
 #endif

@@ -7,8 +7,8 @@ static t_coordinate get_sum_vector(t_var *var, t_render *ren, t_coordinate *src,
 
     dest->d_x = ren->left_side_ray.d_x + src->d_x;
     dest->d_y = ren->left_side_ray.d_y + src->d_y;
-    res.d_x = var->player.direction_x + dest->d_x;
-    res.d_y = var->player.direction_y + dest->d_y;
+    res.d_x = var->player.dir.d_x + dest->d_x;
+    res.d_y = var->player.dir.d_y + dest->d_y;
     distance = sqrtf(res.d_x * res.d_x + res.d_y * res.d_y);
     res.d_x = res.d_x * (1 / distance);
     res.d_y = res.d_y * (1 / distance);
@@ -49,22 +49,22 @@ static void apply_dda(t_var *var)
 
 void hit_value_set(t_var *var)
 {
-    t_render *ren;
 
     int st;
 
-    ren = var->ren;
-
+    t_coordinate    *temp;
     st = 0;
 
     while (st < IMG_W)
     {
+        temp = &var->ren->rays[st];
                 //  printf("after %f %f %f %f\n",add.d_x, add.d_y, add_copy.d_x, add_copy.d_y);
 
         // printf("%d %f %f\n", st, ren->rays[st].d_x, ren->rays[st].d_y);
-        ren->hits[st] = dda_main(var, ren->rays[st]);
+    // printf("int hit %f %f\n",var->player.position_x, var->player.position_y);
+        var->ren->hits[st] = dda_main(var, *temp);
         // printf("%f\n", ren->hits[st].hit_pos.d_x);
-        printf("%d %f\n", st, ren->hits[st].perpWallDist);
+        // printf("%d %c\n", st, ren->hits[st].hit_side);
         // if (ren->hits[st].perpWallDist == 0.95)
             // break;
         st++;

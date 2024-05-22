@@ -32,12 +32,13 @@ void draw_map(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
     int height;
     t_img *tex;
     unsigned int *data;
+    
     t_coordinate  tex_range;
+
     if (draw.end < IMG_H)
         height = draw.end;
     else
         height = IMG_H;
-    st_xy->y = draw.start;
     tex = set_texture_ptr(var, hit->hit_side);
     while (st_xy->y < height)
     {
@@ -48,7 +49,7 @@ void draw_map(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
     }
 }
 
-void draw_ceil_floor(t_var *var, t_step *st_xy, t_draw draw)
+void draw_all(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
 {
     unsigned int *data;
     unsigned int color;
@@ -60,7 +61,7 @@ void draw_ceil_floor(t_var *var, t_step *st_xy, t_draw draw)
         *data = color;
         st_xy->y++;
     }
-    st_xy->y = draw.end;
+    draw_map(var, st_xy, draw, hit);
     color = change_int_to_rgb(var->floor[0], var->floor[1], var->floor[2]);
     while (st_xy->y < IMG_H)
     {
@@ -70,6 +71,35 @@ void draw_ceil_floor(t_var *var, t_step *st_xy, t_draw draw)
     }
 }
 
+// void draw_ceil(t_var *var, t_step *st_xy, t_draw draw)
+// {
+//     unsigned int *data;
+//     unsigned int color;
+        
+//     color = change_int_to_rgb(var->ceil[0], var->ceil[1], var->ceil[2]);
+//     while (st_xy->y < draw.start)
+//     {
+//         data = pixel_ptr(var->img, st_xy->x, st_xy->y);
+//         *data = color;
+//         st_xy->y++;
+//     }
+
+// }
+// void draw_floor(t_var *var, t_step *st_xy)
+// {
+//     unsigned int *data;
+//     unsigned int color;
+        
+
+
+//     color = change_int_to_rgb(var->floor[0], var->floor[1], var->floor[2]);
+//     while (st_xy->y < IMG_H)
+//     {
+//         data = pixel_ptr(var->img, st_xy->x, st_xy->y);
+//         *data = color;
+//         st_xy->y++;
+//     }
+// }
 
 int loop_in_render(t_var *var)
 {
@@ -78,7 +108,7 @@ int loop_in_render(t_var *var)
     t_draw  draw;
     t_hit   hit;
 
-    // move_player(var);
+    move_player(var);
     st_xy.x = 0;
     while (st_xy.x < IMG_W)
     {
@@ -87,8 +117,15 @@ int loop_in_render(t_var *var)
         draw.high = IMG_H / hit.perpWallDist;
         draw.start = (IMG_H - draw.high) / 2;
         draw.end = draw.start + draw.high;
-        draw_ceil_floor(var, &st_xy, draw);
-        draw_map(var, &st_xy, draw, &hit);
+        // printf("%f %d %f %d %d\n", hit.perpWallDist,IMG_H, draw.high, draw.start, draw.end);
+        draw_all(var, &st_xy, draw, &hit);
+        // draw_ceil(var, &st_xy, draw);
+        
+        // // draw_map(var, &st_xy, draw, &hit);
+        // draw_map(var, &st_xy, draw, &hit);
+        // draw_floor(var, &st_xy);
+
+
         st_xy.x++;
     }
     mlx_put_image_to_window(var->mlx_init_ptr, var->win_init_ptr, var->img->img_ptr, 0, 0);

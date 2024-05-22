@@ -19,6 +19,7 @@
 // }
 
 
+
 static void init_render_part(t_var *var)
 {
     var->map_height = double_ft_len(var->map);
@@ -42,11 +43,12 @@ int	render_mlx(t_var *var)
     init_render_part(var);
 
     // set_camera_value(var);
-	mlx_mouse_hide(var->mlx_init_ptr, var->win_init_ptr); 
 	mlx_hook(var->win_init_ptr, 17, 0, close_window, var);
-    mlx_hook(var->win_init_ptr, 2, (1L << 0), esc_exit, var);
-    // mlx_key_hook(var->win_init_ptr, key_pressed, var);
-    // mlx_key_hook(var->win_init_ptr, key_released, var);
+    // mlx_hook(var->win_init_ptr, 2, (1L << 0), esc_exit, var);
+    mlx_hook(var->win_init_ptr, 2, (1L << 0), key_pressed, var);
+    mlx_hook(var->win_init_ptr, 3, (1L << 1), key_released, var);
+	// mlx_hook(var->win_init_ptr, 6, (1L << 6), bonus_mouse, var);
+
 	mlx_loop_hook(var->mlx_init_ptr, loop_in_render, var);
 	mlx_loop(var->mlx_init_ptr);
     free_var(var);

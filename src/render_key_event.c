@@ -36,8 +36,8 @@ int esc_exit(int keysmbol, t_var *var)
     //     player_left_move(var);
     // else if (keysmbol == XK_S || keysmbol == XK_s)
     //     player_down_move(var);
-    else if (keysmbol == XK_W || keysmbol == XK_w)
-        player_up_move(var);
+    // else if (keysmbol == XK_W || keysmbol == XK_w)
+    //     player_up_move(var);
     // else if (keysmbol == XK_D || keysmbol == XK_d)
     //     player_right_move(var);
     return (EXIT_SUCCESS);
@@ -45,17 +45,19 @@ int esc_exit(int keysmbol, t_var *var)
 
 int key_pressed(int keysmbol, t_var *var)
 {
+    if (keysmbol == XK_Escape)
+        close_window(var);
     if (keysmbol == XK_Left)
         var->move.left_rotate = 1;
-    else if (keysmbol == XK_Right)
+    if (keysmbol == XK_Right)
         var->move.right_rotate = 1;
-    else if (keysmbol == XK_A || keysmbol == XK_a)
+    if (keysmbol == XK_A || keysmbol == XK_a)
         var->move.left_move = 1;
-    else if (keysmbol == XK_S || keysmbol == XK_s)
+    if (keysmbol == S || keysmbol == DOWN)
         var->move.down_move = 1;
-    else if (keysmbol == XK_W || keysmbol == XK_w)
+    if (keysmbol == W || keysmbol == UP)
         var->move.up_move = 1;
-    else if (keysmbol == XK_D || keysmbol == XK_d)
+    if (keysmbol == XK_D || keysmbol == XK_d)
         var->move.right_move = 1;
     return (0);
 }
@@ -63,15 +65,15 @@ int key_released(int keysmbol, t_var *var)
 {
     if (keysmbol == XK_Left)
         var->move.left_rotate = 0;
-    else if (keysmbol == XK_Right)
+    if (keysmbol == XK_Right)
         var->move.right_rotate = 0;
-    else if (keysmbol == XK_A || keysmbol == XK_a)
+    if (keysmbol == XK_A || keysmbol == XK_a)
         var->move.left_move = 0;
-    else if (keysmbol == XK_S || keysmbol == XK_s)
+    if (keysmbol == S || keysmbol == DOWN)
         var->move.down_move = 0;
-    else if (keysmbol == XK_W || keysmbol == XK_w)
+    if (keysmbol == W || keysmbol == UP)
         var->move.up_move = 0;
-    else if (keysmbol == XK_D || keysmbol == XK_d)
+    if (keysmbol == XK_D || keysmbol == XK_d)
         var->move.right_move = 0;
     return (0);
 }
