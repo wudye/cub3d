@@ -6,7 +6,7 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:02:46 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/22 14:29:20 by mwu              ###   ########.fr       */
+/*   Updated: 2024/05/23 16:57:09 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static void	init_img(t_var *var)
 	zero_img_init(var->north);
 }
 
-
 static t_var	*init_var(void)
 {
 	t_var	*res;
@@ -78,14 +77,14 @@ static t_var	*init_var(void)
 	res->map = NULL;
 	res->texture = NULL;
 	init_img(res);
-    res->ren = NULL;
-    res->move.down_move = 0;
-    res->move.up_move = 0;
-    res->move.left_move = 0;
-    res->move.right_move = 0;
-    res->move.right_rotate = 0;
-    res->move.left_rotate = 0;
-    return (res);
+	res->ren = NULL;
+	res->move.down_move = 0;
+	res->move.up_move = 0;
+	res->move.left_move = 0;
+	res->move.right_move = 0;
+	res->move.right_rotate = 0;
+	res->move.left_rotate = 0;
+	return (res);
 }
 
 /*
@@ -108,11 +107,10 @@ int	main(int argc, char **argv)
 			error_malloc(var);
 		if (parse_main(var, argv) == 1)
 			return (1);
-
 		if (render_mlx(var) == 1)
 			return (1);
-        if (var)
-            free_var(var);
+		if (var)
+			free_var(var);
 		return (0);
 	}
 	return (err_return_info("Error argument nums wrong", var));

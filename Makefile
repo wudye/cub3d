@@ -14,7 +14,7 @@ FILES  = main.c free_functions.c parse_main.c \
 		render_main.c check_map_value.c \
 		render_utils.c  render_set_value.c \
 		loop_in_render.c vector_operations.c \
-		dda_algo.c draw_map.c  render_player_rotate.c\
+		dda_algo.c render_player_rotate.c\
 		value_in_render.c render_key_event.c render_player_move.c\
 		get_next_line.c get_next_line_utils.c \
 

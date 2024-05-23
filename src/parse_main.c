@@ -6,7 +6,7 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:30:19 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/26 12:44:27 by mwu              ###   ########.fr       */
+/*   Updated: 2024/05/23 17:54:55 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static void	set_value_map(int fd, char **str, int len, t_var *var)
 	}
 	str[i] = 0;
 }
-
 
 static int	set_data_value(int fd, t_var *var, int len)
 {

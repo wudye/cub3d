@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_key_event.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 17:56:02 by mwu               #+#    #+#             */
+/*   Updated: 2024/05/23 17:59:39 by mwu              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../inc/cub3D.h"
 
-int close_window(t_var *var)
+int	close_window(t_var *var)
 {
-    free_var(var);
-    exit(EXIT_SUCCESS);
-    return (EXIT_SUCCESS);
+	free_var(var);
+	exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 /*
@@ -24,56 +35,39 @@ int close_window(t_var *var)
     minilibx (to be exact, Xlib handles it) internally. 
     What we're getting in handle_input is the correct key symbol.
 */
-int esc_exit(int keysmbol, t_var *var)
+
+int	key_pressed(int keysmbol, t_var *var)
 {
-    if (keysmbol == XK_Escape)
-        close_window(var);
-    // else if (keysmbol == XK_Left)
-    //     player_rotate(var, -3);
-    // else if (keysmbol == XK_Right)
-    //     player_rotate(var, 3);
-    // else if (keysmbol == XK_A || keysmbol == XK_a)
-    //     player_left_move(var);
-    // else if (keysmbol == XK_S || keysmbol == XK_s)
-    //     player_down_move(var);
-    // else if (keysmbol == XK_W || keysmbol == XK_w)
-    //     player_up_move(var);
-    // else if (keysmbol == XK_D || keysmbol == XK_d)
-    //     player_right_move(var);
-    return (EXIT_SUCCESS);
+	if (keysmbol == XK_Escape)
+		close_window(var);
+	if (keysmbol == XK_Left)
+		var->move.left_rotate = 1;
+	if (keysmbol == XK_Right)
+		var->move.right_rotate = 1;
+	if (keysmbol == XK_A || keysmbol == XK_a)
+		var->move.left_move = 1;
+	if (keysmbol == S || keysmbol == DOWN)
+		var->move.down_move = 1;
+	if (keysmbol == W || keysmbol == UP)
+		var->move.up_move = 1;
+	if (keysmbol == XK_D || keysmbol == XK_d)
+		var->move.right_move = 1;
+	return (0);
 }
 
-int key_pressed(int keysmbol, t_var *var)
+int	key_released(int keysmbol, t_var *var)
 {
-    if (keysmbol == XK_Escape)
-        close_window(var);
-    if (keysmbol == XK_Left)
-        var->move.left_rotate = 1;
-    if (keysmbol == XK_Right)
-        var->move.right_rotate = 1;
-    if (keysmbol == XK_A || keysmbol == XK_a)
-        var->move.left_move = 1;
-    if (keysmbol == S || keysmbol == DOWN)
-        var->move.down_move = 1;
-    if (keysmbol == W || keysmbol == UP)
-        var->move.up_move = 1;
-    if (keysmbol == XK_D || keysmbol == XK_d)
-        var->move.right_move = 1;
-    return (0);
-}
-int key_released(int keysmbol, t_var *var)
-{
-    if (keysmbol == XK_Left)
-        var->move.left_rotate = 0;
-    if (keysmbol == XK_Right)
-        var->move.right_rotate = 0;
-    if (keysmbol == XK_A || keysmbol == XK_a)
-        var->move.left_move = 0;
-    if (keysmbol == S || keysmbol == DOWN)
-        var->move.down_move = 0;
-    if (keysmbol == W || keysmbol == UP)
-        var->move.up_move = 0;
-    if (keysmbol == XK_D || keysmbol == XK_d)
-        var->move.right_move = 0;
-    return (0);
+	if (keysmbol == XK_Left)
+		var->move.left_rotate = 0;
+	if (keysmbol == XK_Right)
+		var->move.right_rotate = 0;
+	if (keysmbol == XK_A || keysmbol == XK_a)
+		var->move.left_move = 0;
+	if (keysmbol == S || keysmbol == DOWN)
+		var->move.down_move = 0;
+	if (keysmbol == W || keysmbol == UP)
+		var->move.up_move = 0;
+	if (keysmbol == XK_D || keysmbol == XK_d)
+		var->move.right_move = 0;
+	return (0);
 }

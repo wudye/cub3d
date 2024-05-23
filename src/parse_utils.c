@@ -12,6 +12,23 @@
 
 #include "../inc/cub3D.h"
 
+int	check_helper(char **map, int len)
+{
+	int	i;
+	int	maxi;
+
+	i = 0;
+	maxi = 0;
+	while (map[i])
+	{
+		len = ft_strlen(map[i]);
+		if (len > maxi)
+			maxi = len;
+		i++;
+	}
+	return (maxi);
+}
+
 int	parse_argv(char *str)
 {
 	int	n;
