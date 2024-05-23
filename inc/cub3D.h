@@ -42,7 +42,7 @@
 # define WEST 'W'
 # define EAST 'E'
 # define FOV 60
-# define PLAYER_MOVE 0.005
+# define PLAYER_MOVE 0.01
 # define PLAYER_ROTATE 2.0
 
 typedef struct s_var	t_var;
@@ -70,9 +70,9 @@ typedef struct s_step
 typedef struct s_hit
 {
 	char			hit_side;
-	t_coordinate	sideDist;
-	double			perpWallDist;
-	t_coordinate	deltaDist;
+	t_coordinate	sidedist;
+	double			perpwalldist;
+	t_coordinate	deltadist;
 	t_step			ray_map;
 	t_step			step;
 	double			pre_dist;

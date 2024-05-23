@@ -12,8 +12,6 @@
 
 #include "../inc/cub3D.h"
 
-#define PLAYER_MOVE 0.005
-
 void	player_up_move(t_var *var)
 {
 	double	new_posx;

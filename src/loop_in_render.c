@@ -93,7 +93,7 @@ int	loop_in_render(t_var *var)
 	{
 		st_xy.y = 0;
 		hit = var->ren->hits[st_xy.x];
-		draw.high = IMG_H / hit.perpWallDist;
+		draw.high = IMG_H / hit.perpwalldist;
 		draw.start = (IMG_H - draw.high) / 2;
 		draw.end = draw.start + draw.high;
 		draw_all(var, &st_xy, draw, &hit);
