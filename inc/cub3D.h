@@ -44,6 +44,7 @@
 # define FOV 60
 # define PLAYER_MOVE 0.01
 # define PLAYER_ROTATE 2.0
+# define M_D 0.0000001
 
 typedef struct s_var	t_var;
 

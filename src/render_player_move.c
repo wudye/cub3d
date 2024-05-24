@@ -21,8 +21,8 @@ void	player_up_move(t_var *var)
 	new_posy = var->player.position_y + var->player.dir.d_y * PLAYER_MOVE;
 	if (var->map[(int)var->player.position_y][(int)new_posx] != '1')
 		var->player.position_x += var->player.dir.d_x * PLAYER_MOVE;
-	if (var->map[(int)new_posy][(int)var->player.position_x] != '1')
-		var->player.position_y += var->player.dir.d_y * PLAYER_MOVE;
+	if (var->map[(int)(new_posy - M_D)][(int)var->player.position_x] != '1')
+		var->player.position_y += var->player.dir.d_y * PLAYER_MOVE - M_D;
 	hit_value_set(var);
 }
 
@@ -35,8 +35,8 @@ void	player_down_move(t_var *var)
 	new_posy = var->player.position_y - var->player.dir.d_y * PLAYER_MOVE;
 	if (var->map[(int)var->player.position_y][(int)new_posx] != '1')
 		var->player.position_x -= var->player.dir.d_x * PLAYER_MOVE;
-	if (var->map[(int)new_posy][(int)var->player.position_x] != '1')
-		var->player.position_y -= var->player.dir.d_y * PLAYER_MOVE;
+	if (var->map[(int)(new_posy + M_D)][(int)var->player.position_x] != '1')
+		var->player.position_y -= var->player.dir.d_y * PLAYER_MOVE + M_D;
 	hit_value_set(var);
 }
 
@@ -47,7 +47,7 @@ void	player_left_move(t_var *var)
 	double	new_dirx;
 	double	new_diry;
 
-	new_dirx = var->player.dir.d_x * cosf(-M_PI / 2) - \
+	new_dirx = var->player.dir.d_x * cosf(-M_PI / 2) - M_D - \
 var->player.dir.d_y * sinf(-M_PI / 2);
 	new_diry = var->player.dir.d_x * sinf(-M_PI / 2) + \
 var->player.dir.d_y * cosf(-M_PI / 2);
@@ -67,7 +67,7 @@ void	player_right_move(t_var *var)
 	double	new_dirx;
 	double	new_diry;
 
-	new_dirx = var->player.dir.d_x * cosf(M_PI / 2) - \
+	new_dirx = var->player.dir.d_x * cosf(M_PI / 2) + M_D - \
 var->player.dir.d_y * sinf(M_PI / 2);
 	new_diry = var->player.dir.d_x * sinf(M_PI / 2) + \
 var->player.dir.d_y * cosf(M_PI / 2);
