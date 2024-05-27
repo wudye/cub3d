@@ -28,6 +28,15 @@ t_img	*set_texture_ptr(t_var *var, char c)
 		return (var->east);
 }
 
+t_coordinate	cal_texture(t_hit *hit, t_draw draw, int n)
+{
+	t_coordinate	dist;
+
+	dist.d_x = hit->hit_pos.d_x - (int)hit->hit_pos.d_x;
+	dist.d_x += hit->hit_pos.d_y - (int)hit->hit_pos.d_y;
+	dist.d_y = (n - draw.start) / (draw.high);
+	return (dist);
+}
 
 void	draw_map(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
 {
