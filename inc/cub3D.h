@@ -187,7 +187,6 @@ void			vectot_rotate_by_angle(t_coordinate *ray, double angle, \
 				t_player player, double fov_rat);
 t_hit			dda_main(t_var *var, t_coordinate ray);
 int				loop_in_render(t_var *var);
-unsigned int	texture_pixel(t_img *tex, t_coordinate tex_range);
 void			*pixel_ptr(t_img *img, int x, int y);
 int				close_window(t_var *var);
 int				esc_exit(int keysmbol, t_var *var);
@@ -196,4 +195,7 @@ int				key_released(int keysmbol, t_var *var);
 void			move_player(t_var *var);
 void			hit_value_set(t_var *var);
 int				bonus_mouse(int x, int y, t_var *var);
+unsigned int	texture_pixel_E_N(t_img *tex, t_coordinate tex_range);
+unsigned int	texture_pixel_S_W(t_img *tex, t_coordinate tex_range);
+
 #endif
