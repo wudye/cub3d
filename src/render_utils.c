@@ -42,7 +42,7 @@ unsigned int	texture_pixel_E_N(t_img *tex, t_coordinate tex_range)
 {
 	unsigned int	*res;
 	res = (unsigned int *) tex->img_addr;
-    res += (unsigned int)((fabs((64 - (64 * tex_range.d_x))))) + (int)(tex_range.d_y * 64) * 64;
+    res += (unsigned int)(((128 - (64 * tex_range.d_x)))) + (int)(tex_range.d_y * 64) * 64;
 
     return (*res);
 }
