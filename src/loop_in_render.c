@@ -37,7 +37,14 @@ t_coordinate	cal_texture(t_hit *hit, t_draw draw, int n)
 	dist.d_y = (n - draw.start) / (draw.high);
 	return (dist);
 }
+unsigned int	texture_pixel_E_N(t_img *tex, t_coordinate tex_range)
+{
+	unsigned int	*res;
+	res = (unsigned int *) tex->img_addr;
+    res += (unsigned int)((fabs((64 - (64 * tex_range.d_x))))) + (int)(tex_range.d_y * 64) * 64;
 
+    return (*res);
+}
 void	draw_map(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
 {
 	int				height;
@@ -50,14 +57,49 @@ void	draw_map(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
 	else
 		height = IMG_H;
 	tex = set_texture_ptr(var, hit->hit_side);
+    if (hit->hit_side == 'N' || hit->hit_side == 'E')
+    {
 	while (st_xy->y < height)
 	{
 		data = pixel_ptr(var->img, st_xy->x, st_xy->y);
 		tex_range = cal_texture(hit, draw, st_xy->y);
-		*data = texture_pixel(tex, tex_range);
+		*data = texture_pixel_E_N(tex, tex_range);
 		st_xy->y++;
 	}
+    }
+    else
+    {
+     	while (st_xy->y < height)
+	{
+		data = pixel_ptr(var->img, st_xy->x, st_xy->y);
+		tex_range = cal_texture(hit, draw, st_xy->y);
+		*data = texture_pixel_S_W(tex, tex_range);
+		st_xy->y++;
+	}   
+    }
+
 }
+
+// void	draw_map(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
+// {
+// 	int				height;
+// 	t_img			*tex;
+// 	unsigned int	*data;
+// 	t_coordinate	tex_range;
+
+// 	if (draw.end < IMG_H)
+// 		height = draw.end;
+// 	else
+// 		height = IMG_H;
+// 	tex = set_texture_ptr(var, hit->hit_side);
+// 	while (st_xy->y < height)
+// 	{
+// 		data = pixel_ptr(var->img, st_xy->x, st_xy->y);
+// 		tex_range = cal_texture(hit, draw, st_xy->y);
+// 		*data = texture_pixel(tex, tex_range);
+// 		st_xy->y++;
+// 	}
+// }
 
 void	draw_all(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
 {
