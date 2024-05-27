@@ -28,23 +28,7 @@ t_img	*set_texture_ptr(t_var *var, char c)
 		return (var->east);
 }
 
-t_coordinate	cal_texture(t_hit *hit, t_draw draw, int n)
-{
-	t_coordinate	dist;
 
-	dist.d_x = hit->hit_pos.d_x - (int)hit->hit_pos.d_x;
-	dist.d_x += hit->hit_pos.d_y - (int)hit->hit_pos.d_y;
-	dist.d_y = (n - draw.start) / (draw.high);
-	return (dist);
-}
-unsigned int	texture_pixel_E_N(t_img *tex, t_coordinate tex_range)
-{
-	unsigned int	*res;
-	res = (unsigned int *) tex->img_addr;
-    res += (unsigned int)((fabs((64 - (64 * tex_range.d_x))))) + (int)(tex_range.d_y * 64) * 64;
-
-    return (*res);
-}
 void	draw_map(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
 {
 	int				height;
