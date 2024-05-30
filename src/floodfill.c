@@ -37,7 +37,7 @@ static void	flood_fill(char **map, int x, int y)
 {
 	if (y >= 0 && x >= 0 && (map[y] && (int)ft_strlen(map[y]) > x)
 		&& (map[y][x] == '0' || map[y][x] == ' ' || map[y][x] == 'N'
-	 || map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'W'))
+	|| map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'W'))
 	{
 		if (map[y][x] == ' ')
 			map[y][x] = '2';

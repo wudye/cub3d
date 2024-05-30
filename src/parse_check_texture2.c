@@ -16,7 +16,7 @@ static void	arr_to_str2(char *s, char **str)
 {
 	int	i;
 	int	j;
-	int k;
+	int	k;
 
 	i = 1;
 	k = 0;
@@ -57,8 +57,8 @@ static char	*arr_to_str(char *st, t_var *var)
 char	*ctc2(char *st, t_var *var)
 {
 	char	*st2;
-	int	i;
-	int	commas;
+	int		i;
+	int		commas;
 
 	i = 0;
 	commas = 0;

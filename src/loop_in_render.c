@@ -50,27 +50,16 @@ void	draw_map(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
 	else
 		height = IMG_H;
 	tex = set_texture_ptr(var, hit->hit_side);
-    if (hit->hit_side == 'N' || hit->hit_side == 'E')
-    {
 	while (st_xy->y < height)
 	{
 		data = pixel_ptr(var->img, st_xy->x, st_xy->y);
 		tex_range = cal_texture(hit, draw, st_xy->y);
-		*data = texture_pixel_E_N(tex, tex_range);
+		if (hit->hit_side == 'N' || hit->hit_side == 'E')
+			*data = texture_pixel_e_n(tex, tex_range);
+		else
+			*data = texture_pixel_s_w(tex, tex_range);
 		st_xy->y++;
 	}
-    }
-    else
-    {
-     	while (st_xy->y < height)
-	{
-		data = pixel_ptr(var->img, st_xy->x, st_xy->y);
-		tex_range = cal_texture(hit, draw, st_xy->y);
-		*data = texture_pixel_S_W(tex, tex_range);
-		st_xy->y++;
-	}   
-    }
-
 }
 
 // void	draw_map(t_var *var, t_step *st_xy, t_draw draw, t_hit *hit)
