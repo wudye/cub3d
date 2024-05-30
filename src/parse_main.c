@@ -149,6 +149,8 @@ int	parse_main(t_var *var, char **argv)
 		return (1);
 	if (check_texture(var, var->texture) == 1)
 		return (1);
+	if (check_map_floodfill(var, var->map) == 1)
+		return (1);
 	if (check_map_numbers(var, var->map) == 1)
 		return (1);
 	return (0);

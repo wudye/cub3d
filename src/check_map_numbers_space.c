@@ -67,7 +67,7 @@ static bool	dfs_zero(int i, int j, char **str)
 
 	row = double_ft_len(str);
 	col = ft_strlen(str[0]);
-	if (str[i][j] == '2' && (i + 1 <= row
+	if ((i >= 0 && j >= 0 && str[i]) && str[i][j] == '2' && (i + 1 <= row
 							|| i - 1 >= -1 || j + 1 <= col || j - 1 >= -1))
 		return (false);
 	return (true);

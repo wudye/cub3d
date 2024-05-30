@@ -97,7 +97,7 @@ int	check_map_numbers(t_var *var, char **map)
 	len = double_ft_len(map);
 	map_help = reset_map_value(map, var, len);
 	if (check_map_value(var, map_help) == false)
-		return (1);
+		return (free_double_ptr(map_help), 1);
 	map_copy = malloc(sizeof(char *) * (len + 1));
 	if (!map_copy)
 		error_malloc(var);

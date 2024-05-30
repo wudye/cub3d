@@ -8,7 +8,7 @@ CC     = cc
 CFLAGS = -Wall -Wextra -Werror -g
 NAME   = cub3D
 FILES  = main.c free_functions.c parse_main.c \
-		parse_utils.c parse_check_texture.c \
+		parse_utils.c parse_check_texture.c parse_check_texture2.c \
 		parse_check_texture_help.c check_map_numbers.c\
 		check_map_numbers_space.c check_map_numbers_wall.c \
 		render_main.c check_map_value.c \
@@ -16,7 +16,7 @@ FILES  = main.c free_functions.c parse_main.c \
 		loop_in_render.c vector_operations.c \
 		dda_algo.c render_player_rotate.c\
 		value_in_render.c render_key_event.c render_player_move.c\
-		get_next_line.c get_next_line_utils.c \
+		get_next_line.c get_next_line_utils.c floodfill.c
 
 
 

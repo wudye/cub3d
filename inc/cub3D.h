@@ -197,5 +197,8 @@ void			hit_value_set(t_var *var);
 int				bonus_mouse(int x, int y, t_var *var);
 unsigned int	texture_pixel_E_N(t_img *tex, t_coordinate tex_range);
 unsigned int	texture_pixel_S_W(t_img *tex, t_coordinate tex_range);
+int				check_map_floodfill(t_var *var, char **map);
+char			*ctc2(char *st, t_var *var);
+int				count_nrs(char *s);
 
 #endif
