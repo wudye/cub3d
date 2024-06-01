@@ -6,11 +6,11 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 18:19:58 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/25 14:33:55 by mwu              ###   ########.fr       */
+/*   Updated: 2024/05/23 17:43:28 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 void	free_double_ptr(char **str)
 {
@@ -34,16 +34,6 @@ static void	free_img(t_var *var, t_img *img)
 	free(img);
 }
 
-/*
- if (var->north->img_ptr)
-       mlx_destroy_image(var->mlx_init_ptr, var->north->img_ptr);
- if (var->sourth->img_ptr)
-        mlx_destroy_image(var->mlx_init_ptr, var->sourth->img_ptr);
- if (var->east->img_ptr)
-       mlx_destroy_image(var->mlx_init_ptr, var->east->img_ptr);
- if (var->west->img_ptr)
-      mlx_destroy_image(var->mlx_init_ptr, var->west->img_ptr);
-*/
 void	destroy_mlxlib(t_var *var)
 {
 	if (var->north)
@@ -54,6 +44,8 @@ void	destroy_mlxlib(t_var *var)
 		free_img(var, var->west);
 	if (var->east)
 		free_img(var, var->east);
+	if (var->img)
+		free_img(var, var->img);
 	if (var->win_init_ptr)
 	{
 		mlx_destroy_window(var->mlx_init_ptr, var->win_init_ptr);
@@ -73,6 +65,14 @@ void	free_var(t_var *var)
 	destroy_mlxlib(var);
 	free_double_ptr(var->map);
 	free_double_ptr(var->texture);
+	if (var->ren)
+	{
+		if (var->ren->rays)
+			free(var->ren->rays);
+		if (var->ren->hits)
+			free(var->ren->hits);
+		free(var->ren);
+	}
 	free(var);
 }
 

@@ -6,11 +6,28 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:48:08 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/25 14:37:29 by mwu              ###   ########.fr       */
+/*   Updated: 2024/04/22 14:52:11 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
+
+int	check_helper(char **map, int len)
+{
+	int	i;
+	int	maxi;
+
+	i = 0;
+	maxi = 0;
+	while (map[i])
+	{
+		len = ft_strlen(map[i]);
+		if (len > maxi)
+			maxi = len;
+		i++;
+	}
+	return (maxi);
+}
 
 int	parse_argv(char *str)
 {
@@ -74,16 +91,4 @@ int	get_file_length1(int fd, int len)
 	if (j > 0)
 		return (-1);
 	return (i);
-}
-
-void	set_angle_value(float angle, map[i][j])
-{
-	if (map[i][j] == 'N')
-		angle = 90;
-	else if (map[i][j] == 'S')
-		angle = 0;
-	else if (map[i][j] == 'W')
-		angle = 180;
-	else if (map[i][j] == 'E')
-		angle = 270;
 }

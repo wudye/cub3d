@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
 
 static bool	dfs_al(char **map, int j, int k)
 {
@@ -22,15 +22,15 @@ static bool	dfs_al(char **map, int j, int k)
 	if ((j - 1 >= 0 && j + 1 < row && k - 1 >= 0 && k + 1 < col) \
 	&& (map[j - 1][k] == '0' || map[j + 1][k] == '0' \
 	|| map[j][k - 1] == '0' || map[j][k + 1] == '0'))
-		return (false);
+		return (printf("test\n"), false);
 	else if (j + 1 == row && k - 1 >= 0 && k + 1 < col
 		&& (map[j - 1][k] == '0' || map[j][k - 1] == '0'
 				|| map[j][k + 1] == '0'))
-		return (false);
+		return (printf("test1\n"), false);
 	else if ((j - 1 >= 0 && j + 1 < row && k + 1 == col)
 		&& (map[j - 1][k] == '0' || map[j + 1][k] == '0'
 				|| map[j][k - 1] == '0'))
-		return (false);
+		return (printf("test2\n"), false);
 	return (true);
 }
 

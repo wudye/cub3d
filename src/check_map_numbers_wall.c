@@ -6,11 +6,40 @@
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:41:55 by mwu               #+#    #+#             */
-/*   Updated: 2024/04/25 14:32:48 by mwu              ###   ########.fr       */
+/*   Updated: 2024/05/23 17:27:08 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/cub3D.h"
+
+int	set_player_value(char **map, t_var *var)
+{
+	int	i;
+	int	j;
+	int	num;
+
+	num = 0;
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (ft_strchr(PLAYER, map[i][j]))
+			{
+				var->player.position_y = i + 0.5;
+				var->player.position_x = j + 0.5;
+				var->player.player_dir = map[i][j];
+				num += 1;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (num != 1)
+		return (1);
+	return (0);
+}
 
 static int	handle_mid_lines(char **map)
 {
@@ -23,6 +52,9 @@ static int	handle_mid_lines(char **map)
 	while (i < e)
 	{
 		len = ft_strlen(map[i]) - 1;
+		while (len > 0 && map[i][len] \
+						&& (map[i][len] == ' ' || map[i][len] == '\t'))
+			len--;
 		if (map[i][0] != '1' || map[i][len] != '1')
 			return (1);
 		i++;
@@ -53,46 +85,11 @@ static int	handle_first_end_line(char **map)
 	return (0);
 }
 
-static int	set_player_value(char **map, t_var *var, int i, int num)
-{
-	int	j;
-
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (ft_strchr(PLAYER, map[i][j]))
-			{
-				var->player_x = i;
-				var->player_y = j;
-				set_angle_value(var->angle, map[i][j]);
-				num += 1;
-			}
-			else if (map[i][j] != '1' && map[i][j] != ' ' && map[i][j] != '0' \
-							&& !ft_strchr(PLAYER, map[i][j]))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	if (num != 1)
-		return (1);
-	return (0);
-}
-
 int	handle_walls(t_var *var, char **map)
 {
-	int	i;
-	int	num;
-
-	i = 0;
-	num = 0;
 	if (handle_first_end_line(map) == 1)
 		return (err_return_info("Error map walls wrong", var), 1);
 	if (handle_mid_lines(map) == 1)
 		return (err_return_info("Error map walls wrong", var), 1);
-	if (set_player_value(map, var, i, num) == 1)
-		return (err_return_info("Erorr player fail", var), 1);
 	return (0);
 }
