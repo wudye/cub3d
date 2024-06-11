@@ -32,13 +32,20 @@ int	check_helper(char **map, int len)
 int	parse_argv(char *str)
 {
 	int	n;
+	char **str1;
+	char *str2;
+	int len;
 
-	n = ft_strlen(str);
+	str1 = ft_split(str, '/');
+	len = double_ft_len(str1);
+	str2 = str1[len - 1];
+	n = ft_strlen(str2);
 	if (n == 4)
-		return (ft_putstr_fd("Error need full file name\n", 2), 1);
-	str += (n - 4);
-	if (ft_strncmp(str, ".cub", 5) == 0)
-		return (0);
+		return (free_double_ptr(str1), ft_putstr_fd("Error need full file name\n", 2), 1);
+	str2 += (n - 4);
+	if (ft_strncmp(str2, ".cub", 5) == 0)
+		return (free_double_ptr(str1), 0);
+	free_double_ptr(str1);
 	return (1);
 }
 
@@ -50,6 +57,22 @@ int	double_ft_len(char **str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+bool check_tab_first(char *temp1)
+{
+	int i;
+	int len;
+
+	len = ft_strlen(temp1);
+	i = 0;
+	while (i < len - 1)
+	{
+		if (temp1[i] != 9)
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 static void	length1_help(int fd, int len, int *i, int *j)
@@ -64,17 +87,15 @@ static void	length1_help(int fd, int len, int *i, int *j)
 			break ;
 		temp1 = ft_strtrim(temp, " ");
 		free(temp);
-		temp = ft_strtrim(temp1, "\t");
-		free(temp1);
-		if (temp && ft_strncmp(temp, "\n", 2) == 0)
+		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0 || check_tab_first(temp1)))
 		{
-			free(temp);
-			if (*i > 6 && *i < len)
-				(*j)++;
-			continue ;
+			free(temp1);
+			continue;
 		}
 		(*i)++;
-		free(temp);
+		if (*i > 5 && *i < len)
+			(*j)++;
+		free(temp1);
 	}
 }
 
@@ -86,9 +107,9 @@ int	get_file_length1(int fd, int len)
 	j = 0;
 	i = 0;
 	length1_help(fd, len, &i, &j);
-	if (i - 6 == 0)
+	if (i - 6 <= 0)
 		return (-1);
-	if (j > 0)
+	if (j < 0)
 		return (-1);
 	return (i);
 }

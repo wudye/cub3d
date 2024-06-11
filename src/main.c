@@ -108,7 +108,7 @@ int	main(int argc, char **argv)
 		if (parse_main(var, argv) == 1)
 			return (1);
 		if (render_mlx(var) == 1)
-			return (1);
+			return (free_var(var), 1);
 		if (var)
 			free_var(var);
 		return (0);

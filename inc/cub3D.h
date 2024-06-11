@@ -148,6 +148,25 @@ typedef struct s_var
 	t_move		move;
 }	t_var;
 
+typedef struct s_repeat
+{
+	int no;
+	int so;
+	int we;
+	int ea;
+	int f;
+	int c;
+} t_repeat;
+
+typedef struct s_p_nums
+{
+	int np;
+	int sp;
+	int wp;
+	int ep;
+} t_p_nums;
+
+
 int				main(int argc, char **arv);
 int				parse_main(t_var *var, char **argv);
 int				parse_argv(char *str);
@@ -197,5 +216,5 @@ void			hit_value_set(t_var *var);
 int				bonus_mouse(int x, int y, t_var *var);
 unsigned int	texture_pixel_E_N(t_img *tex, t_coordinate tex_range);
 unsigned int	texture_pixel_S_W(t_img *tex, t_coordinate tex_range);
-
+bool check_tab_first(char *temp1);
 #endif
