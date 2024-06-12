@@ -137,12 +137,12 @@ void put_wall_two(char **map)
 			j++;
 		}
 	
-	int i = 0;
-	while (map[i])
-	{
-		printf("right>%s<\n", map[i]);
-		i++;
-	}	
+	// int i = 0;
+	// while (map[i])
+	// {
+	// 	printf("right>%s<\n", map[i]);
+	// 	i++;
+	// }	
 	
 	
 	
@@ -160,8 +160,9 @@ bool check_four_walls_help(int line, char **map, int flag)
 	len = ft_strlen(temp) - 1;
 	if (flag == 1)
 	{
-		// printf("%c %c\n", temp[len], temp[line] );
-		if (temp[len] != '1' || temp[line] != '1')
+
+		// printf("%c %c\n", temp[0], temp[len] );
+		if (temp[0] != '1' || temp[len] != '1')
 			return (free(temp), false);
 	}
 	if (flag == 0)
@@ -185,13 +186,16 @@ bool check_four_walls(char **map)
 	len = double_ft_len(map) - 1;
 	if (!check_four_walls_help(0, map, 0) || !check_four_walls_help(len, map, 0))
 		return (false);
+	// printf("finished\n");
 	i = 1;
 	while (i <= len - 1)
 	{
-		if (!check_four_walls_help(len, map, 1))
+		if (check_four_walls_help(i, map, 1) == false)
 			return (false);
 		i++;
-	} 
+	}
+		// printf("finished\n");
+
 	return (true);
 
 }
@@ -252,15 +256,21 @@ bool check_player_surround(char **map)
 	len = double_ft_len(map) - 1;
 	max_row = ft_strlen(map[0]) - 1;
 	i = 1;
-	while (i <= len)
+	while (i < len)
 	{
-		printf("%s\n", map[i]);
+		// printf("%s\n", map[i]);
 		j = 1;
-		while (map[i][j])
+		while (j < max_row)
 		{
 			if (ft_strchr(PLAYER, map[i][j]))
 			{
-				if (player_flood_fill(i, j, map) == false)
+				if (player_flood_fill(i + 1, j, map) == false)
+					return(ft_putstr_fd("Error player surround\n", 2), false);
+				if (player_flood_fill(i - 1, j, map) == false)
+					return(ft_putstr_fd("Error player surround\n", 2), false);
+				if (player_flood_fill(i, j + 1, map) == false)
+					return(ft_putstr_fd("Error player surround\n", 2), false);
+				if (player_flood_fill(i, j - 1, map) == false)
 					return(ft_putstr_fd("Error player surround\n", 2), false);
 			}
 			j++;
