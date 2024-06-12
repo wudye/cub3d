@@ -217,7 +217,59 @@ bool check_space_surround(int i, int j, char **map)
 			return check_space_surround(i, j - 1, map);
 	}
 	return (true);
-	
+}
+
+bool player_flood_fill(int i, int j, char **map)
+{
+		int max_row;
+	int len;
+
+	len = double_ft_len(map) - 1;
+	max_row = ft_strlen(map[0]) - 1;
+	if (map[i][j] == '2')
+		return (false);
+	else if (map[i][j] == '0')
+	{
+		if (i + 1 >= 0 && i +1 <= len && j >= 0 && j <= max_row)
+			return check_space_surround(i + 1, j, map);
+		if (i - 1 >= 0 && i - 1 <= len && j >= 0 && j <= max_row)
+			return check_space_surround(i - 1, j, map);
+		if (i >= 0 && i <= len && j + 1 >= 0 && j + 1 <= max_row)
+			return check_space_surround(i, j + 1, map);
+		if (i >= 0 && i <= len && j - 1 >= 0 && j - 1 <= max_row)
+			return check_space_surround(i, j - 1, map);
+	}
+	return (true);
+}
+
+bool check_player_surround(char **map)
+{
+	int i;
+	int j;
+		int max_row;
+	int len;
+
+	len = double_ft_len(map) - 1;
+	max_row = ft_strlen(map[0]) - 1;
+	i = 1;
+	while (i <= len)
+	{
+		printf("%s\n", map[i]);
+		j = 1;
+		while (map[i][j])
+		{
+			if (ft_strchr(PLAYER, map[i][j]))
+			{
+				if (player_flood_fill(i, j, map) == false)
+					return(ft_putstr_fd("Error player surround\n", 2), false);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (true);
+
+
 }
 static int	check_map_helper(char **map_copy, \
 				t_var *var, char **map)
@@ -234,7 +286,7 @@ static int	check_map_helper(char **map_copy, \
 	// if (handle_walls(var, map) == 1)
 	// 	return (free_double_ptr(map_copy), 1);
 	if (check_four_walls(map) == false)
-		return (1);
+		return (ft_putstr_fd("Error in walls\n", 2), 1);
 	put_wall_two(map_copy);
 
 	int i = 1;
@@ -246,15 +298,16 @@ static int	check_map_helper(char **map_copy, \
 		{
 			// printf("%c\n", map_copy[i][j]);
 			if (map_copy[i][j] == '0' && check_space_surround(i, j, map_copy) == false)
-				return (1);
+				return (ft_putstr_fd("Error in space\n", 2), 1);
 			j++;			
 		}
 		// printf("<%s> %d %d %d\n", map_copy[i], len, max_row, j);
 		i++;
 	}
+
+	if (check_player_surround(map_copy) == false)
+		return (ft_putstr_fd("Error in player\n", 2), 1);
 	
-	
-(void)var;
 	if (set_player_value(map, var) == 1)
 		return (1);
 	return (0);
