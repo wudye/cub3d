@@ -43,7 +43,7 @@ static bool	space_check_surrond(char **map, char **map_copy)
 			if (map_copy[i][j] == '0')
 			{
 				if (space_check_surrond_help(map_copy, i, j) == false)
-					return (true);
+					return (false);
 			}
 			j++;
 		}

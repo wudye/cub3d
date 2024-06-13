@@ -52,18 +52,22 @@ bool	check_tab_first(char *temp1)
 	i = 0;
 	while (i < len - 1)
 	{
-		if (temp1[i] != 9)
-			return (false);
+		if (temp1[i] == 9)
+			return (true);
 		i++;
 	}
-	return (true);
+	return (false);
 }
 
 static void	length1_help(int fd, int len, int *i, int *j)
 {
 	char	*temp;
 	char	*temp1;
+	int		cp;
+	int		k;
 
+	cp = 0;
+	k = 0;
 	while (1)
 	{
 		temp = get_next_line(fd);
@@ -71,17 +75,59 @@ static void	length1_help(int fd, int len, int *i, int *j)
 			break ;
 		temp1 = ft_strtrim(temp, " ");
 		free(temp);
-		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0 \
-		|| check_tab_first(temp1)))
+		if (*i >= 6)
+		{
+			printf("%s\n", temp1);
+			free(temp1);
+			break;
+		}
+		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0))
 		{
 			free(temp1);
 			continue ;
 		}
 		(*i)++;
-		if (*i > 5 && *i < len)
-			(*j)++;
+		k++;
 		free(temp1);
 	}
+	while (1)
+	{
+		temp = get_next_line(fd);
+		if (temp == NULL)
+			break ;
+		temp1 = ft_strtrim(temp, " ");
+		free(temp);
+		if (temp1 && (ft_strncmp(temp1, "\n", 2) != 0))
+		{	
+			free(temp1);
+			break ;
+		}
+		free(temp1);
+		(*i)++;
+	}
+	while (1)
+	{
+		temp = get_next_line(fd);
+		if (temp == NULL)
+			break ;
+		temp1 = ft_strtrim(temp, " ");
+		free(temp);
+		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0))
+		{	
+			if (*i <= len)
+				(*j)--;
+			free(temp1);
+			continue; ;
+		}
+		cp++;
+		(*j)++;
+		(*i)++;
+		free(temp1);
+	}
+	
+	(*i) = k;
+	(*j) -= cp;
+
 }
 
 int	get_file_length1(int fd, int len)
@@ -92,7 +138,7 @@ int	get_file_length1(int fd, int len)
 	j = 0;
 	i = 0;
 	length1_help(fd, len, &i, &j);
-	if (i - 6 <= 0)
+	if (i - 6 != 0)
 		return (-1);
 	if (j < 0)
 		return (-1);

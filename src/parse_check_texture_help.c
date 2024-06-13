@@ -58,9 +58,9 @@ void	set_nums_value(t_p_nums *s_p_nums, char p)
 		s_p_nums->np += 1;
 	if (p == 'S')
 		s_p_nums->sp += 1;
-	if (p == 'w')
+	if (p == 'W')
 		s_p_nums->wp += 1;
-	if (p == 'e')
+	if (p == 'E')
 		s_p_nums->ep += 1;
 }
 

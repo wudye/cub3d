@@ -103,6 +103,8 @@ static int	open_map_file(char *filename, t_var *var)
 
 int	parse_main(t_var *var, char **argv)
 {
+	if (check_tabs(argv[1], var) == false)
+		return (1);
 	if (open_map_file(argv[1], var) == 1)
 		return (1);
 	if (check_texture(var, var->texture) == 1)

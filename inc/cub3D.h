@@ -231,4 +231,6 @@ bool			player_numbers(t_p_nums *n);
 bool			check_player_numbers(char **map);
 void			get_file_length_help(int fd, int *i);
 int				check_helper(char **map, int len);
+void			length1_help_help(int *i, int *j, int len);
+bool			check_tabs(char *filename, t_var *var);
 #endif
