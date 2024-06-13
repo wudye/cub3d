@@ -233,4 +233,5 @@ void			get_file_length_help(int fd, int *i);
 int				check_helper(char **map, int len);
 void			length1_help_help(int *i, int *j, int len);
 bool			check_tabs(char *filename, t_var *var);
+void			length1_help(int fd, int len, int *i, int *j);
 #endif

@@ -56,14 +56,22 @@ int	check_helper(char **map, int len)
 	return (maxi);
 }
 
-bool	check_tabs(char *filename, t_var *var)
+int	check_tabs_help(char *filename, t_var *var)
 {
-	char	*temp1;
 	int		fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (err_return_info("Error can not open the map", var));
+	return (fd);
+}
+
+bool	check_tabs(char *filename, t_var *var)
+{
+	char	*temp1;
+	int		fd;
+
+	fd = check_tabs_help(filename, var);
 	while (1)
 	{
 		temp1 = get_next_line(fd);
@@ -84,6 +92,5 @@ bool	check_tabs(char *filename, t_var *var)
 		free(temp1);
 	}
 	close(fd);
-	
 	return (true);
 }
