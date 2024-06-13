@@ -12,36 +12,20 @@
 
 #include "../inc/cub3D.h"
 
-int	check_helper(char **map, int len)
-{
-	int	i;
-	int	maxi;
-
-	i = 0;
-	maxi = 0;
-	while (map[i])
-	{
-		len = ft_strlen(map[i]);
-		if (len > maxi)
-			maxi = len;
-		i++;
-	}
-	return (maxi);
-}
-
 int	parse_argv(char *str)
 {
-	int	n;
-	char **str1;
-	char *str2;
-	int len;
+	int		n;
+	char	**str1;
+	char	*str2;
+	int		len;
 
 	str1 = ft_split(str, '/');
 	len = double_ft_len(str1);
 	str2 = str1[len - 1];
 	n = ft_strlen(str2);
 	if (n == 4)
-		return (free_double_ptr(str1), ft_putstr_fd("Error need full file name\n", 2), 1);
+		return (free_double_ptr(str1), \
+		ft_putstr_fd("Error need full file name\n", 2), 1);
 	str2 += (n - 4);
 	if (ft_strncmp(str2, ".cub", 5) == 0)
 		return (free_double_ptr(str1), 0);
@@ -59,10 +43,10 @@ int	double_ft_len(char **str)
 	return (i);
 }
 
-bool check_tab_first(char *temp1)
+bool	check_tab_first(char *temp1)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	len = ft_strlen(temp1);
 	i = 0;
@@ -87,10 +71,11 @@ static void	length1_help(int fd, int len, int *i, int *j)
 			break ;
 		temp1 = ft_strtrim(temp, " ");
 		free(temp);
-		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0 || check_tab_first(temp1)))
+		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0 \
+		|| check_tab_first(temp1)))
 		{
 			free(temp1);
-			continue;
+			continue ;
 		}
 		(*i)++;
 		if (*i > 5 && *i < len)

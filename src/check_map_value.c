@@ -34,7 +34,8 @@ void	set_value_texture(int fd, char **str, int len, t_var *var)
 			break ;
 		temp1 = ft_strtrim(temp, " ");
 		free(temp);
-		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0 || check_tab_first(temp1)))
+		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0 \
+		|| check_tab_first(temp1)))
 		{
 			free(temp1);
 			continue ;
@@ -53,12 +54,6 @@ bool	check_map_value(t_var *var, char **map)
 	int	j;
 
 	(void) var;
-	// i = 0;
-	// while (map[i])
-	// {
-	// 	printf("test%s \n", map[i]);
-	// 	i++;
-	// }
 	i = 0;
 	while (map[i])
 	{

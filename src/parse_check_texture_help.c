@@ -51,53 +51,53 @@ int	check_color_value(char *str, int *color)
 	free_double_ptr(split_str);
 	return (0);
 }
-/* do i use it ?
- bool   is_space(char c)
- {
-    if (c == '\r' || c == '\t' || c == '\v'
-		|| c == '\n' || c == '\f')
-        return (true);
-    else
-        return (false);
- }
 
-void	exchange_helper(char *temp, char **str, int i)
+void	set_nums_value(t_p_nums *s_p_nums, char p)
 {
-	char	*t1;
-    char    *t2;
-
-	t2 = ft_strtrim(temp, " ");
-	free(temp);
-	// temp = ft_strtrim(t2, "\t");
-	// free(t2);
-
-	t1 = ft_strtrim(t2, "\n");
-    int len = ft_strlen(t2);
-    int j = 0;
-    while (t1[j])
-    {
-        if (is_space(t1[j]))
-            break;
-        j++;
-    }
-    if (j == len)
-        str[i] = ft_strdup(t1);
-    else
-    {
-        len = 0;
-        str[i] = malloc(sizeof(char) * (j + 1));
-        if (!str[i])
-        {
-            //test
-            printf("neend handle malloc error\n");
-            exit(1);
-        }
-        while (len < j)
-        {
-            str[i][len] = t1[len];
-            len++;
-        }
-    }
-	free(t2);
+	if (p == 'N')
+		s_p_nums->np += 1;
+	if (p == 'S')
+		s_p_nums->sp += 1;
+	if (p == 'w')
+		s_p_nums->wp += 1;
+	if (p == 'e')
+		s_p_nums->ep += 1;
 }
-*/
+
+bool	player_numbers(t_p_nums *n)
+{
+	if (n->np == 1 && n->sp == 0 && n->wp == 0 && n->ep == 0)
+		return (true);
+	else if (n->np == 0 && n->sp == 1 && n->wp == 0 && n->ep == 0)
+		return (true);
+	else if (n->np == 0 && n->sp == 0 && n->wp == 1 && n->ep == 0)
+		return (true);
+	else if (n->np == 0 && n->sp == 0 && n->wp == 0 && n->ep == 1)
+		return (true);
+	else
+		return (false);
+}
+
+bool	check_player_numbers(char **map)
+{
+	int			i;
+	int			j;
+	t_p_nums	p_nums;
+
+	i = 0;
+	ft_bzero(&p_nums, sizeof(t_p_nums));
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (ft_strchr(PLAYER, map[i][j]))
+				set_nums_value(&p_nums, map[i][j]);
+			j++;
+		}
+		i++;
+	}
+	if (player_numbers(&p_nums) == false)
+		return (false);
+	return (true);
+}

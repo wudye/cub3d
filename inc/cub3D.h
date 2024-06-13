@@ -150,22 +150,21 @@ typedef struct s_var
 
 typedef struct s_repeat
 {
-	int no;
-	int so;
-	int we;
-	int ea;
-	int f;
-	int c;
-} t_repeat;
+	int	no;
+	int	so;
+	int	we;
+	int	ea;
+	int	f;
+	int	c;
+}	t_repeat;
 
 typedef struct s_p_nums
 {
-	int np;
-	int sp;
-	int wp;
-	int ep;
-} t_p_nums;
-
+	int	np;
+	int	sp;
+	int	wp;
+	int	ep;
+}	t_p_nums;
 
 int				main(int argc, char **arv);
 int				parse_main(t_var *var, char **argv);
@@ -174,9 +173,6 @@ int				double_ft_len(char **str);
 int				check_texture(t_var *var, char **texture);
 int				check_color_value(char *str, int *color);
 int				check_map_numbers(t_var *var, char **map);
-int				handle_spaces(char **map, t_var *var);
-int				handle_walls(t_var *var, char **map);
-int				handle_inner_zero(char **map, t_var *var);
 int				get_file_length1(int fd, int len);
 void			exchange_helper(char *temp, char **str, int i);
 bool			check_map_value(t_var *var, char **map);
@@ -214,7 +210,25 @@ int				key_released(int keysmbol, t_var *var);
 void			move_player(t_var *var);
 void			hit_value_set(t_var *var);
 int				bonus_mouse(int x, int y, t_var *var);
-unsigned int	texture_pixel_E_N(t_img *tex, t_coordinate tex_range);
-unsigned int	texture_pixel_S_W(t_img *tex, t_coordinate tex_range);
-bool check_tab_first(char *temp1);
+unsigned int	texture_pixel_e_n(t_img *tex, t_coordinate tex_range);
+unsigned int	texture_pixel_s_w(t_img *tex, t_coordinate tex_range);
+bool			check_tab_first(char *temp1);
+void			set_map_copy(char **map, char **map_copy, int maxi, t_var *var);
+void			dfs(char **map, int i, int j, char target);
+void			put_wall_two(char **map);
+bool			check_four_walls_help(int line, char **map, int flag);
+bool			check_four_walls(char **map);
+bool			check_space_surround(int i, int j, char **map);
+bool			player_flood_fill(int i, int j, char **map);
+bool			check_player_help(int i, int j, char **map);
+bool			check_player_surround(char **map);
+int				ctc(char *st, char *compare, t_var *var, int *color);
+int				check_load_texture(char *str, t_var *var, t_img *img);
+int				ctd(char *st, char *compare, t_var *var, t_img *vimg);
+int				check_texture_content(char *str, t_var *var);
+void			set_nums_value(t_p_nums *s_p_nums, char p);
+bool			player_numbers(t_p_nums *n);
+bool			check_player_numbers(char **map);
+void			get_file_length_help(int fd, int *i);
+int				check_helper(char **map, int len);
 #endif

@@ -15,67 +15,17 @@
 static int	get_file_length(int fd)
 {
 	int		i;
-	char	*temp;
-	char	*temp1;
 
 	i = 0;
-	while (1)
-	{
-		temp = get_next_line(fd);
-		if (temp == NULL)
-			break ;
-		temp1 = ft_strtrim(temp, " ");
-		free(temp);
-		if (temp1 && ft_strncmp(temp1, "\n", 2) == 0)
-		{
-			free(temp1);
-			continue ;
-		}
-		if (check_tab_first(temp1) == true)
-		{
-			free(temp1);
-			continue ;
-		}
-		i++;
-		free(temp1);
-	}
+	get_file_length_help(fd, &i);
 	return (i);
 }
 
-/*// map each line with \n
 static void	set_value_map(int fd, char **str, int len, t_var *var)
 {
 	char	*temp;
 	int		i;
-
-	i = 0;
-	while (1)
-	{
-		temp = get_next_line(fd);
-		if (temp == NULL)
-			break ;
-		if (temp && ft_strncmp(temp, "\n", 2) == 0)
-		{
-			free(temp);
-			continue ;
-		}
-		str[i] = ft_strdup(temp);
-		free(temp);
-		if (!str[i])
-			error_malloc(var);
-		i++;
-		if (i == len)
-			break ;
-	}
-	str[i] = 0;
-}
-*/
-/* map each line without \n */
-static void	set_value_map(int fd, char **str, int len, t_var *var)
-{
-	char	*temp;
-	int		i;
-	char *temp1;
+	char	*temp1;
 
 	i = 0;
 	while (i < len)
@@ -84,7 +34,8 @@ static void	set_value_map(int fd, char **str, int len, t_var *var)
 		if (temp == NULL)
 			break ;
 		temp1 = ft_strtrim(temp, " ");
-		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0 || check_tab_first(temp1)))
+		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0 \
+		|| check_tab_first(temp1)))
 		{
 			free(temp);
 			free(temp1);
@@ -150,55 +101,6 @@ static int	open_map_file(char *filename, t_var *var)
 	return (close(fd), 0);
 }
 
-void set_nums_value(t_p_nums *s_p_nums, char p)
-{
-	if (p == 'N')
-		s_p_nums->np += 1;
-	if (p == 'S')
-		s_p_nums->sp += 1;
-	if (p == 'w')
-		s_p_nums->wp += 1;
-	if (p == 'e')
-		s_p_nums->ep += 1;
-}
-
-bool player_numbers(t_p_nums *n)
-{
-	if (n->np == 1 && n->sp == 0 && n->wp == 0 && n->ep == 0)
-		return (true);
-	else if (n->np == 0 && n->sp == 1 && n->wp == 0 && n->ep == 0)
-		return (true);
-	else if (n->np == 0 && n->sp == 0 && n->wp == 1 && n->ep == 0)
-		return (true);
-	else if (n->np == 0 && n->sp == 0 && n->wp == 0 && n->ep == 1)
-		return (true);
-	else
-		return (false);
-}
-bool check_player_numbers(char **map)
-{
-	int i;
-	int j;
-	t_p_nums	p_nums;
-
-	i = 0;
-	ft_bzero(&p_nums, sizeof(t_p_nums));
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (ft_strchr(PLAYER, map[i][j]))
-				set_nums_value(&p_nums, map[i][j]);
-			j++;
-		}
-		i++;
-	}
-	if (player_numbers(&p_nums) == false)
-		return (false);
-	
-	return (true);
-}
 int	parse_main(t_var *var, char **argv)
 {
 	if (open_map_file(argv[1], var) == 1)

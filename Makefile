@@ -11,8 +11,8 @@ FILES  = main.c free_functions.c parse_main.c \
 		parse_utils.c parse_check_texture.c \
 		parse_check_texture_help.c check_map_numbers.c\
 		check_map_numbers_space.c check_map_numbers_wall.c \
-		render_main.c check_map_value.c \
-		render_utils.c  render_set_value.c \
+		render_main.c check_map_value.c parse_utils2.c \
+		render_utils.c  render_set_value.c parse_utils3.c \
 		loop_in_render.c vector_operations.c \
 		dda_algo.c render_player_rotate.c\
 		value_in_render.c render_key_event.c render_player_move.c\
