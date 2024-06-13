@@ -104,7 +104,7 @@ bool	check_space_surround(int i, int j, char **map)
 	max_row = ft_strlen(map[0]) - 1;
 	if (map[i][j] == '2')
 		return (false);
-	else if (map[i][j] == '0' || ft_strchr(PLAYER, map[i][j]))
+	else if (map[i][j] == '0')
 	{
 		if (i + 1 >= 0 && i +1 <= len && j >= 0 && j <= max_row)
 			return (check_space_surround(i + 1, j, map));

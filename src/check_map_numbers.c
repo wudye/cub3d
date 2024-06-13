@@ -12,6 +12,19 @@
 
 #include "../inc/cub3D.h"
 
+static bool	space_check_surrond_help(char **map_copy, int i, int j)
+{
+	if (check_space_surround(i + 1, j, map_copy) == false)
+		return (ft_putstr_fd("Error in space\n", 2), false);
+	if (check_space_surround(i - 1, j, map_copy) == false)
+		return (ft_putstr_fd("Error in space\n", 2), false);
+	if (check_space_surround(i, j + 1, map_copy) == false)
+		return (ft_putstr_fd("Error in space\n", 2), false);
+	if (check_space_surround(i, j - 1, map_copy) == false)
+		return (ft_putstr_fd("Error in space\n", 2), false);
+	return (true);
+}
+
 static bool	space_check_surrond(char **map, char **map_copy)
 {
 	int	max_row;
@@ -27,9 +40,11 @@ static bool	space_check_surrond(char **map, char **map_copy)
 		j = 1;
 		while (j < max_row)
 		{
-			if (map_copy[i][j] == '0' \
-			&& check_space_surround(i, j, map_copy) == false)
-				return (ft_putstr_fd("Error in space\n", 2), 1);
+			if (map_copy[i][j] == '0')
+			{
+				if (space_check_surrond_help(map_copy, i, j) == false)
+					return (true);
+			}
 			j++;
 		}
 		i++;
