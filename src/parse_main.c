@@ -85,7 +85,7 @@ static int	open_map_file(char *filename, t_var *var)
 	if (fd == -1)
 		return (err_return_info("Error can not open the map", var));
 	len = get_file_length(fd);
-	if (len == 0)
+	if (len == 0 || len == 6)
 		return (close(fd), err_return_info("Error empty map", var));
 	close (fd);
 	fd = open(filename, O_RDONLY);
