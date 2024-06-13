@@ -56,15 +56,6 @@ int	check_helper(char **map, int len)
 	return (maxi);
 }
 
-void	length1_help_help(int *i, int *j, int len)
-{
-	(*i)++;
-	if (*i >= 6)
-		*i = 6;
-	if (*i == 6 && *i <= len)
-		(*j)++;
-}
-
 bool	check_tabs(char *filename, t_var *var)
 {
 	char	*temp1;
@@ -79,9 +70,20 @@ bool	check_tabs(char *filename, t_var *var)
 		if (temp1 == NULL)
 			break ;
 		if (check_tab_first(temp1))
-			return (free(temp1), err_return_info("Error has tap", var), false);
+		{
+			free(temp1);
+			while (1)
+			{
+				temp1 = get_next_line(fd);
+				if (temp1 == NULL)
+					break ;
+				free(temp1);
+			}
+			return (err_return_info("Error has tap", var), false);
+		}
 		free(temp1);
 	}
-	close (fd);
+	close(fd);
+	
 	return (true);
 }
