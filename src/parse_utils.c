@@ -23,7 +23,7 @@ int	parse_argv(char *str)
 	len = double_ft_len(str1);
 	str2 = str1[len - 1];
 	n = ft_strlen(str2);
-	if (n == 4)
+	if (n <= 4)
 		return (free_double_ptr(str1), \
 		ft_putstr_fd("Error need full file name\n", 2), 1);
 	str2 += (n - 4);
