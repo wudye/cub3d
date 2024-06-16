@@ -88,6 +88,8 @@ static int	open_map_file(char *filename, t_var *var)
 	if (len == 0 || len == 6)
 		return (close(fd), err_return_info("Error empty map", var));
 	close (fd);
+	if (check_tabs(filename, var) == false)
+		return (1);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (close(fd), err_return_info("Error can not open the map", var));
@@ -103,8 +105,6 @@ static int	open_map_file(char *filename, t_var *var)
 
 int	parse_main(t_var *var, char **argv)
 {
-	if (check_tabs(argv[1], var) == false)
-		return (1);
 	if (open_map_file(argv[1], var) == 1)
 		return (1);
 	if (check_texture(var, var->texture) == 1)
