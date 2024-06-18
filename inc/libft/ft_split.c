@@ -5,105 +5,115 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 19:02:31 by mwu               #+#    #+#             */
-/*   Updated: 2023/11/17 19:03:42 by mwu              ###   ########.fr       */
+/*   Created: 2023/09/11 13:22:45 by mwu               #+#    #+#             */
+/*   Updated: 2023/09/20 16:58:26 by mwu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_countwords(char *s, char c)
+static int	anum(char const *s, char c)
 {
-	size_t	i;
-	size_t	count;
+	int	i;
+	int	rn;
 
 	i = 0;
-	if (s[0] == c || s[0] == '\0')
-		count = 0;
-	else
-		count = 1;
+	rn = 0;
 	while (s[i])
 	{
-		if (s[i] == c && s[i + 1] != c && s[i + 1] != '\0')
-			count++;
-		i++;
+		if (s[i] == c)
+			i++;
+		else
+		{
+			rn++;
+			while (s[i] && s[i] != c)
+				i++;
+		}
 	}
-	return (count);
+	return (rn);
 }
 
-size_t	ft_wordlen(char *s, char c)
+static char	*value_give(char *des, int strilen, int wordlen, char *s)
 {
-	size_t	len;
-
-	len = 0;
-	while (s[len] && s[len] != c)
-		len++;
-	return (len);
-}
-
-void	ft_freesplit(char **ptr_2d, size_t i)
-{
-	while (i > 0)
-		free(ptr_2d[--i]);
-	free(ptr_2d);
-}
-
-char	**ft_splitfunction(size_t count, char *s, char c, char **ptr_2d)
-{
-	char	*ptr_1d;
-	size_t	i;
-	size_t	j;
+	int	i;
 
 	i = 0;
-	while (i < count)
+	while (wordlen > 0)
 	{
-		while (*s && *s == c)
-			s++;
-		ptr_1d = ft_substr((char *) s, 0, ft_wordlen((char *) s, c));
-		if (!ptr_1d)
-		{
-			ft_freesplit(ptr_2d, i);
-			return (NULL);
-		}
-		ptr_2d[i++] = ptr_1d;
-		j = 0;
-		while (s[j] && s[j] != c)
-			j++;
-		s += j;
+		des[i] = s[strilen - wordlen];
+		wordlen--;
+		i++;
 	}
-	ptr_2d[i] = NULL;
-	return (ptr_2d);
+	des[i] = '\0';
+	return (des);
+}
+
+static char	**frees(char **sp, int i)
+{
+	while (i > 0)
+	{
+		i--;
+		free(sp[i]);
+	}
+	free(sp);
+	return (0);
+}
+
+static char	**insplit(char **sp, char const *s, char c, int l)
+{
+	int	splen;
+	int	strilen;
+	int	wordlen;
+
+	splen = 0;
+	strilen = 0;
+	while (splen < l)
+	{
+		wordlen = 0;
+		while (s[strilen] && s[strilen] == c)
+			strilen++;
+		while (s[strilen] && s[strilen] != c)
+		{
+			strilen++;
+			wordlen++;
+		}
+		sp[splen] = (char *)malloc(sizeof(char) * (wordlen + 1));
+		if (!sp[splen])
+			return (frees(sp, splen));
+		value_give(sp[splen], strilen, wordlen, (char *)s);
+		splen++;
+	}
+	sp[splen] = 0;
+	return (sp);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**ptr_2d;
-	size_t	count;
+	char	**res;
+	int		reslen;
 
 	if (!s)
 		return (NULL);
-	count = ft_countwords((char *) s, c);
-	ptr_2d = malloc((count + 1) * sizeof(char *));
-	if (!ptr_2d)
+	reslen = anum(s, c);
+	res = (char **)malloc(sizeof (char *) * (reslen + 1));
+	if (!res)
 		return (NULL);
-	ptr_2d = ft_splitfunction(count, (char *) s, c, ptr_2d);
-	return (ptr_2d);
+	res = insplit(res, s, c, reslen);
+	return (res);
 }
 /*
-int main (void)
+#include <stdio.h>
+int	main()
 {
-	char str[50]="";
-	char del=' ';
-	char **retp;
-	retp = ft_split(str, del);
-	if (!retp)
-		return (-1);
-	int	i = 0;
-	while (retp[i])
+	char *s = "hello wolrd ";
+	char ** res =  ft_split(s, ' ');
+	int	i;
+	i = 0;
+	while (i < 2)
 	{
-		free(retp[i]);
+		free(res[i]);
 		i++;
-	}	
-	free(retp);
+	}
+	free(res);
 }
 */

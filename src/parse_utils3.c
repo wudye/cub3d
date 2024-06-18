@@ -12,7 +12,7 @@
 
 #include "../inc/cub3D.h"
 
-void	get_file_length_help(int fd, int *i)
+int	get_file_length_help(int fd, int *i)
 {
 	char	*temp;
 	char	*temp1;
@@ -22,8 +22,9 @@ void	get_file_length_help(int fd, int *i)
 		temp = get_next_line(fd);
 		if (temp == NULL)
 			break ;
-		temp1 = ft_strtrim(temp, " ");
-		free(temp);
+		temp1 = reduce_help(temp, fd);
+		if (!temp1)
+			return (ft_putstr_fd("Error in strim\n", 2), 1);
 		if (temp1 && ft_strncmp(temp1, "\n", 2) == 0)
 		{
 			free(temp1);
@@ -37,6 +38,7 @@ void	get_file_length_help(int fd, int *i)
 		(*i)++;
 		free(temp1);
 	}
+	return (0);
 }
 
 int	check_helper(char **map, int len)
@@ -79,7 +81,8 @@ bool	check_tabs_help(int fd, t_var *var)
 		}
 		free(temp1);
 	}
-	close(fd);
+	if (close(fd) == -1)
+		return (err_return_info("Error close", var), false);
 	return (true);
 }
 

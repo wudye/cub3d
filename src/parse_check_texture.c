@@ -68,6 +68,7 @@ int	repeated_ele(t_var *var, char **textture)
 	int			i;
 
 	i = 0;
+	temp = NULL;
 	ft_bzero(&repeat, sizeof(t_repeat));
 	while (textture[i])
 	{

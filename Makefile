@@ -2,10 +2,11 @@
 #MLX
 INC=%%%%
 INCLIB=$(INC)/../lib
-LFLAGS = -L.. -lmlx -L$(INCLIB) -lXext -lX11 -lm
+LFLAGS = -L.. -lmlx -L$(INCLIB) -lXext -lX11 -lm 
+# -g3 -fsanitize=leak,address,undefined
 
 CC     = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 NAME   = cub3D
 FILES  = main.c free_functions.c parse_main.c \
 		parse_utils.c parse_check_texture.c \
@@ -16,7 +17,7 @@ FILES  = main.c free_functions.c parse_main.c \
 		loop_in_render.c vector_operations.c parse_utils4.c \
 		dda_algo.c render_player_rotate.c\
 		value_in_render.c render_key_event.c render_player_move.c\
-		get_next_line.c get_next_line_utils.c \
+		get_next_line.c get_next_line_utils.c open_map_file_utils.c \
 
 
 

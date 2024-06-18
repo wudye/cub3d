@@ -12,40 +12,60 @@
 
 #include "../inc/cub3D.h"
 
-static void	texture_help(t_var *var, char *st, char *temp1, int *i)
+static void	texture_help(t_var *var, char *st, int *i)
 {
-	free(temp1);
 	if (!st)
 		error_malloc(var);
 	(*i)++;
 }
 
-void	set_value_texture(int fd, char **str, int len, t_var *var)
+char	*reduce_help3(char *temp, int fd)
+{
+	char	*temp1;
+	char	*te;
+
+	temp1 = ft_strtrim(temp, "\n");
+	free(temp);
+	if (!temp1)
+	{
+		while (1)
+		{
+			te = get_next_line(fd);
+			if (te == NULL)
+				break ;
+			free(te);
+		}
+		return (NULL);
+	}
+	return (temp1);
+}
+
+void	set_value_texture(int fd, int i, int len, t_var *var)
 {
 	char	*temp;
-	int		i;
 	char	*temp1;
 
-	i = 0;
 	while (1)
 	{
 		temp = get_next_line(fd);
 		if (temp == NULL)
 			break ;
-		temp1 = ft_strtrim(temp, " ");
-		free(temp);
-		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0 \
-		|| check_tab_first(temp1)))
+		temp1 = reduce_help(temp, fd);
+		if (!temp1)
+			error_malloc(var);
+		if (temp1 && (ft_strncmp(temp1, "\n", 2) == 0))
 		{
 			free(temp1);
 			continue ;
 		}
-		str[i] = ft_strtrim(temp1, "\n");
-		texture_help(var, str[i], temp1, &i);
+		var->texture[i] = reduce_help3(temp1, fd);
+		if (!var->texture[i])
+			error_malloc(var);
+		texture_help(var, var->texture[i], &i);
 		if (i == len)
 			break ;
 	}
-	str[i] = 0;
+	var->texture[i] = 0;
 }
 
 bool	check_map_value(t_var *var, char **map)

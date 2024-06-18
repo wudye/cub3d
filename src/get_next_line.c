@@ -17,6 +17,12 @@ char	*ft_strjoin_free(char *keep, char *buffer)
 	char	*res;
 
 	res = ft_strjoin1(keep, buffer);
+	if (!res)
+	{
+		free(keep);
+		free(buffer);
+		return (NULL);
+	}
 	free(keep);
 	return (res);
 }
@@ -87,7 +93,7 @@ char	*read_file(int fd, char *keep)
 	while ((ft_strn1(keep) != 1) && frv > 0)
 	{
 		frv = read(fd, buffer, BUFFER_SIZE);
-		if (frv == -1)
+		if (frv <= 0)
 		{
 			free(buffer);
 			free(keep);
@@ -95,6 +101,8 @@ char	*read_file(int fd, char *keep)
 		}
 		buffer[frv] = '\0';
 		keep = ft_strjoin_free(keep, buffer);
+		if (!keep)
+			return (NULL);
 	}
 	free(buffer);
 	return (keep);

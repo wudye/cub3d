@@ -78,7 +78,7 @@ t_var *var, t_img *vimg)
 
 	str = ft_split(st, ' ');
 	if (!str)
-		error_malloc(var);
+		return (error_malloc(var), 1);
 	if (double_ft_len(str) != 2)
 	{
 		free_double_ptr(str);

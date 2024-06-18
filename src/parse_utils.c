@@ -20,6 +20,8 @@ int	parse_argv(char *str)
 	int		len;
 
 	str1 = ft_split(str, '/');
+	if (!str1)
+		return (1);
 	len = double_ft_len(str1);
 	str2 = str1[len - 1];
 	n = ft_strlen(str2);
@@ -66,10 +68,31 @@ int	get_file_length1(int fd, int len)
 
 	j = 0;
 	i = 0;
-	length1_help(fd, len, &i, &j);
+	if (length1_help(fd, len, &i, &j) == 1)
+		return (-1);
 	if (i - 6 != 0)
 		return (-1);
 	if (j < 0)
 		return (-1);
 	return (i);
+}
+
+char	*reduce_help(char *temp, int fd)
+{
+	char	*temp1;
+
+	temp1 = ft_strtrim(temp, " ");
+	free(temp);
+	if (!temp1)
+	{
+		while (1)
+		{
+			temp1 = get_next_line(fd);
+			if (temp1 == NULL)
+				break ;
+			free(temp1);
+		}
+		return (NULL);
+	}
+	return (temp1);
 }
